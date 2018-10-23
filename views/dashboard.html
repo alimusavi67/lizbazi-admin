@@ -1,0 +1,159 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="dashboard">خانه</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <a ui-sref="dashboard">پیشخوان</a>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+        <!-- <div class="btn-group pull-right">
+            <button type="button" class="btn btn-fit-height grey-salt dropdown-toggle" data-toggle="dropdown" dropdown-menu-hover data-delay="1000" data-close-others="true"> عملیات
+                <i class="fa fa-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu pull-right" role="menu">
+                <li>
+                    <a href="#">
+                        <i class="icon-user"></i>کاربر جدید</a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-present"></i> رویداد تازه
+                        <span class="badge badge-success">4</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-basket"></i> سفارش جدید </a>
+                </li>
+                <li class="divider"> </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-flag"></i> پیام ها
+                        <span class="badge badge-danger">4</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-users"></i> تراکنش ها
+                        <span class="badge badge-warning">12</span>
+                    </a>
+                </li>
+            </ul>
+        </div> -->
+    </div>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div>
+    <!-- BEGIN DASHBOARD STATS -->
+    <!-- END DASHBOARD STATS -->
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light bordered ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-settings font-green"></i>
+                        <span class="caption-subject font-green bold uppercase">دسترسی سریع</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                            <div class="tiles">
+                                <div class="tile double-down bg-blue-hoki">
+                                    <a ui-sref="showstudents" class="dashboard-qnav">
+                                        <div class="tile-body">
+                                            <i class="fa fa-bell-o"></i>
+                                        </div>
+                                        <div class="tile-object">
+                                            <div class="name"> دانش آموزان </div>
+                                            <div class="number" ng-bind="sugCount">  </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="tile bg-red-sunglo">
+                                    <a ui-sref="showteachers" class="dashboard-qnav">
+                                        <div class="tile-body">
+                                            <i class="fa fa-safari"></i>
+                                        </div>
+                                        <div class="tile-object">
+                                            <div class="name">  معلم ها </div>
+                                            <div class="number" ng-bind="merCount"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="tile selected bg-yellow-saffron">
+                                    <a ui-sref="showparents" class="dashboard-qnav">
+                                        <div class="corner"> </div>
+                                        <div class="tile-body">
+                                            <i class="fa fa-user"></i>
+                                        </div>
+                                        <div class="tile-object">
+                                            <div class="name"> اولیا </div>
+                                            <div class="number" ng-bind="oprCount"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="tile bg-purple-studio">
+                                    <a ui-sref="showcourses" class="dashboard-qnav">
+                                        <div class="tile-body">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </div>
+                                        <div class="tile-object">
+                                            <div class="name"> درس ها </div>
+                                            <div class="number" ng-bind="vCount"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="tile bg-red-intense">
+                                    <a ui-sref="showclassrooms" class="dashboard-qnav">
+                                        <div class="tile-body">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </div>
+                                        <div class="tile-object">
+                                            <div class="name"> کلاس ها  </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="tile bg-green">
+                                    <a ui-sref="attReport" class="dashboard-qnav">
+                                        <div class="tile-body">
+                                            <i class="fa fa-bar-chart-o"></i>
+                                        </div>
+                                        <div class="tile-object">
+                                            <div class="name"> گزارش حضور</div>
+                                            <div class="number"> </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="tile bg-green">
+                                    <a ui-sref="actReport" class="dashboard-qnav">
+                                        <div class="tile-body">
+                                            <i class="fa fa-bar-chart-o"></i>
+                                        </div>
+                                        <div class="tile-object">
+                                            <div class="name"> گزارش فعالیت ها</div>
+                                            <div class="number"> </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+
+
+                            </div>
+                        </div>  
+            </div>
+            <!-- END PORTLET-->
+        </div>
+    </div>      
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
+<script>
+    Dashboard.init();
+</script>
+<!-- BEGIN MAIN JS & CSS

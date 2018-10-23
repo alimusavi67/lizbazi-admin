@@ -1,0 +1,57 @@
+<!--
+=================================================================================
+= ~Page Name  : Login
+= ~Author     : Faraz pardazan CO
+= ~License    : Faraz Pardazan
+= ~Date       : 1396/05/08
+= ~Developer  : EH7AN
+=================================================================================
+-->
+<!-- BEGIN LOGO -->
+<div class="login">
+    <div class="logo">
+        <a href="index.html">
+            <img src="../assets/pages/img/logo.png" alt="" style="width: 55% !important;"/> </a>
+    </div>
+    <div class="content login-content ">
+        <!-- BEGIN LOGIN FORM -->
+        <form id="login-form" class="login-form" action="login()" method="post">
+            <h3 class="form-title">ورود به حساب کاربری</h3>
+            <div class="alert alert-danger display-hide">
+                <button class="close" data-close="alert"></button>
+                <span> نام کاربری و کلمه عبور را وارد نمایید. </span>
+            </div>
+            <div class="form-group">
+                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                <label class="control-label visible-ie8 visible-ie9">نام کاربری</label>
+                <div class="input-icon">
+                    <i class="fa fa-user"></i>
+                    <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="نام کاربری" name="username" ng-model="username" /> </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">کلمه عبور</label>
+                <div class="input-icon">
+                    <i class="fa fa-lock"></i>
+                    <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="کلمه عبور" name="password" ng-model="password"/> </div>
+            </div>
+            <div class="form-actions">
+                <label class="rememberme mt-checkbox mt-checkbox-outline">
+                    <input type="checkbox" ng-model="remember" name="remember" value="1" /> مرا به خاطر بسپر
+                    <span></span>
+                </label>
+
+                <button type="submit" class="btn green mt-ladda-btn ladda-button pull-right"
+                data-style="zoom-out">
+                    <span class="ladda-label">ورود به پنل</span>
+                </button>
+            </div>
+            <div class="form-group">
+                <span>{{loginMsg}}</span>
+            </div>
+        </form>
+        <!-- END LOGIN FORM -->
+    </div>
+    <!-- END LOGIN -->
+    <!-- BEGIN COPYRIGHT -->
+    <!-- END COPYRIGHT -->
+</div>

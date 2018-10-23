@@ -1,0 +1,158 @@
+/* here you can put your own css to customize and override the theme */
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/eot/IRANSansWeb.eot');
+  src: url('../fonts/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+     url('../fonts/woff2/IRANSansWeb.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+     url('../fonts/woff/IRANSansWeb.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+     url('../fonts/ttf/IRANSansWeb.ttf') format('truetype');
+}
+.no-pad {
+	padding: 0px !important;
+}
+.top-mar {
+  margin-top: 3%;
+}
+.login-content .form-actions {
+	position: relative;
+}
+.login-content .error {
+	color: #000 !important;
+}
+.add-new-row {
+	margin-left: 5%;
+}
+.page-logo > a {
+      width: 80% !important;
+}
+.page-logo > a > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.phone-tag {
+  display: inline-block;
+  padding: 5px 15px;
+  background-color: #d5d5d5;
+  border-radius: 3px;
+  color: #717171;
+  margin-right: 2%;
+  margin-top: 2%;
+}
+.phone-tag:first-child {
+  margin-right: 0px !important;
+}
+.rm-phone-tag {
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.rm-phone-tag:hover {
+  color: #ef5050;
+}
+.help-block-error {
+  opacity: 1 !important;
+}
+.modal-input-mar {
+  margin-bottom: 7% !important;
+}
+.tooltip.right, .tooltip.top, .tooltip.bottom {
+  font-family: IRANSans !important;
+}
+.admin-op {
+  display: inline-block;
+  width: 25px;
+  text-align: center;
+  cursor: pointer;
+}
+.fntbtn {
+  font-family: IRANSans !important;
+}
+#roles-error,
+#platform-error,
+#phonetip-error {
+  display: block;
+  margin-top: 40px;
+}
+/*======================== Response editor ============================*/
+.reseditor .toolbar {
+  min-height: 35px;
+  height: auto;
+  background-color: #efefef;
+  padding: 10px 15px;
+}
+.reseditor .content {
+  border: 1px solid #27a4b0 !important;
+}
+.reseditor .toolbar .btn {
+  margin-right: 1%;
+}
+.mdc {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-color: #000;
+}
+/*======================== Lock screen css ===========================*/
+.page-lock .page-logo {
+  width: 98px;
+  height: 70px;
+}
+.page-lock .page-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/*fixer*/
+.popover-footer {
+  padding: 10px 15px;
+}
+/*========================= Dashboard quick nav css ==================*/
+.dashboard-qnav {
+  text-decoration: none;
+}
+.dashboard-qnav:hover {
+  text-decoration: none;
+}
+.page-header.navbar .page-logo .logo-default {
+  margin: 18px 0 0 !important;
+}
+i.fileinput-exists {
+  cursor: pointer;
+  transition: all 0.3s;
+}
+i.fileinput-exists:hover {
+  color: #2b902b;
+}
+/*======================== Charts styling ===============================*/
+.chart {
+  width  : 100%;
+  height : 250px;
+}
+.amcharts-legend-div svg {
+  right: 0 !important;
+}
+.reqi-chart {
+  border: 1px solid #c2c2c2;
+  margin-bottom: 15px;
+  background-color: #f6f6f6;
+}
+.mt-checkbox > span::after {
+  border-width: 0 2px 2px 0px !important;
+  transform: rotate(-317deg) !important;
+}
+/*===================== Banks capabilities =====================*/
+.md-checkbox input[type="checkbox"]:checked ~ label > .check {
+  transform: scale(1) rotate(45deg) !important;
+}
+.md-checkbox label > .check {
+  border-left: none !important;
+  border-right: 2px solid #36c6d3 !important;
+}
+.bank-font {
+  font-family: "IRANSans"
+}
+.datepicker-plot-area{
+  z-index: 7 !important; 
+}

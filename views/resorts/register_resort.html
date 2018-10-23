@@ -1,0 +1,108 @@
+<!-- BEGIN CONTENT BODY -->
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">خانه</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>ثبت کاربر جدید</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<div class="row">
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <span class="caption-subject bold uppercase">فرم ثبت کاربر جدید</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form role="form" id="insertUserForm">
+                    <div class="form-body">
+                        <!-- name input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="firstName" ng-model="newResort.firstName" class="form-control">
+                                <label for="form_control_1">نام</label>
+                                <span class="help-block">لطفا از حروف فارسی استفاده کنید</span>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- family input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="lastName" class="form-control" ng-model="newResort.latitude">
+                                <label for="form_control_1">latitude </label>
+                                <span class="help-block">لطفا از حروف فارسی استفاده کنید</span>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- password input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label" ng-hide="editMode">
+                            <div class="input-icon">
+                                <input type="text" name="password" class="form-control" ng-model="newResort.longitude">
+                                <label for="form_control_1"> longitude</label>
+                                <!-- <span class="help-block">لطفا از حروف فارسی استفاده کنید</span> -->
+                                <i class="fa fa-key"></i>
+                            </div>
+                        </div>
+
+                        <!-- user roles -->
+                        <div class="form-group form-md-line-input form-md-floating-label has-info">
+                            <select ng-model="newResort.countryId" name="roles" class="form-control select2 edited"  ng-options="country.id as country.name for country in countryList">
+                                <option value="">انتخاب کنید ... </option>
+                            </select>
+                            <label for="form_control_1" style="color: #27a4b0"> کشور</label>
+                        </div>
+                        <!-- user name input -->
+                        <div class="form-group form-md-line-input form-md-floating-label has-info">
+                            <select ng-model="newResort.status" name="roles" class="form-control select2 edited">
+                                <option value="Open"> باز</option>
+                                <option value="Closed">بسته</option>
+                            </select>
+                            <label for="form_control_1" style="color: #27a4b0"> وضعیت</label>
+                        </div>
+
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <label for="form_control_1">تصویر </label>
+                            <div class="input-icon">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                        <img ng-src="{{(newMerchant.mediaUniqueId)? '/api/media/' + newresort.mediaUniqueId + '/file?preview=true' : '../../assets/no-image.png'}}" alt="" /> </div>
+                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+                                    <div>
+                                        <span class="btn green btn-file uplodp-btn">
+                                            <span class="fileinput-new"> انتخاب تصویر </span>
+                                            <button type="button" class="fileinput-exists btn blue ladda-changepic"
+                                            >تعویض
+                                            </button>
+                                            <input type="file" name="..."  onchange="angular.element(this).scope().fileUploader(this.files)"> </span>
+                                        <a id="deleteImage" href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput" ng-click="addBtnGreen()">پاک کردن</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-actions noborder">
+                        <button type="button" class="btn blue mt-ladda-btn ladda-button"
+                                data-style="zoom-out" ng-click="registerUser()">
+                            <span class="ladda-label">ثبت</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+<!-- END CONTENT BODY

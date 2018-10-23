@@ -1,0 +1,29 @@
+<div class="page-lock">
+    <div class="page-body">
+        <img class="page-lock-img" src="../assets/pages/img/logo.png" alt="">
+        <div class="page-lock-info">
+            <h1 ng-bind="currentUser.username"></h1>
+            <span class="email"> نقش کاربر : {{currentUser.role}}</span>
+            <span class="locked"> Locked </span>
+            <form class="form-inline" id="lockscreen-form">
+                <div class="input-group input-medium">
+                    <input type="password" class="form-control lockinput" ng-model="password" placeholder="کلمه عبور" >
+                    <span class="input-group-btn">
+                        <button type="button" class="btn green mt-ladda-btn ladda-button pull-right"
+                        data-style="zoom-out" ng-click="ulock()">
+                            <i class="m-icon-swapleft m-icon-white ladda-label"></i>
+                        </button>
+                    </span>
+                </div>
+                <!-- /input-group -->
+                <div class="relogin">
+                    <a href="/#/login">{{currentUser.username}} نیستید ؟  </a>
+                </div>
+                <div class="locklog">
+                    <span ng-bind="loginMsg"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--[if lt IE 9]>

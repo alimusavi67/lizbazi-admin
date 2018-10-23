@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="123" height="125" viewBox="0 0 123 125">
+  <g fill="none" fill-rule="evenodd" stroke="#FFF" stroke-width="3" transform="translate(1 2)">
+    <polygon fill="#EEB900" points="17.59 102.493 102.271 102.493 102.271 77.623 17.59 77.623"/>
+    <polygon fill="#EEB900" points="17.716 42.638 102.397 42.638 102.397 17.768 17.716 17.768"/>
+    <polyline fill="#AA1A1F" points=".068 60.034 60.062 .186 77.588 17.805 17.594 77.654 .068 60.034"/>
+    <polyline fill="#AA1A1F" points="42.412 102.492 102.406 42.644 119.932 60.263 59.938 120.112 42.412 102.492"/>
+  </g>
+</svg>
