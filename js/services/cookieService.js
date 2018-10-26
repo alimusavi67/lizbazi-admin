@@ -64,7 +64,8 @@ angular.module('MetronicApp')
             var deviceId = fingerPrint();
             var loginReq = {
                 username: username,
-                password: password
+                password: password,
+                platform: 'Web'
             };
             var url = Constants.serverUrl + "/user/login";
             var config = Constants.defaultHeader();

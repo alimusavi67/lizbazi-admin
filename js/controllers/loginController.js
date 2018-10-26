@@ -39,7 +39,6 @@ angular.module('MetronicApp')
         .then(function (response) {
             UIButtons.stopSpin(el);
             if (response.status === 200) {
-                debugger
                 $rootScope.setCurrentUser(user);
                 if (redirectPath) {
                     $location.url(redirectPath)

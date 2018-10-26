@@ -42,30 +42,61 @@ angular.module('MetronicApp')
             // listingDate2();
         }
 
+
+
         $scope.registerResortFeature = function() {
             // create a new user when mode is `create`
-            var el = $('.mt-ladda-btn')[0];
-            UIButtons.startSpin(el);
-            var url = `resort/${resortId}/features`
+            if (mode === 'create'){
+                var el = $('.mt-ladda-btn')[0];
+                UIButtons.startSpin(el);
+                var url = `resort/${resortId}/features`
                 initService.postMethod($scope.newResort, url)
-                .then(function (resault) {
-                    UIButtons.stopSpin(el);
-                    if ( resault.code === 0 ) {
-                        var msg = 'عملیات با موفقیت انجام شد';
-                        UIToastr.init('success', msg);
-                    }
-                    else {
-                        var msg = resault.data.message;
-                        UIToastr.init('info', msg);
-                        $scope.newResort = {};
-                    }
-                    
-                })
-                .catch(function (error) {
-                    UIButtons.stopSpin(el);
-                    var msg = error.data.message;
-                    UIToastr.init('warning', msg);
-                });
+                    .then(function (resault) {
+                        UIButtons.stopSpin(el);
+                        if ( resault.code === 0 ) {
+                            var msg = 'عملیات با موفقیت انجام شد';
+                            UIToastr.init('success', msg);
+                        }
+                        else {
+                            var msg = resault.data.message;
+                            UIToastr.init('info', msg);
+                            $scope.newResort = {};
+                        }
+
+                    })
+                    .catch(function (error) {
+                        UIButtons.stopSpin(el);
+                        var msg = error.data.message;
+                        UIToastr.init('warning', msg);
+                    });
+            } else if (mode === 'update') {
+                var el = $('.mt-ladda-btn')[0];
+                UIButtons.startSpin(el);
+                var url = `resort/${resortId}/features/${$stateParams.featureId}`;
+                initService.postMethod($scope.newResort, url)
+                    .then(function (resault) {
+                        UIButtons.stopSpin(el);
+                        debugger
+                        if ( resault.data.code === 0 ) {
+                            var msg = 'عملیات با موفقیت انجام شد';
+                            UIToastr.init('success', msg);
+                            var url = `resorts/${resortId}/feature`;
+                            $location.path(url);
+                        }
+                        else {
+                            var msg = resault.data.message;
+                            UIToastr.init('info', msg);
+                            $scope.newResort = {};
+                        }
+
+                    })
+                    .catch(function (error) {
+                        UIButtons.stopSpin(el);
+                        var msg = error.data.message;
+                        UIToastr.init('warning', msg);
+                    });
+            }
+
         };
 
         // =============== Show all users ================
@@ -80,7 +111,17 @@ angular.module('MetronicApp')
         	initService.getMethod(data, `resort/${resortId}`)
 	        .then(function (resault) {
 	            debugger
-	            $scope.resortItem = resault.data.content.resorts;
+	            $scope.resortItem = resault.data.content;
+                if ($stateParams.featureId) {
+                    mode = 'update';
+                    var featureId = $stateParams.featureId;
+                    for (item of $scope.resortItem.features) {
+                        if (item.id === featureId) {
+                            $scope.newResort = item;
+                        }
+                    }
+                    // listingDate2();
+                }
 	            $timeout(function(){
                     initTable();
 	      			toolTipHandler();
@@ -91,10 +132,10 @@ angular.module('MetronicApp')
 	           
 	        });
         }
-        $scope.goToEditResort = function(student) {
+        $scope.goToEditFeature = function(feature) {
         	var	url = '';
-        	if (student.id) {
-        		url = '/student/'+ student.id +'/edit';
+        	if (feature.id) {
+        		url = '/resort/'+ resortId +'/feature/' + feature.id + '/edit';
                 $location.path(url);
         	}
         };
@@ -103,17 +144,17 @@ angular.module('MetronicApp')
                 url = '#/resort/'+ resortId +'/feature/register';
                 return url
         };
-        // =============== Delete a user ================
-        deleteMethod = function(uniqueId,index) {
+        // =============== Delete a resort feature ================
+        $scope.deleteMethod = function(feature,index) {
             var data = {};
-            var url = 'suggestion/' + uniqueId;
+            var url = `resort/${resortId}/features/${feature.id}`;
 
-            suggestionService.deleteMethod(data, url)
+            initService.deleteMethod(data, url)
             .then(function (resault) {
                 if ( resault.data.code === 0 ) {
                     var msg = resault.data.message;
                     UIToastr.init('success', msg);
-                    $scope.suggestionList.splice(index,1);
+                    $scope.resortItem.features.splice(index,1);
                     $state.reload();
                 }
                 else if (resault.data.code === 101){
@@ -150,7 +191,7 @@ angular.module('MetronicApp')
                 initService.uploader(fd, file, url,function(result){
                     if (result.data.code == 0) {
                         UIButtons.stopSpin(el);
-                        $scope.newResort.photoMediaIds = [];
+                        $scope.newResort.iconMediaIds = [];
                         $scope.newResort.photoMediaIds.push(result.data.content.id);
                         debugger
                     }

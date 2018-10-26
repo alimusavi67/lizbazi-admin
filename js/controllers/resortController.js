@@ -35,9 +35,10 @@ angular.module('MetronicApp')
         $scope.userPass = {};
         $scope.userAdded = true;
 
-        if ($stateParams.studentId) { // If user id is set so Mode is update
-            var studentId = $stateParams.studentId;
-            getStudent();
+        if ($stateParams.resortId) { // If user id is set so Mode is update
+            var resortId = $stateParams.resortId;
+            getResort();
+            mode = 'update';
             // listingDate2();
         } else if ($location.$$url == '/resorts/all') {
             getAllResort();
@@ -48,27 +49,56 @@ angular.module('MetronicApp')
 
         $scope.registerResort = function() {
             // create a new user when mode is `create`
-            var el = $('.mt-ladda-btn')[0];
-            UIButtons.startSpin(el);
+            if (mode === 'create'){
+                var el = $('.mt-ladda-btn')[0];
+                UIButtons.startSpin(el);
                 initService.postMethod($scope.newResort, 'resort')
-                .then(function (resault) {
-                    UIButtons.stopSpin(el);
-                    if ( resault.code === 0 ) {
-                        var msg = 'عملیات با موفقیت انجام شد';
-                        UIToastr.init('success', msg);
-                    }
-                    else {
-                        var msg = resault.data.message;
-                        UIToastr.init('info', msg);
-                        $scope.newResort = {};
-                    }
-                    
-                })
-                .catch(function (error) {
-                    UIButtons.stopSpin(el);
-                    var msg = error.data.message;
-                    UIToastr.init('warning', msg);
-                });
+                    .then(function (resault) {
+                        UIButtons.stopSpin(el);
+                        if ( resault.code === 0 ) {
+                            var msg = 'عملیات با موفقیت انجام شد';
+                            UIToastr.init('success', msg);
+                        }
+                        else {
+                            var msg = resault.data.message;
+                            UIToastr.init('info', msg);
+                            $scope.newResort = {};
+                        }
+
+                    })
+                    .catch(function (error) {
+                        UIButtons.stopSpin(el);
+                        var msg = error.data.message;
+                        UIToastr.init('warning', msg);
+                    });
+            } else if (mode === 'update') {
+                var el = $('.mt-ladda-btn')[0];
+                UIButtons.startSpin(el);
+                initService.postMethod($scope.newResort, `resort/${resortId}`)
+                    .then(function (resault) {
+                        debugger
+                        UIButtons.stopSpin(el);
+                        if ( resault.data.code === 0 ) {
+                            debugger
+                            var msg = 'عملیات با موفقیت انجام شد';
+                            UIToastr.init('success', msg);
+                            $location.path('resorts/all');
+
+                        }
+                        else {
+                            var msg = resault.data.message;
+                            UIToastr.init('info', msg);
+                            $scope.newResort = {};
+                        }
+
+                    })
+                    .catch(function (error) {
+                        UIButtons.stopSpin(el);
+                        var msg = error.data.message;
+                        UIToastr.init('warning', msg);
+                    });
+            }
+
         };
 
         // update student data
@@ -163,19 +193,20 @@ angular.module('MetronicApp')
                 });
         }
         // =============== Get a user ================
-        function getStudent()
+        function getResort()
         {
             var	data = {
                 'params' :{
 
                 }
             };
-            var url = 'studentProfile/' + studentId;
+            var url = 'resort/' + resortId;
 
             initService.getMethod(data, url)
                 .then(function (resault) {
-                    $scope.editStudentItem = resault.data.data;
-                    fillBirthDateValue($scope.editStudentItem.birth_date);
+                    debugger
+                    $scope.newResort = resault.data.content;
+                    $scope.newResort.countryId =  $scope.newResort.country.id;
 
                 })
                 .catch(function (error) {
@@ -183,18 +214,18 @@ angular.module('MetronicApp')
                 });
         }
 
-        $scope.goToEditStudent = function(student) {
+        $scope.goToEditResort = function(resort) {
         	var	url = '';
-        	if (student.id) {
-        		url = '/student/'+ student.id +'/edit';
+        	if (resort.id) {
+        		url = '/resort/'+ resort.id +'/edit';
                 $location.path(url);
         	}
         };
 
-        $scope.goToStudentActivity = function(student) {
+        $scope.goToResortFeature = function(resort) {
             var	url = '';
-            if (student.id) {
-                url = '/student/'+ student.id +'/activity';
+            if (resort.id) {
+                url = '/resort/'+ resort.id +'/feature';
                 $location.path(url);
             }
         };
