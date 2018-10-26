@@ -46,14 +46,14 @@ angular.module('MetronicApp')
         }
 
 
-        $scope.registerUser = function() {
+        $scope.registerResort = function() {
             // create a new user when mode is `create`
             var el = $('.mt-ladda-btn')[0];
             UIButtons.startSpin(el);
                 initService.postMethod($scope.newResort, 'resort')
                 .then(function (resault) {
                     UIButtons.stopSpin(el);
-                    if ( resault.status === 200 ) {
+                    if ( resault.code === 0 ) {
                         var msg = 'عملیات با موفقیت انجام شد';
                         UIToastr.init('success', msg);
                     }

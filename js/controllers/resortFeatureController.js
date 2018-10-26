@@ -1,0 +1,288 @@
+/*
+=================================================================================
+= ~Controller : User controller
+= ~Author     : Faraz pardazan CO
+= ~License    : Faraz Pardazan
+= ~Developer  : EH7AN
+= ~Date       : 1396/02/01 
+=================================================================================
+*/
+angular.module('MetronicApp')
+.controller('resortFeatureController',
+	['$timeout','$rootScope','$location','$stateParams', '$state', '$window', '$scope','$q','$cookieStore', '$timeout','settings','initService','$state','Constants','$interval',
+ function($timeout,$rootScope,$location,$stateParams, $state, $window,  $scope,$q,$cookieStore, $timeout, settings,initService,$state,Constants,$interval) {
+    $scope.$on('$viewContentLoaded', function() {   
+        // initialize core components
+        App.initAjax();
+        // set default layout mode
+        $rootScope.settings.layout.pageContentWhite = true;
+        $rootScope.settings.layout.pageBodySolid = false;
+        $rootScope.settings.layout.pageSidebarClosed = false;
+        ComponentsSelect2.init();
+        $('.page-content').attr('style','');
+        UIIdleTimeout.init($location.$$url);
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
+         UIIdleTimeout.destroy();
+        })
+        // ================Init process========================
+        var token = $cookieStore.get(Constants.cookieName).token;
+        var mode = 'create';
+        $scope.newResort = {};
+        $scope.editStudentItem = {};
+        $scope.studentExtraData = {};
+        $scope.resortList = [];
+        $scope.userRoles = [];
+        $scope.userPass = {};
+        $scope.userAdded = true;
+
+        if ($stateParams.resortId) { // If user id is set so Mode is update
+            var reortId = $stateParams.resortId;
+            getResort();
+            // listingDate2();
+        }
+
+        $scope.registerResortFeature = function() {
+            // create a new user when mode is `create`
+            var el = $('.mt-ladda-btn')[0];
+            UIButtons.startSpin(el);
+                initService.postMethod($scope.newResort, 'resort')
+                .then(function (resault) {
+                    UIButtons.stopSpin(el);
+                    if ( resault.code === 0 ) {
+                        var msg = 'عملیات با موفقیت انجام شد';
+                        UIToastr.init('success', msg);
+                    }
+                    else {
+                        var msg = resault.data.message;
+                        UIToastr.init('info', msg);
+                        $scope.newResort = {};
+                    }
+                    
+                })
+                .catch(function (error) {
+                    UIButtons.stopSpin(el);
+                    var msg = error.data.message;
+                    UIToastr.init('warning', msg);
+                });
+        };
+
+        // =============== Show all users ================
+        function getResort()
+        {
+     		var	data = {
+     		    'params' :{
+
+                }
+            };
+
+        	initService.getMethod(data, 'resort')
+	        .then(function (resault) {
+	            debugger
+	            $scope.resortList = resault.data.content.resorts;
+	            $timeout(function(){
+                    initTable();
+	      			toolTipHandler();
+                    UIConfirmations.init();
+	            },100);
+	        })
+	        .catch(function (error) {
+	           
+	        });
+        }
+        $scope.goToEditResort = function(student) {
+        	var	url = '';
+        	if (student.id) {
+        		url = '/student/'+ student.id +'/edit';
+                $location.path(url);
+        	}
+        };
+        // =============== Delete a user ================
+        deleteMethod = function(uniqueId,index) {
+            var data = {};
+            var url = 'suggestion/' + uniqueId;
+
+            suggestionService.deleteMethod(data, url)
+            .then(function (resault) {
+                if ( resault.data.code === 0 ) {
+                    var msg = resault.data.message;
+                    UIToastr.init('success', msg);
+                    $scope.suggestionList.splice(index,1);
+                    $state.reload();
+                }
+                else if (resault.data.code === 101){
+                        var msg = resault.data.message;
+                        console.log(msg);
+                    }
+                else {
+                    var msg = resault.data.message;
+                    UIToastr.init('success', msg);
+                }
+            })
+            .catch(function (error) {
+                var msg = error.data.message;
+                console.log(msg);
+            });
+        };
+
+        // ================ statick js ========================
+
+        function toolTipHandler()
+        {
+        	$('[data-toggle="tooltip"]').tooltip({
+	           animation: true,
+	           delay: { "show": 100, "hide": 250 },
+	        });
+        }
+        function activeUser(flag,target)
+        {
+             
+            var active = $(target).hasClass('fa-check-circle-o');
+            var deactive = $(target).hasClass('fa-times-circle-o');
+            if ( !flag && active ) {
+                $(target).removeClass('fa-check-circle-o');
+                $(target).addClass('fa-times-circle-o');
+            }
+            else if( flag && deactive) {
+                $(target).removeClass('fa-times-circle-o');
+                $(target).addClass('fa-check-circle-o');
+            }
+        }
+    
+        function initTable() {
+            var table = $('#users_table');
+
+            table.dataTable({
+                "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+
+                "lengthMenu": [
+                    [5, 15, 20, -1],
+                    [5, 15, 20, "همه"] // change per page values here
+                ],
+                "fnDrawCallback": function( oSettings ) {
+                    $timeout(function(){
+                        toolTipHandler();
+                        UIConfirmations.init();
+                    }, 100);        
+                },
+                dom: 'Blfrtip',
+                 buttons: [
+                     {
+                        extend: 'excelHtml5',
+                        title: 'لیست کاربران',
+                        text: 'خروجی excel',
+                        exportOptions: {
+                            columns: [ 1, 2, 3, 4]
+                        },
+                    },
+                    {
+                        extend: 'print',
+                        title: 'لیست کاربران',
+                        text: 'پرینت لیست',
+                        exportOptions: {
+                            columns: [ 1, 2, 3, 4]
+                        },
+                        customize: function ( win ) {
+                        $(win.document.body)
+                        .css( 'font-size', '10pt' )
+                        .css( 'text-align', 'center' )
+                        .css( 'padding-right', '10%' )
+                        .prepend(
+                            '<span>چتر سبز</span>'
+                        );
+ 
+                        $(win.document.body).find( 'table' )
+                        .addClass( 'print-preview' )
+                        }
+                    }
+                ],
+                // set the initial value
+                "pageLength": 5,            
+                "pagingType": "bootstrap_full_number",
+                "columnDefs": [
+                    {  // set default column settings
+                        'orderable': false,
+                        'targets': [0]
+                    }, 
+                    {
+                        "searchable": false,
+                        "targets": [0]
+                    },
+                    {
+                        "className": "dt-right", 
+                        //"targets": [2]
+                    }
+                ],
+                "order": [
+                    [1, "asc"]
+                ], // set first column as a default sort by asc
+                "language": Constants.tableTranslations
+            });
+        };
+
+        // ================= date settings ===================
+        function listingDate() {
+            $timeout(function(){
+                $('.date-input').val('');
+                $('.date-input').addClass('edited');
+                $('#fromDate').pDatepicker({
+                    format: 'LL',
+                    altField:'#fromDateTS',
+                });
+
+            }, 500);
+        }
+
+        function listingDate2(time) {
+            $timeout(function(){
+                $('.date-input').val(time);
+                $('.date-input').addClass('edited');
+                $('#fromDate').pDatepicker({
+                    format: 'LL',
+                    altField:'#fromDateTS',
+                });
+
+            }, 500);
+        }
+        // ==================== Persian date to timestamp ===============
+        function pDateTimeStamp(date) {
+            let cDate = date;
+            let intDate = $.map(cDate.split('/'), function(value) {
+                return parseInt(value, 10);
+            });
+            p_date = persianDate(intDate);
+            var unix_timestamp = p_date.unix();
+            var out = unix_timestamp * 1000;
+            return out;
+        }
+
+        function fillBirthDateValue(time) {
+            if (time != null && time != "") {
+                var time_stamp = parseInt(time);
+                val = convertDate(time_stamp)
+                listingDate2(time_stamp);
+            }
+        }
+
+        function convertDate(date) {
+            var day = new persianDate(date).format('YYYY/MM/DD');
+            return day;
+        }
+        
+       
+        // ================== Jquery handler ==================
+        $(document).on('click','ul.pagination > li  ',function(event){
+            $timeout(function(){
+                toolTipHandler();
+            },500)
+        })
+        $(document).ready(function(){
+            $(".nav-tabs a[data-toggle=tab]").on("click", function(e) {
+                if ($(this).hasClass("disabled")) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+
+    });
+}]);

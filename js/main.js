@@ -380,7 +380,42 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                 }]
             }
         })
-        // Show all teachers
+        // Show all resort feature
+        .state('showresortsfeature', {
+            url: "/resort/:resortId/feature",
+            templateUrl: "views/resorts/show_resorts_feature.html",
+            data: {
+                pageTitle: 'ویژگی پیست '
+            },
+            controller: "resortFeatureController",
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        files: [
+                            '../assets/global/plugins/datatables/datatables.min.css',
+                            '../assets/global/plugins/select2/css/select2.min.css',
+                            '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
+                            '../assets/global/plugins/bootstrap-toastr/toastr-rtl.min.css',
+
+                            '../assets/global/plugins/datatables/datatables.all.min.js',
+                            '../assets/pages/scripts/table-datatables-managed.min.js',
+                            '../assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
+                            '../assets/global/plugins/select2/js/select2.full.min.js',
+                            '../assets/pages/scripts/components-select2.min.js',
+                            '../assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js',
+                            '../assets/pages/scripts/ui-confirmations.js',
+                            '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+                            '../assets/pages/scripts/ui-toastr.js',
+
+
+                            'js/controllers/resortFeatureController.js'
+                        ]
+                    });
+                }]
+            }
+        })
 
 }]);
 /* Init global settings and run the app */
