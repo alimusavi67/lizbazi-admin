@@ -11,8 +11,8 @@
             </div>
             <div class="col-sm-3 col-xs-12 pull-left">
                 <span class="input-group-btn">
-                    <a href="/#/resort/register" class="btn green" id="username1_checker">
-                        <i class="fa fa-plus add-new-row"></i>ثبت پیست</a>
+                    <a ng-href="{{goToAddFeature()}}" class="btn green" id="username1_checker">
+                        <i class="fa fa-plus add-new-row"></i>ثبت </a>
                 </span>
             </div>
             <div class="portlet-body">
@@ -33,15 +33,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="odd gradeX" ng-repeat="resort in resortList">
+                        <tr class="odd gradeX" ng-repeat="feature in resortItem.features">
 
                             <td ng-bind="$index + 1"></td>
-                            <td ng-bind="resort.name"></td>
-                            <td ng-bind="resort.status"></td>
-                            <td ng-bind="resort.preCode"></td>
-                            <td ng-bind="resort.country.id"></td>
-                            <td class="center" ng-bind="resort.latitude"></td>
-                            <td class="center" ng-bind="resort.longitude"></td>
+                            <td ng-bind="feature.title"></td>
+                            <td ng-bind="feature.value"></td>
+                            <td ng-bind="feature.color"></td>
                             <td>
                                 <i class='fa fa-pencil admin-op font-green-jungle' ng-click="goToEditStudent(user)" data-toggle="tooltip" data-placement="top" title="ویرایش"></i>
                                 <i class='fa fa-book admin-op font-green-jungle' ng-click="goToStudentActivity(user)" data-toggle="tooltip" data-placement="top" title="فعالیت ها"></i>

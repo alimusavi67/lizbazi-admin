@@ -19,7 +19,7 @@
         <div class="portlet light ">
             <div class="portlet-title">
                 <div class="caption font-red-sunglo">
-                    <span class="caption-subject bold uppercase">فرم ثبت پیست جدید</span>
+                    <span class="caption-subject bold uppercase">فرم ثبت ویژگی جدید</span>
                 </div>
                 <div class="actions">
                     <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
@@ -31,46 +31,31 @@
                         <!-- name input -->
                         <div class="form-group form-md-line-input has-success form-md-floating-label">
                             <div class="input-icon">
-                                <input type="text" name="firstName" ng-model="newResort.firstName" class="form-control">
+                                <input type="text" name="firstName" ng-model="newResort.title" class="form-control">
                                 <label for="form_control_1">نام</label>
-                                <span class="help-block">لطفا از حروف فارسی استفاده کنید</span>
+
                                 <i class="fa fa-user-o"></i>
                             </div>
                         </div>
                         <!-- family input -->
                         <div class="form-group form-md-line-input has-success form-md-floating-label">
                             <div class="input-icon">
-                                <input type="text" name="lastName" class="form-control" ng-model="newResort.latitude">
-                                <label for="form_control_1">latitude </label>
-                                <span class="help-block">لطفا از حروف فارسی استفاده کنید</span>
+                                <input type="text" name="lastName" class="form-control" ng-model="newResort.value">
+                                <label for="form_control_1">مقدار </label>
+
                                 <i class="fa fa-user-o"></i>
                             </div>
                         </div>
                         <!-- password input -->
                         <div class="form-group form-md-line-input has-success form-md-floating-label" ng-hide="editMode">
                             <div class="input-icon">
-                                <input type="text" name="password" class="form-control" ng-model="newResort.longitude">
-                                <label for="form_control_1"> longitude</label>
+                                <input type="text" name="password" class="form-control" ng-model="newResort.color">
+                                <label for="form_control_1"> رنگ</label>
                                 <!-- <span class="help-block">لطفا از حروف فارسی استفاده کنید</span> -->
                                 <i class="fa fa-key"></i>
                             </div>
                         </div>
 
-                        <!-- user roles -->
-                        <div class="form-group form-md-line-input form-md-floating-label has-info">
-                            <select ng-model="newResort.countryId" name="roles" class="form-control select2 edited"  ng-options="country.id as country.name for country in countryList">
-                                <option value="">انتخاب کنید ... </option>
-                            </select>
-                            <label for="form_control_1" style="color: #27a4b0"> کشور</label>
-                        </div>
-                        <!-- user name input -->
-                        <div class="form-group form-md-line-input form-md-floating-label has-info">
-                            <select ng-model="newResort.status" name="roles" class="form-control select2 edited">
-                                <option value="Open"> باز</option>
-                                <option value="Closed">بسته</option>
-                            </select>
-                            <label for="form_control_1" style="color: #27a4b0"> وضعیت</label>
-                        </div>
 
                         <div class="form-group form-md-line-input has-success form-md-floating-label">
                             <label for="form_control_1">تصویر </label>
@@ -95,7 +80,7 @@
                     </div>
                     <div class="form-actions noborder">
                         <button type="button" class="btn blue mt-ladda-btn ladda-button"
-                                data-style="zoom-out" ng-click="registerResort()">
+                                data-style="zoom-out" ng-click="registerResortFeature()">
                             <span class="ladda-label">ثبت</span>
                         </button>
                     </div>

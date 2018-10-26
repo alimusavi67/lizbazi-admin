@@ -34,9 +34,10 @@ angular.module('MetronicApp')
         $scope.userRoles = [];
         $scope.userPass = {};
         $scope.userAdded = true;
+        $scope.resortItem = {};
 
-        if ($stateParams.resortId) { // If user id is set so Mode is update
-            var reortId = $stateParams.resortId;
+        if ($stateParams.resortId) {
+            var resortId = $stateParams.resortId;
             getResort();
             // listingDate2();
         }
@@ -45,7 +46,8 @@ angular.module('MetronicApp')
             // create a new user when mode is `create`
             var el = $('.mt-ladda-btn')[0];
             UIButtons.startSpin(el);
-                initService.postMethod($scope.newResort, 'resort')
+            var url = `resort/${resortId}/features`
+                initService.postMethod($scope.newResort, url)
                 .then(function (resault) {
                     UIButtons.stopSpin(el);
                     if ( resault.code === 0 ) {
@@ -75,10 +77,10 @@ angular.module('MetronicApp')
                 }
             };
 
-        	initService.getMethod(data, 'resort')
+        	initService.getMethod(data, `resort/${resortId}`)
 	        .then(function (resault) {
 	            debugger
-	            $scope.resortList = resault.data.content.resorts;
+	            $scope.resortItem = resault.data.content.resorts;
 	            $timeout(function(){
                     initTable();
 	      			toolTipHandler();
@@ -95,6 +97,11 @@ angular.module('MetronicApp')
         		url = '/student/'+ student.id +'/edit';
                 $location.path(url);
         	}
+        };
+        // ======== generate insert link
+        $scope.goToAddFeature = function() {
+                url = '#/resort/'+ resortId +'/feature/register';
+                return url
         };
         // =============== Delete a user ================
         deleteMethod = function(uniqueId,index) {
@@ -125,6 +132,118 @@ angular.module('MetronicApp')
         };
 
         // ================ statick js ========================
+
+        //============= upload files   =======
+        $scope.fileUploader = function(files) {
+
+            var el = $('.ladda-changepic')[0];
+            $('.uplodp-btn').removeClass('green');
+            // UIButtons.startSpin(el);
+            var file=files[0];
+            compactImages(file, function(myBolb){
+                var canceller = $q.defer();
+                file.canceler = canceller;
+                var fd = new FormData(document.forms[0]);
+                fd.append('file', myBolb);
+                var url = '/media/upload';
+                var formData = new FormData();
+                initService.uploader(fd, file, url,function(result){
+                    if (result.data.code == 0) {
+                        UIButtons.stopSpin(el);
+                        $scope.newResort.photoMediaIds = [];
+                        $scope.newResort.photoMediaIds.push(result.data.content.id);
+                        debugger
+                    }
+                    else {
+                        var msg = result.data.message;
+                        UIToastr.init('error', msg);
+                    }
+                })
+            });
+        };
+        // ============================= Compact images using convas  ===============================
+        function compactImages(myFile,callBack)
+        {
+
+            var fr = new FileReader;
+            var reader = new FileReader();
+            var bolb_obj = '';
+
+            reader.onload = function(e) {
+                if (!myFile){
+                    return
+                }
+
+                var img = new Image;
+                img.onload = function() {
+                    var width = img.width;
+                    var height = img.height;
+                    var canvas = document.createElement('canvas');
+                    // ======= BEGIN initializing resize =============
+                    var MAX_WIDTH = 800;
+                    var MAX_HEIGHT = 800;
+                    var quality = 0.7;
+                    var type = myFile.type;
+                    // ======= END initializing resize =============
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height = Math.round(height *= MAX_WIDTH / width);
+                            width = height;
+                        }
+                        else {
+                            height = width;
+                        }
+                    }
+                    else {
+                        if (height > MAX_HEIGHT) {
+                            width = Math.round(width *= MAX_HEIGHT / height);
+                            height = width;
+                        }
+                        else {
+                            width = height
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    var ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    var dataURL = canvas.toDataURL(type);
+                    bolb_obj = dataURItoBlob(dataURL);
+                    $.event.trigger({
+                        type: "imageResized",
+                        blob: bolb_obj,
+                        url: dataURL
+                    });
+                    callBack(bolb_obj);
+                };
+                img.src = e.target.result;
+            }
+            if (myFile){
+                reader.readAsDataURL(myFile);
+            }
+        }
+        // =========================Convert Data Url to bolb object ========================================
+        function dataURItoBlob(dataURI) {
+            // convert base64/URLEncoded data component to raw binary data held in a string
+            var byteString;
+            if (dataURI.split(',')[0].indexOf('base64') >= 0)
+                byteString = atob(dataURI.split(',')[1]);
+            else
+                byteString = unescape(dataURI.split(',')[1]);
+
+            // separate out the mime component
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+            // write the bytes of the string to a typed array
+            var ab = new ArrayBuffer(byteString.length);
+            var ia = new Uint8Array(ab);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            var cmBlob = new Blob([ia], {type:mimeString});
+            return cmBlob;
+        }
 
         function toolTipHandler()
         {
