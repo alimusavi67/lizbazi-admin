@@ -1,0 +1,147 @@
+<!-- BEGIN CONTENT BODY -->
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">خانه</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>ثبت کاربر جدید</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<div class="row">
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <span class="caption-subject bold uppercase">فرم ثبت پیست جدید</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"
+                       data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form role="form" id="insertUserForm">
+                    <div class="form-body">
+                        <!-- name input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newVideo.caption" class="form-control edited">
+                                <label for="form_control_1">توضیح</label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newVideo.name" class="form-control edited">
+                                <label for="form_control_1">نام</label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newVideo.order" class="form-control edited">
+                                <label for="form_control_1">الویت</label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- family input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="lastName" class="form-control edited"
+                                       ng-model="newVideo.englishVideoLengthSeconds">
+                                <label for="form_control_1">مدت زمان فیلم انگلیسی </label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- password input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="password" class="form-control edited"
+                                       ng-model="newVideo.farsiVideoLengthSeconds">
+                                <label for="form_control_1"> مدت زمان فیلم انگلیسی</label>
+                                <!-- <span class="help-block">لطفا از حروف فارسی استفاده کنید</span> -->
+                                <i class="fa fa-key"></i>
+                            </div>
+                        </div>
+
+
+                        <!-- user name input -->
+                        <div class="form-group form-md-line-input form-md-floating-label has-info">
+                            <select ng-model="newVideo.level" name="roles" class="form-control select2 edited">
+                                <option value="Beginner"> Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                            <label for="form_control_1" style="color: #27a4b0"> لول</label>
+                        </div>
+                        <!-- user name input -->
+                        <div class="form-group form-md-line-input form-md-floating-label has-info">
+                            <select ng-model="newVideo.sportField" name="roles" class="form-control select2 edited">
+                                <option value="Snowboard"> Snowboard</option>
+                                <option value="Alpine">Alpine</option>
+                            </select>
+                            <label for="form_control_1" style="color: #27a4b0"> رشته ورزشی</label>
+                        </div>
+
+                        <div id='onlymedia'>
+                            <p><b>انتخاب فایل انگلیسی</b></p>
+                            <div class="input-group">
+                                <input type="text" class="form-control input-lg" readonly="true">
+                                            <span class="input-group-btn">
+                              <button class="btn btn-info btn-lg" type="button"
+                                      onclick="document.getElementById('uploadContent').click()">BROWSE</button>
+                            </span>
+                                <input type="file"
+                                       onchange="angular.element(this).scope().fileUploader(this.files, 'english')"
+                                       multiple="multiple" name="contentMedia" id="uploadContent" ng-show="false"/>
+                            </div>
+                            <div ng-show="contentIsImage()">
+                                <img id="contentImage" ng-src="{{contentSource}}" style="width: 130px;"/>
+                            </div>
+                            <div ng-show="contentIsVideo()">
+                                <img id="contentImage" ng-src="{{contentSource}}" style="width: 130px;"/>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div id='onlymedia'>
+                            <p><b>انتخاب فایل فارسی</b></p>
+                            <div class="input-group">
+                                <input type="text" class="form-control input-lg" readonly="true">
+                                <span class="input-group-btn">
+                              <button class="btn btn-info btn-lg" type="button"
+                                      onclick="document.getElementById('uploadContent').click()">BROWSE</button>
+                            </span>
+                                <input type="file"
+                                       onchange="angular.element(this).scope().fileUploader(this.files, 'farsi')"
+                                       multiple="multiple" name="contentMedia" id="uploadContent" ng-show="false"/>
+                            </div>
+                            <div ng-show="contentIsImage()">
+                                <img id="contentImage" ng-src="{{contentSource}}" style="width: 130px;"/>
+                            </div>
+                            <div ng-show="contentIsVideo()">
+                                <img id="contentImage" ng-src="{{contentSource}}" style="width: 130px;"/>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-actions noborder">
+                        <button type="button" class="btn blue mt-ladda-btn ladda-button"
+                                data-style="zoom-out" ng-click="registerVideo()">
+                            <span class="ladda-label">ثبت</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+<!-- END CONTENT BODY

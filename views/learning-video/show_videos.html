@@ -1,0 +1,66 @@
+<!-- BEGIN MAIN CONTENT -->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase">فهرست  پیست ها</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xs-12 pull-left">
+                <span class="input-group-btn">
+                    <a href="/#/resort/register" class="btn green" id="username1_checker">
+                        <i class="fa fa-plus add-new-row"></i>ثبت پیست</a>
+                </span>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                </div>
+                <table class="table table-striped table-bordered table-hover table-checkable order-column" id="users_table">
+                    <thead>
+                        <tr>
+
+                            <th> ردیف </th>
+                            <th> نام </th>
+                            <th> وضعیت </th>
+                            <!--<th> کد </th>-->
+                            <th> کشور  </th>
+                            <th> latitude  </th>
+                            <th> longitude  </th>
+                            <th> عملیات </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="odd gradeX" ng-repeat="resort in videoList">
+
+                            <td ng-bind="$index + 1"></td>
+                            <td ng-bind="resort.name"></td>
+                            <td ng-bind="resort.status"></td>
+                            <!--<td ng-bind="resort.preCode"></td>-->
+                            <td ng-bind="resort.country.name"></td>
+                            <td class="center" ng-bind="resort.latitude"></td>
+                            <td class="center" ng-bind="resort.longitude"></td>
+                            <td>
+                                <i class='fa fa-pencil admin-op font-green-jungle' ng-click="goToEditResort(resort)" data-toggle="tooltip" data-placement="top" title="ویرایش"></i>
+                                <i class='fa fa-book admin-op font-green-jungle' ng-click="goToResortFeature(resort)" data-toggle="tooltip" data-placement="top" title="ویژگی ها"></i>
+
+                               <!--  <i class="user-status fa admin-op" ng-click="activateUser(user,$event)" data-toggle="tooltip" data-placement="top"
+                                title="{{(user.active)?'غیر فعال کردن':'فعال کردن'}}"
+                                ng-class="(user.active) ? 'fa-check-circle-o font-green-seagreen' : 'fa-times-circle-o font-yellow-gold'"></i> -->
+
+                                <!-- <i class="fa fa-trash-o admin-op font-red-mint" role="button" data-toggle="confirmation" data-content="{{merhant.uniqueId}}" data-index="{{$index}}"></i> -->
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+
+    </div>
+</div>
+
+<!-- END MAIN CONTENT -->
