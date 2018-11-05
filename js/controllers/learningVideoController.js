@@ -35,9 +35,9 @@ angular.module('MetronicApp')
         $scope.userPass = {};
         $scope.userAdded = true;
 
-        if ($stateParams.videoID) { // If user id is set so Mode is update
-            var resortId = $stateParams.resortId;
-            getResort();
+        if ($stateParams.videoId) { // If user id is set so Mode is update
+            var videoId = $stateParams.videoId;
+            getVideo();
             mode = 'update';
             // listingDate2();
         } else if ($location.$$url == '/videos/all') {
@@ -193,21 +193,20 @@ angular.module('MetronicApp')
                 });
         }
         // =============== Get a user ================
-        function getResort()
+        function getVideo()
         {
             var	data = {
                 'params' :{
 
                 }
             };
-            var url = 'resort/' + resortId;
+            var url = 'learningVideo/' + videoId;
 
             initService.getMethod(data, url)
                 .then(function (resault) {
                     debugger
-                    $scope.newResort = resault.data.content;
-                    $scope.newResort.countryId =  $scope.newResort.country.id;
-
+                    $scope.newVideo = resault.data.content;
+                    $scope.newVideo.coverPhotoMediaId = resault.data.content.coverPhoto.id;
                 })
                 .catch(function (error) {
 
@@ -256,10 +255,15 @@ angular.module('MetronicApp')
                 console.log(msg);
             });
         };
+        // go to edit
+        $scope.goToEdit = function(video) {
+            let url = '/video/' + video.id;
+            $location.path(url);
+        }
         //============= upload files   =======
         $scope.fileUploader = function(files, type) {
 
-            var el = $('.ladda-changepic')[0];
+            // var el = $('.ladda-changepic')[0];
             $('.uplodp-btn').removeClass('green');
             // UIButtons.startSpin(el);
             var file=files[0];
@@ -270,13 +274,16 @@ angular.module('MetronicApp')
                 var url = '/media/upload';
                 var formData = new FormData();
                 initService.uploader(fd, file, url,function(result){
+                    debugger
                     if (result.data.code == 0) {
-                        UIButtons.stopSpin(el);
+                        // UIButtons.stopSpin(el);
                         if (type === 'english') {
                             $scope.newVideo.englishVideoMediaId = result.data.content.id;
+                            $scope.englishFileName =  result.data.content.fileName;
                         }
                         if (type === 'farsi') {
                             $scope.newVideo.farsiVideoMediaId = result.data.content.id;
+                            $scope.farsiFileName =  result.data.content.fileName;
                         }
 
                     }
@@ -285,6 +292,33 @@ angular.module('MetronicApp')
                         UIToastr.init('error', msg);
                     }
                 })
+        };
+         //============= upload coverImage   =======
+         $scope.avatarUploader = function(files) {
+
+            var el = $('.ladda-changepic')[0];
+            $('.uplodp-btn').removeClass('green');
+            // UIButtons.startSpin(el);
+            var file=files[0];
+            compactImages(file, function(myBolb){
+                var canceller = $q.defer();
+                file.canceler = canceller;
+                var fd = new FormData(document.forms[0]);
+                fd.append('file', myBolb);
+                var url = '/media/upload';
+                var formData = new FormData();
+                initService.uploader(fd, file, url,function(result){
+                    if (result.data.code == 0) {
+                        UIButtons.stopSpin(el);
+                        $scope.newVideo.coverPhotoMediaId = result.data.content.id;
+                        debugger
+                    }
+                    else {
+                        var msg = result.data.message;
+                        UIToastr.init('error', msg);
+                    }
+                })
+            });
         };
         // ============================= Compact images using convas  ===============================
         function compactImages(myFile,callBack)

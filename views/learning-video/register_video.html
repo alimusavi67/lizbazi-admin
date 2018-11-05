@@ -8,7 +8,7 @@
             <i class="fa fa-angle-left"></i>
         </li>
         <li>
-            <span>ثبت کاربر جدید</span>
+            <span>ثبت فیلم جدید</span>
         </li>
     </ul>
 </div>
@@ -19,7 +19,7 @@
         <div class="portlet light ">
             <div class="portlet-title">
                 <div class="caption font-red-sunglo">
-                    <span class="caption-subject bold uppercase">فرم ثبت پیست جدید</span>
+                    <span class="caption-subject bold uppercase">فرم ثبت فیلم جدید</span>
                 </div>
                 <div class="actions">
                     <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"
@@ -90,10 +90,32 @@
                             <label for="form_control_1" style="color: #27a4b0"> رشته ورزشی</label>
                         </div>
 
+                        <!-- cover image -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <label for="form_control_1">تصویر </label>
+                            <div class="input-icon">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                        <img ng-src="{{(newVideo.coverPhotoMediaId)? '/api/media/' + newVideo.coverPhotoMediaId + '/file?preview=true' : '../../assets/no-image.png'}}" alt="" /> </div>
+                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+                                    <div>
+                                        <span class="btn green btn-file uplodp-btn">
+                                            <span class="fileinput-new"> انتخاب تصویر </span>
+                                            <button type="button" class="fileinput-exists btn blue ladda-changepic"
+                                            >تعویض
+                                            </button>
+                                            <input type="file" name="..."  onchange="angular.element(this).scope().avatarUploader(this.files)"> </span>
+                                        <a id="deleteImage" href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput" ng-click="addBtnGreen()">پاک کردن</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end cover -->
+
                         <div id='onlymedia'>
                             <p><b>انتخاب فایل انگلیسی</b></p>
                             <div class="input-group">
-                                <input type="text" class="form-control input-lg" readonly="true">
+                                <input type="text" class="form-control input-lg" readonly="true" ng-value="englishFileName">
                                             <span class="input-group-btn">
                               <button class="btn btn-info btn-lg" type="button"
                                       onclick="document.getElementById('uploadContent').click()">BROWSE</button>
@@ -114,14 +136,14 @@
                         <div id='onlymedia'>
                             <p><b>انتخاب فایل فارسی</b></p>
                             <div class="input-group">
-                                <input type="text" class="form-control input-lg" readonly="true">
+                                <input type="text" class="form-control input-lg" readonly="true" ng-value="farsiFileName">
                                 <span class="input-group-btn">
                               <button class="btn btn-info btn-lg" type="button"
-                                      onclick="document.getElementById('uploadContent').click()">BROWSE</button>
+                                      onclick="document.getElementById('uploadFarsiContent').click()">BROWSE</button>
                             </span>
                                 <input type="file"
                                        onchange="angular.element(this).scope().fileUploader(this.files, 'farsi')"
-                                       multiple="multiple" name="contentMedia" id="uploadContent" ng-show="false"/>
+                                       multiple="multiple" name="contentMedia" id="uploadFarsiContent" ng-show="false"/>
                             </div>
                             <div ng-show="contentIsImage()">
                                 <img id="contentImage" ng-src="{{contentSource}}" style="width: 130px;"/>

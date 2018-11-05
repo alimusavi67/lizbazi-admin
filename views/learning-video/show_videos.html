@@ -6,13 +6,13 @@
             <div class="portlet-title">
                 <div class="caption font-dark">
                     <i class="icon-settings font-dark"></i>
-                    <span class="caption-subject bold uppercase">فهرست  پیست ها</span>
+                    <span class="caption-subject bold uppercase">فهرست  فیلم های آموزشی</span>
                 </div>
             </div>
             <div class="col-sm-3 col-xs-12 pull-left">
                 <span class="input-group-btn">
-                    <a href="/#/resort/register" class="btn green" id="username1_checker">
-                        <i class="fa fa-plus add-new-row"></i>ثبت پیست</a>
+                    <a href="/#/video/register" class="btn green" id="username1_checker">
+                        <i class="fa fa-plus add-new-row"></i>ثبت فیلم</a>
                 </span>
             </div>
             <div class="portlet-body">
@@ -24,11 +24,11 @@
 
                             <th> ردیف </th>
                             <th> نام </th>
-                            <th> وضعیت </th>
+                            <th> رشته </th>
                             <!--<th> کد </th>-->
-                            <th> کشور  </th>
-                            <th> latitude  </th>
-                            <th> longitude  </th>
+                            <th> سطح  </th>
+                            <th> الویت  </th>
+                           
                             <th> عملیات </th>
                         </tr>
                     </thead>
@@ -37,14 +37,13 @@
 
                             <td ng-bind="$index + 1"></td>
                             <td ng-bind="resort.name"></td>
-                            <td ng-bind="resort.status"></td>
+                            <td ng-bind="resort.sportField"></td>
                             <!--<td ng-bind="resort.preCode"></td>-->
-                            <td ng-bind="resort.country.name"></td>
-                            <td class="center" ng-bind="resort.latitude"></td>
-                            <td class="center" ng-bind="resort.longitude"></td>
+                            <td ng-bind="resort.level"></td>
+                            <td class="center" ng-bind="resort.order"></td>
                             <td>
-                                <i class='fa fa-pencil admin-op font-green-jungle' ng-click="goToEditResort(resort)" data-toggle="tooltip" data-placement="top" title="ویرایش"></i>
-                                <i class='fa fa-book admin-op font-green-jungle' ng-click="goToResortFeature(resort)" data-toggle="tooltip" data-placement="top" title="ویژگی ها"></i>
+                                <i class='fa fa-pencil admin-op font-green-jungle' ng-click="goToEdit(resort)" data-toggle="tooltip" data-placement="top" title="ویرایش"></i>
+                                <!-- <i class='fa fa-book admin-op font-green-jungle' ng-click="goToResortFeature(resort)" data-toggle="tooltip" data-placement="top" title="ویژگی ها"></i> -->
 
                                <!--  <i class="user-status fa admin-op" ng-click="activateUser(user,$event)" data-toggle="tooltip" data-placement="top"
                                 title="{{(user.active)?'غیر فعال کردن':'فعال کردن'}}"
