@@ -58,6 +58,7 @@ angular.module('MetronicApp')
                         if ( resault.code === 0 ) {
                             var msg = 'عملیات با موفقیت انجام شد';
                             UIToastr.init('success', msg);
+                            $location.path('resorts/all')
                         }
                         else {
                             var msg = resault.data.message;
@@ -257,7 +258,7 @@ angular.module('MetronicApp')
             });
         };
         //============= upload files   =======
-        $scope.fileUploader = function(files) {
+        $scope.fileUploader = function(files, type) {
 
             var el = $('.ladda-changepic')[0];
             $('.uplodp-btn').removeClass('green');
@@ -273,8 +274,12 @@ angular.module('MetronicApp')
                 initService.uploader(fd, file, url,function(result){
                     if (result.data.code == 0) {
                         UIButtons.stopSpin(el);
+                        if (type === 'image') {
                         $scope.newResort.photoMediaIds = [];
                         $scope.newResort.photoMediaIds.push(result.data.content.id);
+                        } else {
+                            $scope.newResort.mapPhotoMediaId = reult.data.content.id;
+                        }
                         debugger
                     }
                     else {
