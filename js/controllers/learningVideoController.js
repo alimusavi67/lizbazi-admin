@@ -74,15 +74,13 @@ angular.module('MetronicApp')
             } else if (mode === 'update') {
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
-                initService.postMethod($scope.newResort, `resort/${resortId}`)
+                initService.postMethod($scope.newVideo, `learningVideo/${videoId}`)
                     .then(function (resault) {
-                        debugger
                         UIButtons.stopSpin(el);
                         if ( resault.data.code === 0 ) {
-                            debugger
                             var msg = 'عملیات با موفقیت انجام شد';
                             UIToastr.init('success', msg);
-                            $location.path('resorts/all');
+                            $location.path('videos/all');
 
                         }
                         else {
@@ -101,57 +99,9 @@ angular.module('MetronicApp')
 
         };
 
-        // update student data
-        $scope.updateStudentData = function() {
-            // create a new user when mode is `create`
-            var el = $('.mt-ladda-btn')[0];
-            UIButtons.startSpin(el);
-            url = 'studentProfile/' + $scope.studentExtraData.id;
-            initService.putMethod($scope.studentExtraData, url)
-                .then(function (resault) {
-                    UIButtons.stopSpin(el);
-                    if ( resault.status === 200 ) {
-                        var msg = 'عملیات با موفقیت انجام شد';
-                        UIToastr.init('success', msg);
-                    }
-                    else {
-                        var msg = resault.data.message;
-                        UIToastr.init('info', msg);
-                        $scope.newResort = {};
-                    }
+       
 
-                })
-                .catch(function (error) {
-                    UIButtons.stopSpin(el);
-                    var msg = error.data.message;
-                    UIToastr.init('warning', msg);
-                });
-        };
-
-        // edit student
-        $scope.editStudent = function() {
-            // create a new user when mode is `create`
-
-            url = 'studentProfile/' + studentId;
-            initService.putMethod($scope.editStudentItem, url)
-                .then(function (resault) {
-                    if ( resault.status === 200 ) {
-                        var msg = 'عملیات با موفقیت انجام شد';
-                        UIToastr.init('success', msg);
-                    }
-                    else {
-                        var msg = resault.data.message;
-                        UIToastr.init('info', msg);
-                        $scope.newResort = {};
-                    }
-
-                })
-                .catch(function (error) {
-                    UIButtons.stopSpin(el);
-                    var msg = error.data.message;
-                    UIToastr.init('warning', msg);
-                });
-        };
+       
         // =============== Show all users ================
         function getAllVideos()
         {
@@ -163,7 +113,6 @@ angular.module('MetronicApp')
 
         	initService.getMethod(data, 'learningVideo')
 	        .then(function (resault) {
-	            debugger
 	            $scope.videoList = resault.data.content.learningVideos;
 	            $timeout(function(){
                     initTable();
@@ -204,9 +153,14 @@ angular.module('MetronicApp')
 
             initService.getMethod(data, url)
                 .then(function (resault) {
-                    debugger
                     $scope.newVideo = resault.data.content;
                     $scope.newVideo.coverPhotoMediaId = resault.data.content.coverPhoto.id;
+                    $scope.newVideo.farsiVideoMediaId =  $scope.newVideo.farsiVideo.id;
+                    $scope.newVideo.englishVideoMediaId =  $scope.newVideo.englishVideo.id;
+
+                    delete $scope.newVideo.farsiVideo;
+                    delete $scope.newVideo.englishVideo;
+
                 })
                 .catch(function (error) {
 
@@ -274,7 +228,6 @@ angular.module('MetronicApp')
                 var url = '/media/upload';
                 var formData = new FormData();
                 initService.uploader(fd, file, url,function(result){
-                    debugger
                     if (result.data.code == 0) {
                         // UIButtons.stopSpin(el);
                         if (type === 'english') {
@@ -311,7 +264,6 @@ angular.module('MetronicApp')
                     if (result.data.code == 0) {
                         UIButtons.stopSpin(el);
                         $scope.newVideo.coverPhotoMediaId = result.data.content.id;
-                        debugger
                     }
                     else {
                         var msg = result.data.message;
