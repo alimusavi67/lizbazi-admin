@@ -280,7 +280,6 @@ angular.module('MetronicApp')
                         } else {
                             $scope.newResort.mapPhotoMediaId = reult.data.content.id;
                         }
-                        debugger
                     }
                     else {
                         var msg = result.data.message;

@@ -156,3 +156,14 @@ i.fileinput-exists:hover {
 .datepicker-plot-area{
   z-index: 7 !important; 
 }
+.resort-meidas {
+  margin-bottom: 60px;
+  background-color: beige;
+  padding: 15px 5px;
+  box-shadow: 0px 0px 5px 0px;
+}
+.btn-up-meida {
+  background-color: #32c5d2;
+  color: #fff !important;
+  padding: 8px 15px !important;
+}
