@@ -114,9 +114,10 @@ MetronicApp.controller('FooterController', ['$scope', function($scope) {
         Layout.initFooter(); // init footer
     });
 }]);
+var sedu
 /* Setup Constants */
 MetronicApp.constant('Constants', {
-    serverUrl: "/api",
+    serverUrl: "/api/dar",
     cookieName: "userInfo",
     contentType: "application/json",
     version: "1.0",
