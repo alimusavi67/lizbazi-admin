@@ -117,7 +117,7 @@ MetronicApp.controller('FooterController', ['$scope', function($scope) {
 var sedu
 /* Setup Constants */
 MetronicApp.constant('Constants', {
-    serverUrl: "/api/dar",
+    serverUrl: "/api",
     cookieName: "userInfo",
     contentType: "application/json",
     version: "1.0",
