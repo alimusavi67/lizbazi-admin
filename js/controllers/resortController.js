@@ -103,57 +103,7 @@ angular.module('MetronicApp')
 
         };
 
-        // update student data
-        $scope.updateStudentData = function() {
-            // create a new user when mode is `create`
-            var el = $('.mt-ladda-btn')[0];
-            UIButtons.startSpin(el);
-            url = 'studentProfile/' + $scope.studentExtraData.id;
-            initService.putMethod($scope.studentExtraData, url)
-                .then(function (resault) {
-                    UIButtons.stopSpin(el);
-                    if ( resault.status === 200 ) {
-                        var msg = 'عملیات با موفقیت انجام شد';
-                        UIToastr.init('success', msg);
-                    }
-                    else {
-                        var msg = resault.data.message;
-                        UIToastr.init('info', msg);
-                        $scope.newResort = {};
-                    }
 
-                })
-                .catch(function (error) {
-                    UIButtons.stopSpin(el);
-                    var msg = error.data.message;
-                    UIToastr.init('warning', msg);
-                });
-        };
-
-        // edit student
-        $scope.editStudent = function() {
-            // create a new user when mode is `create`
-
-            url = 'studentProfile/' + studentId;
-            initService.putMethod($scope.editStudentItem, url)
-                .then(function (resault) {
-                    if ( resault.status === 200 ) {
-                        var msg = 'عملیات با موفقیت انجام شد';
-                        UIToastr.init('success', msg);
-                    }
-                    else {
-                        var msg = resault.data.message;
-                        UIToastr.init('info', msg);
-                        $scope.newResort = {};
-                    }
-
-                })
-                .catch(function (error) {
-                    UIButtons.stopSpin(el);
-                    var msg = error.data.message;
-                    UIToastr.init('warning', msg);
-                });
-        };
         // =============== Show all users ================
         function getAllResort()
         {
@@ -165,7 +115,6 @@ angular.module('MetronicApp')
 
         	initService.getMethod(data, 'resort')
 	        .then(function (resault) {
-	            debugger
 	            $scope.resortList = resault.data.content.resorts;
 	            $timeout(function(){
                     initTable();
