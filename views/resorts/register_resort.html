@@ -71,19 +71,6 @@
                             <label for="form_control_1" style="color: #27a4b0"> وضعیت</label>
                         </div>
 
-                        <div class="form-group form-md-line-input has-success form-md-floating-label">
-                            <div class="input-icon">
-                                <label for="resortMedia" class="btn btn-green btn-up-meida">انتخاب تصاویر</label>
-                                <input id="resortMedia" class="hidden" type="file" name="..."  onchange="angular.element(this).scope().fileUploader(this.files, 'image')">
-                            </div>
-                        </div>
-    
-                        <!-- BEGIN Resort gallery photo -->
-                        <div class="form-group col-md-12 resort-meidas">
-                            <div class="col-md-2">
-                                <img class="img-responsive" src="assets/pages/img/logo.png">
-                            </div>
-                        </div>
                         <!-- BEGIN Resort gallery photo -->
                         <div class="form-group form-md-line-input has-success form-md-floating-label">
                             <label for="form_control_1">تصویر نقشه </label>
@@ -101,6 +88,24 @@
                                             <input type="file" name="..."  onchange="angular.element(this).scope().fileUploader(this.files, 'map')"> </span>
                                         <a id="deleteImage" href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput" ng-click="addBtnGreen()">پاک کردن</a>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                <div class="input-icon">
+                                    <label for="resortMedia" class="btn btn-green btn-up-meida">انتخاب تصاویر پیست</label>
+                                    <input id="resortMedia" class="hidden" type="file" name="..."  onchange="angular.element(this).scope().fileUploader(this.files, 'image')">
+                                </div>
+                            </div>
+
+                            <!-- BEGIN Resort gallery photo -->
+                            <div class="form-group col-md-12 resort-meidas" ng-show="imageList.length > 0">
+                                <div class="col-md-2" ng-repeat="img in imageList track by $index" >
+                                    <i class="icon-close" index="$index" ng-click="deleteImage($index)"></i>
+                                    <img class="img-responsive" ng-src="{{img.previewUrl}}">
                                 </div>
                             </div>
                         </div>

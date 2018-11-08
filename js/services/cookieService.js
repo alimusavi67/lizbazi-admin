@@ -65,7 +65,8 @@ angular.module('MetronicApp')
             var loginReq = {
                 username: username,
                 password: password,
-                platform: 'Web'
+                platform: 'Web',
+                buildNo: 1
             };
             var url = Constants.serverUrl + "/user/login";
             var config = Constants.defaultHeader();

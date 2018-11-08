@@ -34,10 +34,13 @@ angular.module('MetronicApp')
         $scope.userRoles = [];
         $scope.userPass = {};
         $scope.userAdded = true;
+        $scope.imageList = [];
+        $scope.newResort.photoMediaIds = [];
 
         if ($stateParams.resortId) { // If user id is set so Mode is update
             var resortId = $stateParams.resortId;
             getResort();
+            getAllCountry();
             mode = 'update';
             // listingDate2();
         } else if ($location.$$url == '/resorts/all') {
@@ -77,10 +80,8 @@ angular.module('MetronicApp')
                 UIButtons.startSpin(el);
                 initService.postMethod($scope.newResort, `resort/${resortId}`)
                     .then(function (resault) {
-                        debugger
                         UIButtons.stopSpin(el);
                         if ( resault.data.code === 0 ) {
-                            debugger
                             var msg = 'عملیات با موفقیت انجام شد';
                             UIToastr.init('success', msg);
                             $location.path('resorts/all');
@@ -205,9 +206,17 @@ angular.module('MetronicApp')
 
             initService.getMethod(data, url)
                 .then(function (resault) {
-                    debugger
                     $scope.newResort = resault.data.content;
                     $scope.newResort.countryId =  $scope.newResort.country.id;
+                    $scope.imageList =  $scope.newResort.photos;
+                    $scope.newResort.photoMediaIds = [];
+                    for (img of $scope.newResort.photos) {
+                        $scope.newResort.photoMediaIds.push(img.id);
+                    }
+                    delete $scope.newResort.photos;
+                    $timeout(function(){
+                        ComponentsSelect2.init();
+                    }, 100);
 
                 })
                 .catch(function (error) {
@@ -230,6 +239,13 @@ angular.module('MetronicApp')
                 $location.path(url);
             }
         };
+
+        // =============== delete image =================
+        $scope.deleteImage = function(index) {
+            $scope.imageList.splice(index, 1);
+            this.newResort.photoMediaIds.splice(index, 1);
+
+        }
         // =============== Delete a user ================
         deleteMethod = function(uniqueId,index) {
             var data = {};
@@ -275,10 +291,10 @@ angular.module('MetronicApp')
                     if (result.data.code == 0) {
                         UIButtons.stopSpin(el);
                         if (type === 'image') {
-                        $scope.newResort.photoMediaIds = [];
+                        $scope.imageList.push(result.data.content);
                         $scope.newResort.photoMediaIds.push(result.data.content.id);
                         } else {
-                            $scope.newResort.mapPhotoMediaId = reult.data.content.id;
+                            $scope.newResort.mapPhotoMediaId = result.data.content.id;
                         }
                     }
                     else {
