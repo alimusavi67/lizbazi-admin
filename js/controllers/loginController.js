@@ -1,3 +1,13 @@
+/*
+=================================================================================
+= ~Controller : instructorController
+= ~Author     : Petra
+= ~License    : Petra
+= ~Developer  : EH7AN
+= ~Date       : 1397/08/01 
+=================================================================================
+*/
+
 /* Setup sign in controller */
 angular.module('MetronicApp')
     .controller('loginController', 

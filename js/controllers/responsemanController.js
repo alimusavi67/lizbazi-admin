@@ -1,12 +1,13 @@
 /*
 =================================================================================
-= ~Controller : response manager Controller
-= ~Author     : Faraz pardazan CO
-= ~License    : Faraz Pardazan
+= ~Controller : instructorController
+= ~Author     : Petra
+= ~License    : Petra
 = ~Developer  : EH7AN
-= ~Date       : 1396/06/06 
+= ~Date       : 1397/08/01 
 =================================================================================
 */
+
 angular.module('MetronicApp').controller('responsemanController',
  ['$rootScope', '$scope', '$timeout', '$location', '$stateParams', 'settings', 'responsemanService', 'Constants',
  function($rootScope, $scope, $timeout, $location, $stateParams, settings, responsemanService , Constants ) {

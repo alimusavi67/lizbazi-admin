@@ -1,12 +1,13 @@
 /*
 =================================================================================
-= ~Controller : suggestionController
-= ~Author     : Faraz pardazan CO
-= ~License    : Faraz Pardazan
+= ~Controller : instructorController
+= ~Author     : Petra
+= ~License    : Petra
 = ~Developer  : EH7AN
-= ~Date       : 1396/06/04 
+= ~Date       : 1397/08/01 
 =================================================================================
 */
+
 angular.module('MetronicApp').controller('DashboardController',
  function($rootScope, $scope, $http, $timeout, $cookies, $location,initService) {
     $scope.$on('$viewContentLoaded', function() {   

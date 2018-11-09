@@ -1,0 +1,162 @@
+<!-- BEGIN CONTENT BODY -->
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">خانه</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>ثبت مربی</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<div class="row">
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <span class="caption-subject bold uppercase">فرم ثبت مربی جدید</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form role="form" id="insertUserForm">
+                    <div class="form-body">
+                        <!-- name input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newinstructor.name" class="form-control edited">
+                                <label for="form_control_1">نام</label>
+                                <span class="help-block">لطفا از حروف فارسی استفاده کنید</span>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- contactInfoDescription input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <textarea type="text" name="lastName" class="form-control edited" ng-model="newinstructor.contactInfoDescription"> </textarea>
+                                <label for="form_control_1">اطلاعات تکمیلی</label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- countryId input -->
+                        <div class="form-group form-md-line-input form-md-floating-label has-info">
+                            <select ng-model="newinstructor.countryId" name="roles" class="form-control select2 edited"  ng-options="country.id as country.name for country in countryList">
+                                <option value="">انتخاب کنید ... </option>
+                            </select>
+                            <label for="form_control_1" style="color: #27a4b0"> کشور</label>
+                        </div>
+                        <!-- displayOrder input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newinstructor.displayOrder" class="form-control edited">
+                                <label for="form_control_1">اولویت نمایش</label>
+                                <span class="help-block">لطفا از مقادیر عددی استفاده کنید</span>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- email input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newinstructor.email" class="form-control edited">
+                                <label for="form_control_1">ایمیل</label>
+                                <span class="help-block">لطفا از مقادیر عددی استفاده کنید</span>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- listDescription input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <textarea type="text" name="lastName" class="form-control edited" ng-model="newinstructor.listDescription"> </textarea>
+                                <label for="form_control_1">توضیحات لیستی</label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- phoneNumber input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newinstructor.phoneNumber" class="form-control edited">
+                                <label for="form_control_1">شماره تماس</label>
+                                <span class="help-block">لطفا از مقادیر عددی استفاده کنید</span>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- skill input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newinstructor.skill" class="form-control edited">
+                                <label for="form_control_1">مهارت</label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- sportsField input -->
+                        <div class="form-group form-md-line-input form-md-floating-label has-info">
+                            <select ng-model="newinstructor.sportsField" name="roles" class="form-control select2 edited"  ng-options="spField.value as spField.key for spField in sportFields">
+                                <option value="">انتخاب کنید ... </option>
+                            </select>
+                            <label for="form_control_1" style="color: #27a4b0"> رشته ورزشی</label>
+                        </div>
+                      
+        
+                        <!-- flagPhotoMediaId input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <label for="form_control_1">تصویر لیست </label>
+                            <div class="input-icon">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                        <img ng-src="{{(newResort.mapPhoto)? newResort.mapPhoto.previewUrl : '../../assets/no-image.png'}}" alt="" /> </div>
+                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+                                    <div>
+                                        <span class="btn green btn-file uplodp-btn">
+                                            <span class="fileinput-new"> انتخاب تصویر </span>
+                                            <button type="button" class="fileinput-exists btn blue ladda-changepic"
+                                            >تعویض
+                                            </button>
+                                            <input type="file" name="..."  onchange="angular.element(this).scope().fileUploader(this.files)"> </span>
+                                        <a id="deleteImage" href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput" ng-click="addBtnGreen()">پاک کردن</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- flagPhotoMediaId input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <label for="form_control_1">تصویر تماسی </label>
+                            <div class="input-icon">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                        <img ng-src="{{(newResort.mapPhoto)? newResort.mapPhoto.previewUrl : '../../assets/no-image.png'}}" alt="" /> </div>
+                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+                                    <div>
+                                        <span class="btn green btn-file uplodp-btn">
+                                            <span class="fileinput-new"> انتخاب تصویر </span>
+                                            <button type="button" class="fileinput-exists btn blue ladda-changepic"
+                                            >تعویض
+                                            </button>
+                                            <input type="file" name="..."  onchange="angular.element(this).scope().fileUploader2(this.files)"> </span>
+                                        <a id="deleteImage" href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput" ng-click="addBtnGreen()">پاک کردن</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="form-actions noborder">
+                        <button type="button" class="btn blue mt-ladda-btn ladda-button"
+                                data-style="zoom-out" ng-click="registerInstructor()">
+                            <span class="ladda-label">ثبت</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+<!-- END CONTENT BODY

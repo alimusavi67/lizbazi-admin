@@ -1,12 +1,13 @@
 /*
 =================================================================================
-= ~Controller : User controller
-= ~Author     : Faraz pardazan CO
-= ~License    : Faraz Pardazan
+= ~Controller : instructorController
+= ~Author     : Petra
+= ~License    : Petra
 = ~Developer  : EH7AN
-= ~Date       : 1396/02/01 
+= ~Date       : 1397/08/01 
 =================================================================================
 */
+
 angular.module('MetronicApp')
 .controller('resortController',
 	['$timeout','$rootScope','$location','$stateParams', '$state', '$window', '$scope','$q','$cookieStore', '$timeout','settings','initService','$state','Constants','$interval',

@@ -7,9 +7,8 @@
 = ~Date       : 1397/08/01 
 =================================================================================
 */
-
 angular.module('MetronicApp')
-.controller('countryController',
+.controller('instructorController',
 	['$timeout','$rootScope','$location','$stateParams', '$state', '$window', '$scope','$q','$cookieStore', '$timeout','settings','initService','$state','Constants','$interval',
  function($timeout,$rootScope,$location,$stateParams, $state, $window,  $scope,$q,$cookieStore, $timeout, settings,initService,$state,Constants,$interval) {
     $scope.$on('$viewContentLoaded', function() {   
@@ -24,30 +23,27 @@ angular.module('MetronicApp')
         // ================Init process========================
         var token = $cookieStore.get(Constants.cookieName).token;
         var mode = 'create';
-        $scope.newCountry = {};
-        $scope.editStudentItem = {};
-        $scope.studentExtraData = {};
-        $scope.countries = [];
-        
-        $scope.resortItem = {};
-
-        if ($stateParams.countryId) {
-            var countryId = $stateParams.countryId;
-            getCountry();
+        $scope.newinstructor = {};
+        $scope.instructors = [];
+        getAllCountry();
+        getSportFields();
+        if ($stateParams.instructor) {
+            var instructor = $stateParams.instructor;
+            getInstructorById();
         }
         else {
-            getCountries();
+            getinstructor();
         }
 
 
 
-        $scope.registerResortFeature = function() {
+        $scope.registerInstructor = function() {
             // create a new user when mode is `create`
             if (mode === 'create'){
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
-                var url = `resort/${resortId}/features`
-                initService.postMethod($scope.newResort, url)
+                var url = `instructor`
+                initService.postMethod($scope.newinstructor, url)
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
                         if ( resault.code === 0 ) {
@@ -69,7 +65,7 @@ angular.module('MetronicApp')
             } else if (mode === 'update') {
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
-                var url = `resort/${resortId}/features/${$stateParams.featureId}`;
+                var url = `instructor/${instructorId}`;
                 initService.postMethod($scope.newResort, url)
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
@@ -95,14 +91,44 @@ angular.module('MetronicApp')
             }
 
         };
+        // ================= get all countries ==========
+        function getAllCountry()
+        {
+            var data = {
+                'params' :{
 
-        // =============== Show all countries ================
-        function getCountries()
+                }
+            };
+            initService.getMethod(data, 'baseInfo/countries')
+                .then(function (resault) {
+                    $scope.countryList = resault.data.content.countries;
+                })
+                .catch(function (error) {
+
+                });
+        }
+         function getSportFields()
+        {
+            var data = {
+                'params' :{
+
+                }
+            };
+            initService.getMethod(data, 'baseInfo/sportFields')
+                .then(function (resault) {
+                    $scope.sportFields = resault.data.content;
+                })
+                .catch(function (error) {
+
+                });
+        }
+        // =============== Show all getinstructor ================
+        function getinstructor()
         {
      		var	data = {'params' :{}};
-        	initService.getMethod(data, 'baseInfo/countries')
+        	initService.getMethod(data, 'instructor/admin')
 	        .then(function (resault) {
-	            $scope.countries = resault.data.content.countries;
+	            $scope.instructors = resault.data.content.instructors;
             
 	            $timeout(function(){
                     initTable();
@@ -115,7 +141,7 @@ angular.module('MetronicApp')
 	        });
         }
         // ======== Get country by id
-        function getCountry()
+        function getInstructorById()
         {
             var data = {'params' :{}};
             initService.getMethod(data, `baseInfo/countries/countryId`)
@@ -185,7 +211,32 @@ angular.module('MetronicApp')
                 initService.uploader(fd, file, url,function(result){
                     if (result.data.code == 0) {
                         UIButtons.stopSpin(el);
-                        $scope.newCountry.flagPhotoMediaId = result.data.content.id;
+                        $scope.newinstructor.listPhotoMediaId = result.data.content.id;
+                    }
+                    else {
+                        var msg = result.data.message;
+                        UIToastr.init('error', msg);
+                    }
+                })
+            });
+        };
+        $scope.fileUploader2 = function(files) {
+
+            var el = $('.ladda-changepic')[0];
+            $('.uplodp-btn').removeClass('green');
+            // UIButtons.startSpin(el);
+            var file=files[0];
+            compactImages(file, function(myBolb){
+                var canceller = $q.defer();
+                file.canceler = canceller;
+                var fd = new FormData(document.forms[0]);
+                fd.append('file', myBolb);
+                var url = '/media/upload';
+                var formData = new FormData();
+                initService.uploader(fd, file, url,function(result){
+                    if (result.data.code == 0) {
+                        UIButtons.stopSpin(el);
+                        $scope.newinstructor.contactInfoPhotoMediaId = result.data.content.id;
                     }
                     else {
                         var msg = result.data.message;
