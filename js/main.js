@@ -309,7 +309,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                 }]
             }
         })
-        // Register new student
+        // Register new resort
         .state('newresort', {
             url: "/resort/register",
             templateUrl: "views/resorts/register_resort.html",
@@ -346,7 +346,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                 }]
             }
         })
-        // Register new student
+        // Edit resort
         .state('editresort', {
             url: "/resort/:resortId/edit",
             templateUrl: "views/resorts/register_resort.html",
@@ -420,7 +420,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                 }]
             }
         })
-        // Register new student
+        // Register new resort feature
         .state('newresortfeature', {
             url: "/resort/:resortId/feature/register",
             templateUrl: "views/resorts/register_resort_feature.html",
@@ -599,6 +599,118 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
                             'js/controllers/learningVideoController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        // Show all Countries
+        .state('allCountries', {
+            url: "/country/all",
+            templateUrl: "views/countries/coutires_all.html",
+            data: {
+                pageTitle: 'کشور ها'
+            },
+            controller: "countryController",
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        files: [
+                            '../assets/global/plugins/datatables/datatables.min.css',
+                            '../assets/global/plugins/select2/css/select2.min.css',
+                            '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
+                            '../assets/global/plugins/bootstrap-toastr/toastr-rtl.min.css',
+
+                            '../assets/global/plugins/datatables/datatables.all.min.js',
+                            '../assets/pages/scripts/table-datatables-managed.min.js',
+                            '../assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
+                            '../assets/global/plugins/select2/js/select2.full.min.js',
+                            '../assets/pages/scripts/components-select2.min.js',
+                            '../assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js',
+                            '../assets/pages/scripts/ui-confirmations.js',
+                            '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+                            '../assets/pages/scripts/ui-toastr.js',
+
+
+                            'js/controllers/countryController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        // Store new Country
+        .state('storeCountry', {
+            url: "/country/new",
+            templateUrl: "views/countries/new_country.html",
+            data: {
+                pageTitle: 'ثبت کشور'
+            },
+            controller: "countryController",
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        files: [
+                            '../assets/global/plugins/datatables/datatables.min.css',
+                            '../assets/global/plugins/select2/css/select2.min.css',
+                            '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
+                            '../assets/global/plugins/bootstrap-toastr/toastr-rtl.min.css',
+                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
+
+                            '../assets/global/plugins/datatables/datatables.all.min.js',
+                            '../assets/pages/scripts/table-datatables-managed.min.js',
+                            '../assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
+                            '../assets/global/plugins/select2/js/select2.full.min.js',
+                            '../assets/pages/scripts/components-select2.min.js',
+                            '../assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js',
+                            '../assets/pages/scripts/ui-confirmations.js',
+                            '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
+                            '../assets/pages/scripts/ui-toastr.js',
+
+
+                            'js/controllers/countryController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        // edit Country
+        .state('editCountry', {
+            url: "/country/:countryId/edit",
+            templateUrl: "views/countries/new_country.html",
+            data: {
+                pageTitle: 'ویرایش کشور'
+            },
+            controller: "countryController",
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        files: [
+                            '../assets/global/plugins/datatables/datatables.min.css',
+                            '../assets/global/plugins/select2/css/select2.min.css',
+                            '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
+                            '../assets/global/plugins/bootstrap-toastr/toastr-rtl.min.css',
+                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
+
+                            '../assets/global/plugins/datatables/datatables.all.min.js',
+                            '../assets/pages/scripts/table-datatables-managed.min.js',
+                            '../assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
+                            '../assets/global/plugins/select2/js/select2.full.min.js',
+                            '../assets/pages/scripts/components-select2.min.js',
+                            '../assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js',
+                            '../assets/pages/scripts/ui-confirmations.js',
+                            '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
+                            '../assets/pages/scripts/ui-toastr.js',
+
+
+                            'js/controllers/countryController.js'
                         ]
                     });
                 }]

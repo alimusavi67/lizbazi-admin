@@ -167,3 +167,12 @@ i.fileinput-exists:hover {
   color: #fff !important;
   padding: 8px 15px !important;
 }
+.flag-img {
+  display: block;
+  height: 50px;
+}
+.flag-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
