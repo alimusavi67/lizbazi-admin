@@ -32,6 +32,7 @@ angular.module('MetronicApp')
         $scope.resortItem = {};
 
         if ($stateParams.countryId) {
+            var mode = 'update';
             var countryId = $stateParams.countryId;
             getCountry();
         }
@@ -40,24 +41,27 @@ angular.module('MetronicApp')
         }
 
 
-
-        $scope.registerResortFeature = function() {
+        // =============== Register countries ================
+        $scope.registerCountry = function() {
             // create a new user when mode is `create`
             if (mode === 'create'){
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
-                var url = `resort/${resortId}/features`
-                initService.postMethod($scope.newResort, url)
+                var url = 'baseInfo/countries'
+                initService.postMethod($scope.newCountry, url)
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
-                        if ( resault.code === 0 ) {
+                        if ( resault.data.code === 0 ) {
                             var msg = 'عملیات با موفقیت انجام شد';
                             UIToastr.init('success', msg);
+                            $timeout(function(){
+                                $window.history.back();
+                            }, 1000);
                         }
                         else {
                             var msg = resault.data.message;
                             UIToastr.init('info', msg);
-                            $scope.newResort = {};
+                            $scope.newCountry = {};
                         }
 
                     })
@@ -69,21 +73,21 @@ angular.module('MetronicApp')
             } else if (mode === 'update') {
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
-                var url = `resort/${resortId}/features/${$stateParams.featureId}`;
-                initService.postMethod($scope.newResort, url)
+                var url = `baseInfo/countries/${$stateParams.countryId}`;
+                initService.postMethod($scope.newCountry, url)
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
-                        debugger
                         if ( resault.data.code === 0 ) {
                             var msg = 'عملیات با موفقیت انجام شد';
                             UIToastr.init('success', msg);
-                            var url = `resorts/${resortId}/feature`;
-                            $location.path(url);
+                            $timeout(function(){
+                                $window.history.back();
+                            }, 1000);
                         }
                         else {
                             var msg = resault.data.message;
                             UIToastr.init('info', msg);
-                            $scope.newResort = {};
+                            $scope.newCountry = {};
                         }
 
                     })
@@ -118,9 +122,12 @@ angular.module('MetronicApp')
         function getCountry()
         {
             var data = {'params' :{}};
-            initService.getMethod(data, `baseInfo/countries/countryId`)
+            initService.getMethod(data, `baseInfo/countries/${countryId}`)
             .then(function (resault) {
                 $scope.newCountry = resault.data.content;
+                $timeout(function(){
+                    ComponentsSelect2.init();
+                }, 500);
             })
             .catch(function (error) {
                

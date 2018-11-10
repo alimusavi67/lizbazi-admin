@@ -114,7 +114,6 @@ MetronicApp.controller('FooterController', ['$scope', function($scope) {
         Layout.initFooter(); // init footer
     });
 }]);
-var sedu
 /* Setup Constants */
 MetronicApp.constant('Constants', {
     serverUrl: "/api",
@@ -670,6 +669,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
                             '../assets/pages/scripts/ui-toastr.js',
+                            '../assets/pages/scripts/ui-buttons.js',
 
 
                             'js/controllers/countryController.js'
@@ -708,6 +708,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
                             '../assets/pages/scripts/ui-toastr.js',
+                            '../assets/pages/scripts/ui-buttons.js',
 
 
                             'js/controllers/countryController.js'
