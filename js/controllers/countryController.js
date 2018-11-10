@@ -180,7 +180,7 @@ angular.module('MetronicApp')
 
             var el = $('.ladda-changepic')[0];
             $('.uplodp-btn').removeClass('green');
-            // UIButtons.startSpin(el);
+            UIButtons.startSpin(el);
             var file=files[0];
             compactImages(file, function(myBolb){
                 var canceller = $q.defer();

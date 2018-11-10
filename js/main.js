@@ -631,6 +631,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-confirmations.js',
                             '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
                             '../assets/pages/scripts/ui-toastr.js',
+                            '../assets/pages/scripts/ui-buttons.js',
 
 
                             'js/controllers/countryController.js'
