@@ -14,8 +14,6 @@ angular.module('MetronicApp')
     this.getMethod = function (data,url) {
         var deferred = $q.defer();
         var config = Constants.defaultHeader();
-        data.params.token =  $cookies.get('token');
-        config.params = data.params;
         var url = Constants.serverUrl + '/' + url;
         var That = this;
         $http.get(url, config)
@@ -34,8 +32,6 @@ angular.module('MetronicApp')
         var deferred = $q.defer();
         var config = Constants.defaultHeader();
         var url = Constants.serverUrl + '/' + url;
-        config.params = {};
-        config.params.token = $cookies.get('token');
         $http.post(url, data, config)
             .then(function (response) {
                 deferred.resolve(response);
@@ -49,8 +45,6 @@ angular.module('MetronicApp')
         var deferred = $q.defer();
         var config = Constants.defaultHeader();
         var url = Constants.serverUrl + '/' + url;
-        config.params = {};
-        config.params.token = $cookies.get('token');
         $http.put(url, data, config)
             .then(function (response) {
                 deferred.resolve(response);
@@ -63,8 +57,6 @@ angular.module('MetronicApp')
      this.deleteMethod = function (data,url) {
         var deferred = $q.defer();
         var config = Constants.defaultHeader();
-        config.params = {};
-        config.params.token = $cookies.get('token');
         var url = Constants.serverUrl + '/' + url;
         $http.delete(url, config)
             .then(function (response) {
