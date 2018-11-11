@@ -27,9 +27,10 @@ angular.module('MetronicApp')
         $scope.instructors = [];
         getAllCountry();
         getSportFields();
-        if ($stateParams.instructor) {
-            var instructor = $stateParams.instructor;
+        if ($stateParams.instructorId) {
+            var instructorId = $stateParams.instructorId;
             getInstructorById();
+            var mode = 'update';
         }
         else {
             getinstructor();
@@ -49,6 +50,9 @@ angular.module('MetronicApp')
                         if ( resault.code === 0 ) {
                             var msg = 'عملیات با موفقیت انجام شد';
                             UIToastr.init('success', msg);
+                            $timeout(function(){
+                                $window.history.back();
+                            }, 1000);
                         }
                         else {
                             var msg = resault.data.message;
@@ -66,15 +70,15 @@ angular.module('MetronicApp')
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
                 var url = `instructor/${instructorId}`;
-                initService.postMethod($scope.newResort, url)
+                initService.postMethod($scope.newinstructor, url)
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
-                        debugger
                         if ( resault.data.code === 0 ) {
                             var msg = 'عملیات با موفقیت انجام شد';
                             UIToastr.init('success', msg);
-                            var url = `resorts/${resortId}/feature`;
-                            $location.path(url);
+                            $timeout(function(){
+                                $window.history.back();
+                            }, 1000);
                         }
                         else {
                             var msg = resault.data.message;
@@ -144,26 +148,18 @@ angular.module('MetronicApp')
         function getInstructorById()
         {
             var data = {'params' :{}};
-            initService.getMethod(data, `baseInfo/countries/countryId`)
+            initService.getMethod(data, `instructor/${instructorId}`)
             .then(function (resault) {
-                $scope.newCountry = resault.data.content;
+                $scope.newinstructor = resault.data.content;
+                $scope.newinstructor.countryId = resault.data.content.country.id;
+                $timeout(function(){
+                    ComponentsSelect2.init();
+                }, 500);
             })
             .catch(function (error) {
                
             });
         }
-        $scope.goToEditFeature = function(feature) {
-        	var	url = '';
-        	if (feature.id) {
-        		url = '/resort/'+ resortId +'/feature/' + feature.id + '/edit';
-                $location.path(url);
-        	}
-        };
-        // ======== generate insert link
-        $scope.goToAddFeature = function() {
-                url = '#/resort/'+ resortId +'/feature/register';
-                return url
-        };
         // =============== Delete a resort feature ================
         $scope.deleteMethod = function(feature,index) {
             var data = {};
@@ -421,63 +417,14 @@ angular.module('MetronicApp')
                 "language": Constants.tableTranslations
             });
         };
-        $scope.goToEditCountry = function(country) {
+        $scope.goToEditInstructor = function(instructor) {
             var url = '';
-            if (country.id) {
-                url = '/country/'+ country.id +'/edit';
+            if (instructor.id) {
+                url = '/instructor/'+ instructor.id +'/edit';
                 $location.path(url);
             }
         };
-        // ================= date settings ===================
-        function listingDate() {
-            $timeout(function(){
-                $('.date-input').val('');
-                $('.date-input').addClass('edited');
-                $('#fromDate').pDatepicker({
-                    format: 'LL',
-                    altField:'#fromDateTS',
-                });
 
-            }, 500);
-        }
-
-        function listingDate2(time) {
-            $timeout(function(){
-                $('.date-input').val(time);
-                $('.date-input').addClass('edited');
-                $('#fromDate').pDatepicker({
-                    format: 'LL',
-                    altField:'#fromDateTS',
-                });
-
-            }, 500);
-        }
-        // ==================== Persian date to timestamp ===============
-        function pDateTimeStamp(date) {
-            let cDate = date;
-            let intDate = $.map(cDate.split('/'), function(value) {
-                return parseInt(value, 10);
-            });
-            p_date = persianDate(intDate);
-            var unix_timestamp = p_date.unix();
-            var out = unix_timestamp * 1000;
-            return out;
-        }
-
-        function fillBirthDateValue(time) {
-            if (time != null && time != "") {
-                var time_stamp = parseInt(time);
-                val = convertDate(time_stamp)
-                listingDate2(time_stamp);
-            }
-        }
-
-        function convertDate(date) {
-            var day = new persianDate(date).format('YYYY/MM/DD');
-            return day;
-        }
-        
-       
         // ================== Jquery handler ==================
         $(document).on('click','ul.pagination > li  ',function(event){
             $timeout(function(){
