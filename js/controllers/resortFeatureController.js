@@ -54,9 +54,11 @@ angular.module('MetronicApp')
                 initService.postMethod($scope.newResort, url)
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
-                        if ( resault.code === 0 ) {
+                        if ( resault.data.code === 0 ) {
                             var msg = 'عملیات با موفقیت انجام شد';
                             UIToastr.init('success', msg);
+                            let url = `resort/${resortId}/feature`
+                            $location.path(url);
                         }
                         else {
                             var msg = resault.data.message;

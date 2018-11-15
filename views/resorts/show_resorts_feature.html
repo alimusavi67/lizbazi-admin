@@ -26,6 +26,7 @@
                             <th> عنوان </th>
                             <th> مقدار </th>
                             <th> رنگ </th>
+                            <th> ترتیب نمایش </th>
 
                             <th> عملیات </th>
                         </tr>
@@ -37,6 +38,7 @@
                             <td ng-bind="feature.title"></td>
                             <td ng-bind="feature.value"></td>
                             <td ng-bind="feature.color"></td>
+                            <td ng-bind="feature.displayOrder"></td>
                             <td>
                                 <i class='fa fa-pencil admin-op font-green-jungle' ng-click="goToEditFeature(feature)" data-toggle="tooltip" data-placement="top" title="ویرایش"></i>
                                 <i class='fa fa-trash-o admin-op font-red-mint' ng-click="deleteMethod(feature, $index)" data-toggle="tooltip" data-placement="top" title="حذف"></i>
