@@ -152,6 +152,14 @@ angular.module('MetronicApp')
             .then(function (resault) {
                 $scope.newinstructor = resault.data.content;
                 $scope.newinstructor.countryId = resault.data.content.country.id;
+                if ( $scope.newinstructor.listPhotoMedia){
+                    $scope.newinstructor.listPhotoMediaId =  $scope.newinstructor.listPhotoMedia.id;
+                }
+                if ($scope.newinstructor.contactInfoPhotoMedia){
+                    $scope.newinstructor.contactInfoPhotoMediaId =  $scope.newinstructor.contactInfoPhotoMedia.id;
+                }
+
+                debugger
                 $timeout(function(){
                     ComponentsSelect2.init();
                 }, 500);

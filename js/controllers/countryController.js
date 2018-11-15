@@ -125,6 +125,9 @@ angular.module('MetronicApp')
             initService.getMethod(data, `baseInfo/countries/${countryId}`)
             .then(function (resault) {
                 $scope.newCountry = resault.data.content;
+                if ($scope.newCountry.flagPhoto) {
+                    $scope.newCountry.flagPhotoMediaId = $scope.newCountry.flagPhoto.id;
+                }
                 $timeout(function(){
                     ComponentsSelect2.init();
                 }, 500);
