@@ -24,7 +24,7 @@ angular.module('MetronicApp')
         // ================Init process========================
         var token = $cookieStore.get(Constants.cookieName).token;
         var mode = 'create';
-        $scope.newCountry = {};
+        $scope.newVersiom = {};
         $scope.editStudentItem = {};
         $scope.studentExtraData = {};
         $scope.versionList = [];
@@ -42,13 +42,13 @@ angular.module('MetronicApp')
 
 
         // =============== Register countries ================
-        $scope.registerCountry = function() {
+        $scope.registerVersion = function() {
             // create a new user when mode is `create`
             if (mode === 'create'){
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
-                var url = 'baseInfo/countries'
-                initService.postMethod($scope.newCountry, url)
+                var url = '/version'
+                initService.postMethod($scope.newVersiom, url)
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
                         if ( resault.data.code === 0 ) {
@@ -61,7 +61,7 @@ angular.module('MetronicApp')
                         else {
                             var msg = resault.data.message;
                             UIToastr.init('info', msg);
-                            $scope.newCountry = {};
+                            $scope.newVersiom = {};
                         }
 
                     })
@@ -73,8 +73,8 @@ angular.module('MetronicApp')
             } else if (mode === 'update') {
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
-                var url = `baseInfo/countries/${$stateParams.countryId}`;
-                initService.postMethod($scope.newCountry, url)
+                var url = `version/${$stateParams.versionId}`;
+                initService.postMethod($scope.newVersiom, url)
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
                         if ( resault.data.code === 0 ) {
@@ -87,7 +87,7 @@ angular.module('MetronicApp')
                         else {
                             var msg = resault.data.message;
                             UIToastr.init('info', msg);
-                            $scope.newCountry = {};
+                            $scope.newVersiom = {};
                         }
 
                     })
@@ -124,9 +124,9 @@ angular.module('MetronicApp')
             var data = {'params' :{}};
             initService.getMethod(data, `baseInfo/countries/${countryId}`)
             .then(function (resault) {
-                $scope.newCountry = resault.data.content;
-                if ($scope.newCountry.flagPhoto) {
-                    $scope.newCountry.flagPhotoMediaId = $scope.newCountry.flagPhoto.id;
+                $scope.newVersiom = resault.data.content;
+                if ($scope.newVersiom.flagPhoto) {
+                    $scope.newVersiom.flagPhotoMediaId = $scope.newVersiom.flagPhoto.id;
                 }
                 $timeout(function(){
                     ComponentsSelect2.init();
@@ -176,117 +176,6 @@ angular.module('MetronicApp')
             });
         };
 
-        // ================ statick js ========================
-
-        //============= upload files   =======
-        $scope.fileUploader = function(files) {
-
-            var el = $('.ladda-changepic')[0];
-            $('.uplodp-btn').removeClass('green');
-            UIButtons.startSpin(el);
-            var file=files[0];
-            compactImages(file, function(myBolb){
-                var canceller = $q.defer();
-                file.canceler = canceller;
-                var fd = new FormData(document.forms[0]);
-                fd.append('file', myBolb);
-                var url = '/media/upload';
-                var formData = new FormData();
-                initService.uploader(fd, file, url,function(result){
-                    if (result.data.code == 0) {
-                        UIButtons.stopSpin(el);
-                        $scope.newCountry.flagPhotoMediaId = result.data.content.id;
-                    }
-                    else {
-                        var msg = result.data.message;
-                        UIToastr.init('error', msg);
-                    }
-                })
-            });
-        };
-        // ============================= Compact images using convas  ===============================
-        function compactImages(myFile,callBack)
-        {
-
-            var fr = new FileReader;
-            var reader = new FileReader();
-            var bolb_obj = '';
-
-            reader.onload = function(e) {
-                if (!myFile){
-                    return
-                }
-
-                var img = new Image;
-                img.onload = function() {
-                    var width = img.width;
-                    var height = img.height;
-                    var canvas = document.createElement('canvas');
-                    // ======= BEGIN initializing resize =============
-                    var MAX_WIDTH = 800;
-                    var MAX_HEIGHT = 800;
-                    var quality = 0.7;
-                    var type = myFile.type;
-                    // ======= END initializing resize =============
-                    if (width > height) {
-                        if (width > MAX_WIDTH) {
-                            height = Math.round(height *= MAX_WIDTH / width);
-                            width = height;
-                        }
-                        else {
-                            height = width;
-                        }
-                    }
-                    else {
-                        if (height > MAX_HEIGHT) {
-                            width = Math.round(width *= MAX_HEIGHT / height);
-                            height = width;
-                        }
-                        else {
-                            width = height
-                        }
-                    }
-                    canvas.width = width;
-                    canvas.height = height;
-                    var ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0, width, height);
-
-                    var dataURL = canvas.toDataURL(type);
-                    bolb_obj = dataURItoBlob(dataURL);
-                    $.event.trigger({
-                        type: "imageResized",
-                        blob: bolb_obj,
-                        url: dataURL
-                    });
-                    callBack(bolb_obj);
-                };
-                img.src = e.target.result;
-            }
-            if (myFile){
-                reader.readAsDataURL(myFile);
-            }
-        }
-        // =========================Convert Data Url to bolb object ========================================
-        function dataURItoBlob(dataURI) {
-            // convert base64/URLEncoded data component to raw binary data held in a string
-            var byteString;
-            if (dataURI.split(',')[0].indexOf('base64') >= 0)
-                byteString = atob(dataURI.split(',')[1]);
-            else
-                byteString = unescape(dataURI.split(',')[1]);
-
-            // separate out the mime component
-            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-            // write the bytes of the string to a typed array
-            var ab = new ArrayBuffer(byteString.length);
-            var ia = new Uint8Array(ab);
-            for (var i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
-            }
-            var cmBlob = new Blob([ia], {type:mimeString});
-            return cmBlob;
-        }
 
         function toolTipHandler()
         {

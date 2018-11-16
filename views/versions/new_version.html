@@ -8,7 +8,7 @@
             <i class="fa fa-angle-left"></i>
         </li>
         <li>
-            <span>ثبت کشور تازه</span>
+            <span>ثبت نسخه تازه</span>
         </li>
     </ul>
 </div>
@@ -19,7 +19,7 @@
         <div class="portlet light ">
             <div class="portlet-title">
                 <div class="caption font-red-sunglo">
-                    <span class="caption-subject bold uppercase">فرم ثبت کشور جدید</span>
+                    <span class="caption-subject bold uppercase">فرم ثبت نسخه جدید</span>
                 </div>
                 <div class="actions">
                     <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
@@ -31,8 +31,8 @@
                         <!-- name input -->
                         <div class="form-group form-md-line-input has-success form-md-floating-label">
                             <div class="input-icon">
-                                <input type="text" name="name" ng-model="newCountry.name" class="form-control edited">
-                                <label for="form_control_1">نام</label>
+                                <input type="text" name="name" ng-model="newVersiom.version" class="form-control edited">
+                                <label for="form_control_1">نسخه</label>
                                 <span class="help-block">لطفا از حروف فارسی استفاده کنید</span>
                                 <i class="fa fa-user-o"></i>
                             </div>
@@ -40,49 +40,56 @@
                         <!-- preCode input -->
                         <div class="form-group form-md-line-input has-success form-md-floating-label">
                             <div class="input-icon">
-                                <input type="text" name="lastName" class="form-control edited" ng-model="newCountry.preCode">
-                                <label for="form_control_1">پیش شماره</label>
+                                <input type="text" name="lastName" class="form-control edited" ng-model="newVersiom.releaseNote">
+                                <label for="form_control_1">متن انتشار </label>
                                 <i class="fa fa-user-o"></i>
                             </div>
                         </div>
-                        <!-- smsActive input -->
+                        <!-- buildNo input -->
                         <div class="form-group form-md-line-input has-success form-md-floating-label">
                             <div class="input-icon">
-                                <select ng-model="newCountry.smsActive" name="roles" class="form-control select2 edited">
+                                <input type="text" name="lastName" class="form-control edited" ng-model="newVersiom.buildNo">
+                                <label for="form_control_1">buildNo  </label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- active  -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <select ng-model="newVersiom.active" name="roles" class="form-control select2 edited">
                                     <option value="true" selected>فعال</option>
                                     <option value="false">غیر فعال</option>
                                 </select>
-                                <label for="form_control_1"> وضعیت پیام کوتاه</label>
-                                <i class="fa fa-key"></i>
-                            </div>
-                        </div>
-        
-                        <!-- flagPhotoMediaId input -->
-                        <div class="form-group form-md-line-input has-success form-md-floating-label">
-                            <label for="form_control_1">تصویر پرچم </label>
-                            <div class="input-icon">
-                                <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                        <img ng-src="{{(newCountry.flagPhoto)? newCountry.flagPhoto.previewUrl : '../../assets/no-image.png'}}" alt="" /> </div>
-                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
-                                    <div>
-                                        <span class="btn green btn-file uplodp-btn">
-                                            <span class="fileinput-new"> انتخاب تصویر </span>
-                                            <button type="button" class="fileinput-exists btn blue ladda-changepic"
-                                            >تعویض
-                                            </button>
-                                            <input type="file" name="..."  onchange="angular.element(this).scope().fileUploader(this.files)"> </span>
-                                        <a id="deleteImage" href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput" ng-click="addBtnGreen()">پاک کردن</a>
-                                    </div>
-                                </div>
+                                <label for="form_control_1"> وضعیت </label>
                             </div>
                         </div>
 
+                        <!-- published  -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <select ng-model="newVersiom.published" name="roles" class="form-control select2 edited">
+                                    <option value="true" selected>فعال</option>
+                                    <option value="false">غیر فعال</option>
+                                </select>
+                                <label for="form_control_1"> وضعیت انتشار </label>
+                            </div>
+                        </div>
+
+                        <!-- platform  -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <select ng-model="newVersiom.platform" name="roles" class="form-control select2 edited">
+                                    <option value="Android" selected>Android</option>
+                                    <option value="IOS">IOS </option>
+                                </select>
+                                <label for="form_control_1"> platform  </label>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="form-actions noborder">
                         <button type="button" class="btn blue mt-ladda-btn ladda-button"
-                                data-style="zoom-out" ng-click="registerCountry()">
+                                data-style="zoom-out" ng-click="registerVersion()">
                             <span class="ladda-label">ثبت</span>
                         </button>
                     </div>
