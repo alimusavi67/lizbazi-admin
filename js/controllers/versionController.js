@@ -9,7 +9,7 @@
 */
 
 angular.module('MetronicApp')
-.controller('resortFeatureController',
+.controller('versionController',
 	['$timeout','$rootScope','$location','$stateParams', '$state', '$window', '$scope','$q','$cookieStore', '$timeout','settings','initService','$state','Constants','$interval',
  function($timeout,$rootScope,$location,$stateParams, $state, $window,  $scope,$q,$cookieStore, $timeout, settings,initService,$state,Constants,$interval) {
     $scope.$on('$viewContentLoaded', function() {   
@@ -21,49 +21,47 @@ angular.module('MetronicApp')
         $rootScope.settings.layout.pageSidebarClosed = false;
         ComponentsSelect2.init();
         $('.page-content').attr('style','');
-        UIIdleTimeout.init($location.$$url);
-        $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
-         UIIdleTimeout.destroy();
-        })
         // ================Init process========================
         var token = $cookieStore.get(Constants.cookieName).token;
         var mode = 'create';
-        $scope.newResort = {};
+        $scope.newCountry = {};
         $scope.editStudentItem = {};
         $scope.studentExtraData = {};
-        $scope.resortList = [];
-        $scope.userRoles = [];
-        $scope.userPass = {};
-        $scope.userAdded = true;
+        $scope.versionList = [];
+        
         $scope.resortItem = {};
 
-        if ($stateParams.resortId) {
-            var resortId = $stateParams.resortId;
-            getResort();
-            // listingDate2();
+        if ($stateParams.countryId) {
+            var mode = 'update';
+            var countryId = $stateParams.countryId;
+            getCountry();
+        }
+        else {
+            getAllVersions();
         }
 
 
-
-        $scope.registerResortFeature = function() {
+        // =============== Register countries ================
+        $scope.registerCountry = function() {
             // create a new user when mode is `create`
             if (mode === 'create'){
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
-                var url = `resort/${resortId}/features`
-                initService.postMethod($scope.newResort, url)
+                var url = 'baseInfo/countries'
+                initService.postMethod($scope.newCountry, url)
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
                         if ( resault.data.code === 0 ) {
                             var msg = 'عملیات با موفقیت انجام شد';
                             UIToastr.init('success', msg);
-                            let url = `resort/${resortId}/feature`
-                            $location.path(url);
+                            $timeout(function(){
+                                $window.history.back();
+                            }, 1000);
                         }
                         else {
                             var msg = resault.data.message;
                             UIToastr.init('info', msg);
-                            $scope.newResort = {};
+                            $scope.newCountry = {};
                         }
 
                     })
@@ -75,20 +73,21 @@ angular.module('MetronicApp')
             } else if (mode === 'update') {
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
-                var url = `resort/${resortId}/features/${$stateParams.featureId}`;
-                initService.postMethod($scope.newResort, url)
+                var url = `baseInfo/countries/${$stateParams.countryId}`;
+                initService.postMethod($scope.newCountry, url)
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
                         if ( resault.data.code === 0 ) {
                             var msg = 'عملیات با موفقیت انجام شد';
                             UIToastr.init('success', msg);
-                            var url = `resort/${resortId}/feature`;
-                            $location.path(url);
+                            $timeout(function(){
+                                $window.history.back();
+                            }, 1000);
                         }
                         else {
                             var msg = resault.data.message;
                             UIToastr.init('info', msg);
-                            $scope.newResort = {};
+                            $scope.newCountry = {};
                         }
 
                     })
@@ -101,29 +100,14 @@ angular.module('MetronicApp')
 
         };
 
-        // =============== Show all users ================
-        function getResort()
+        // =============== Show all countries ================
+        function getAllVersions()
         {
-     		var	data = {
-     		    'params' :{
-
-                }
-            };
-
-        	initService.getMethod(data, `resort/${resortId}`)
+     		var	data = {'params' :{}};
+        	initService.getMethod(data, '/version')
 	        .then(function (resault) {
-	            debugger
-	            $scope.resortItem = resault.data.content;
-                if ($stateParams.featureId) {
-                    mode = 'update';
-                    var featureId = $stateParams.featureId;
-                    for (item of $scope.resortItem.features) {
-                        if (item.id === featureId) {
-                            $scope.newResort = item;
-                        }
-                    }
-                    // listingDate2();
-                }
+	            $scope.versionList = resault.data.content.versions;
+            
 	            $timeout(function(){
                     initTable();
 	      			toolTipHandler();
@@ -133,6 +117,24 @@ angular.module('MetronicApp')
 	        .catch(function (error) {
 	           
 	        });
+        }
+        // ======== Get country by id
+        function getCountry()
+        {
+            var data = {'params' :{}};
+            initService.getMethod(data, `baseInfo/countries/${countryId}`)
+            .then(function (resault) {
+                $scope.newCountry = resault.data.content;
+                if ($scope.newCountry.flagPhoto) {
+                    $scope.newCountry.flagPhotoMediaId = $scope.newCountry.flagPhoto.id;
+                }
+                $timeout(function(){
+                    ComponentsSelect2.init();
+                }, 500);
+            })
+            .catch(function (error) {
+               
+            });
         }
         $scope.goToEditFeature = function(feature) {
         	var	url = '';
@@ -181,7 +183,7 @@ angular.module('MetronicApp')
 
             var el = $('.ladda-changepic')[0];
             $('.uplodp-btn').removeClass('green');
-            // UIButtons.startSpin(el);
+            UIButtons.startSpin(el);
             var file=files[0];
             compactImages(file, function(myBolb){
                 var canceller = $q.defer();
@@ -193,9 +195,7 @@ angular.module('MetronicApp')
                 initService.uploader(fd, file, url,function(result){
                     if (result.data.code == 0) {
                         UIButtons.stopSpin(el);
-                        $scope.newResort.iconMediaIds = [];
-                        $scope.newResort.photoMediaIds.push(result.data.content.id);
-                        debugger
+                        $scope.newCountry.flagPhotoMediaId = result.data.content.id;
                     }
                     else {
                         var msg = result.data.message;
@@ -314,6 +314,7 @@ angular.module('MetronicApp')
             var table = $('#users_table');
 
             table.dataTable({
+                "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
 
                 "lengthMenu": [
                     [5, 15, 20, -1],
@@ -357,7 +358,7 @@ angular.module('MetronicApp')
                     }
                 ],
                 // set the initial value
-                "pageLength": 100,
+                "pageLength": 5,            
                 "pagingType": "bootstrap_full_number",
                 "columnDefs": [
                     {  // set default column settings
@@ -379,7 +380,13 @@ angular.module('MetronicApp')
                 "language": Constants.tableTranslations
             });
         };
-
+        $scope.goToEditCountry = function(country) {
+            var url = '';
+            if (country.id) {
+                url = '/country/'+ country.id +'/edit';
+                $location.path(url);
+            }
+        };
         // ================= date settings ===================
         function listingDate() {
             $timeout(function(){
