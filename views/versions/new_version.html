@@ -1,0 +1,102 @@
+<!-- BEGIN CONTENT BODY -->
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">خانه</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>ثبت نسخه تازه</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<div class="row">
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <span class="caption-subject bold uppercase">فرم ثبت نسخه جدید</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form role="form" id="insertUserForm">
+                    <div class="form-body">
+                        <!-- name input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newVersiom.version" class="form-control edited">
+                                <label for="form_control_1">نسخه</label>
+                                <span class="help-block">لطفا از حروف فارسی استفاده کنید</span>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- preCode input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="lastName" class="form-control edited" ng-model="newVersiom.releaseNote">
+                                <label for="form_control_1">متن انتشار </label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- buildNo input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="lastName" class="form-control edited" ng-model="newVersiom.buildNo">
+                                <label for="form_control_1">buildNo  </label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- active  -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <select ng-model="newVersiom.active" name="roles" class="form-control select2 edited">
+                                    <option value="true" selected>فعال</option>
+                                    <option value="false">غیر فعال</option>
+                                </select>
+                                <label for="form_control_1"> وضعیت </label>
+                            </div>
+                        </div>
+
+                        <!-- published  -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <select ng-model="newVersiom.published" name="roles" class="form-control select2 edited">
+                                    <option value="true" selected>فعال</option>
+                                    <option value="false">غیر فعال</option>
+                                </select>
+                                <label for="form_control_1"> وضعیت انتشار </label>
+                            </div>
+                        </div>
+
+                        <!-- platform  -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <select ng-model="newVersiom.platform" name="roles" class="form-control select2 edited">
+                                    <option value="Android" selected>Android</option>
+                                    <option value="IOS">IOS </option>
+                                </select>
+                                <label for="form_control_1"> platform  </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-actions noborder">
+                        <button type="button" class="btn blue mt-ladda-btn ladda-button"
+                                data-style="zoom-out" ng-click="registerVersion()">
+                            <span class="ladda-label">ثبت</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+<!-- END CONTENT BODY

@@ -1,0 +1,65 @@
+<!-- BEGIN MAIN CONTENT -->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase">فهرست  نسخه ها</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xs-12 pull-left">
+                <span class="input-group-btn">
+                    <a ui-sref="storeVersion" class="btn green" id="username1_checker">
+                        <i class="fa fa-plus add-new-row"></i>ثبت نسخه</a>
+                </span>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                </div>
+                <table class="table table-striped table-bordered table-hover table-checkable order-column" id="users_table">
+                    <thead>
+                        <tr>
+
+                            <th> ردیف </th>
+                            <th> نسخه </th>
+                            <th>  متن انتشار </th>
+                            <th>وضعیت</th>
+                            <th> پلتفرم  </th>
+                            <th>  منتشر شده  </th>
+                            <th> buildNo  </th>
+                            <th> تاربخ ثبت  </th>
+                            <th> عملیات </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="odd gradeX" ng-repeat="version in versionList track by $index">
+
+                            <td ng-bind="$index + 1"></td>
+                            <td ng-bind="version.version"></td>
+                            <td ng-bind="version.releaseNote"></td>
+                            <td>{{ (version.active) ? 'فعال' : 'غیر فعال' }}</td>
+                            <td ng-bind="version.releaseNote"></td>
+                            <td>{{ (version.published) ? 'فعال' : 'غیر فعال' }}</td>
+                            <td ng-bind="version.buildNo"></td>
+                            <td ng-bind="version.creationDate"></td>
+
+
+
+                            <td>
+                                <i class='fa fa-pencil admin-op font-green-jungle' ng-click="goToEditCountry(version)" data-toggle="tooltip" data-placement="top" title="ویرایش"></i>
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+
+    </div>
+</div>
+
+<!-- END MAIN CONTENT -->
