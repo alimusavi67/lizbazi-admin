@@ -176,3 +176,10 @@ i.fileinput-exists:hover {
   height: 100%;
   object-fit: contain;
 }
+.del-res-img {
+  cursor: pointer;
+}
+.del-res-img:hover {
+  color: #f24f4f;
+  transition: 0.3 all;
+}

@@ -36,7 +36,7 @@ angular.module('MetronicApp')
         $scope.userPass = {};
         $scope.userAdded = true;
         $scope.imageList = [];
-        $scope.newResort.photoMediaIds = [];
+        // $scope.newResort.photoMediaIds = [];
 
         if ($stateParams.resortId) { // If user id is set so Mode is update
             var resortId = $stateParams.resortId;
@@ -147,6 +147,7 @@ angular.module('MetronicApp')
         // =============== Get a user ================
         function getResort()
         {
+        
             var	data = {
                 'params' :{
 
@@ -158,11 +159,14 @@ angular.module('MetronicApp')
                 .then(function (resault) {
                     $scope.newResort = resault.data.content;
                     $scope.newResort.countryId =  $scope.newResort.country.id;
-                    $scope.imageList =  $scope.newResort.photos;
-                    $scope.newResort.photoMediaIds = [];
-                    for (img of $scope.newResort.photos) {
-                        $scope.newResort.photoMediaIds.push(img.id);
+                    if (resault.data.content.mapPhoto) {
+                        $scope.newResort.mapPhotoMediaId = resault.data.content.mapPhoto.id;
                     }
+                    $scope.imageList =  $scope.newResort.photos;
+                    // $scope.newResort.photoMediaIds = [];
+                    // for (img of $scope.newResort.photos) {
+                    //     $scope.newResort.photoMediaIds.push(img.id);
+                    // }
                     delete $scope.newResort.photos;
                     $timeout(function(){
                         ComponentsSelect2.init();
@@ -191,9 +195,22 @@ angular.module('MetronicApp')
         };
 
         // =============== delete image =================
-        $scope.deleteImage = function(index) {
+        $scope.deleteImage = function(index, img) {
             $scope.imageList.splice(index, 1);
-            this.newResort.photoMediaIds.splice(index, 1);
+            // this.newResort.photoMediaIds.splice(index, 1);
+            let data = {
+                params:{photoMediaId : [img.id]}
+            }
+            let url = `resort/${resortId}/photos`;
+            initService.deleteMethod(data, url)
+                .then(function (resault) {
+                    if (resault.data.code === 0) {
+                        UIToastr.init('info', 'با موفقیت حذف شد');
+                    }
+                })
+                .catch(function (error) {
+                    UIToastr.init('info', 'خطا در ارسال اطلاعات');
+                });
 
         }
         // =============== Delete a user ================
@@ -241,8 +258,10 @@ angular.module('MetronicApp')
                     if (result.data.code == 0) {
                         UIButtons.stopSpin(el);
                         if (type === 'image') {
-                        $scope.imageList.push(result.data.content);
-                        $scope.newResort.photoMediaIds.push(result.data.content.id);
+                            $scope.imageList.push(result.data.content);
+                            // $scope.newResort.photoMediaIds.push(result.data.content.id);
+                            submitPhotos(result.data.content.id);
+
                         } else {
                             $scope.newResort.mapPhotoMediaId = result.data.content.id;
                         }
@@ -254,6 +273,21 @@ angular.module('MetronicApp')
                 })
             });
         };
+        function submitPhotos(mediaId) {
+            let data = {
+                photoMediaIds : [mediaId]
+            }
+            let url = `resort/${resortId}/photos`;
+            initService.postMethod(data, url)
+                .then(function (resault) {
+                    if (resault.data.code === 0) {
+                        UIToastr.init('info', 'با موفقیت آپلود شد');
+                    }  
+                })
+                .catch(function (error) {
+
+                });
+        }
         // ============================= Compact images using convas  ===============================
         function compactImages(myFile,callBack)
         {
@@ -315,6 +349,7 @@ angular.module('MetronicApp')
             if (myFile){
                 reader.readAsDataURL(myFile);
             }
+
         }
         // =========================Convert Data Url to bolb object ========================================
         function dataURItoBlob(dataURI) {
