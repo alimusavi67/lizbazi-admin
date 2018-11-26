@@ -203,13 +203,13 @@ angular.module('MetronicApp')
 
             var el = $('.ladda-changepic')[0];
             $('.uplodp-btn').removeClass('green');
-            // UIButtons.startSpin(el);
             var file=files[0];
-            compactImages(file, function(myBolb){
-                var canceller = $q.defer();
-                file.canceler = canceller;
-                var fd = new FormData(document.forms[0]);
-                fd.append('file', myBolb);
+            var canceller = $q.defer();
+            file.canceler = canceller;
+
+            var fd = new FormData();
+            fd.append('contentMedia', file);;
+            fd.append("file",file);
                 var url = '/media/upload';
                 var formData = new FormData();
                 initService.uploader(fd, file, url,function(result){
@@ -222,7 +222,7 @@ angular.module('MetronicApp')
                         UIToastr.init('error', msg);
                     }
                 })
-            });
+            // });
         };
         $scope.fileUploader2 = function(files) {
 

@@ -74,11 +74,8 @@ angular.module('MetronicApp')
             $http.post(url, loginReq, config)
                 .then(function (response) {
                     var expireDate = nxtWeekExpire();
-                    debugger
                         if (response.status === 200) {
-                           // var user = response.data.data.user;
-                            var user = {'id': 131313, 'firstName': 'ali'}
-
+                           var user = response.data.content.userInfo;
                              var userInfo = JSON.stringify(user);
                             if (remember) {
                                 $cookies.put(Constants.cookieName, userInfo,{'expires' : expireDate});
