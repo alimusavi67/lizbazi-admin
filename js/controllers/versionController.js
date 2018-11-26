@@ -47,7 +47,7 @@ angular.module('MetronicApp')
             if (mode === 'create'){
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
-                var url = '/version'
+                var url = 'version'
                 initService.postMethod($scope.newVersiom, url)
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
@@ -104,7 +104,7 @@ angular.module('MetronicApp')
         function getAllVersions()
         {
      		var	data = {'params' :{}};
-        	initService.getMethod(data, '/version')
+        	initService.getMethod(data, 'version')
 	        .then(function (resault) {
 	            $scope.versionList = resault.data.content.versions;
             

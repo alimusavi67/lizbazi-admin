@@ -123,7 +123,7 @@
                             <!-- BEGIN Resort gallery photo -->
                             <div class="form-group col-md-12 resort-meidas" ng-show="imageList.length > 0">
                                 <div class="col-md-2" ng-repeat="img in imageList track by $index" >
-                                    <i class="icon-close" index="$index" ng-click="deleteImage($index)"></i>
+                                    <i class="icon-close del-res-img" index="$index" ng-click="deleteImage($index, img)"></i>
                                     <img class="img-responsive" ng-src="{{img.previewUrl}}">
                                 </div>
                             </div>

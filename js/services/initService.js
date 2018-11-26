@@ -57,8 +57,12 @@ angular.module('MetronicApp')
      this.deleteMethod = function (data,url) {
         var deferred = $q.defer();
         var config = Constants.defaultHeader();
+        if (data.params) {
+            config.params = data.params;
+        }
+        
         var url = Constants.serverUrl + '/' + url;
-        $http.delete(url, config)
+        $http.delete(url ,config)
             .then(function (response) {
                 deferred.resolve(response);
             }).catch(function (response) {
