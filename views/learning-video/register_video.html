@@ -30,20 +30,28 @@
                 <form role="form" id="insertUserForm">
                     <div class="form-body">
                         <!-- name input -->
-                        <div class="form-group form-md-line-input has-success form-md-floating-label">
-                            <div class="input-icon">
-                                <input type="text" name="name" ng-model="newVideo.caption" class="form-control edited">
-                                <label for="form_control_1">توضیح</label>
-                                <i class="fa fa-user-o"></i>
-                            </div>
-                        </div>
-                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                         <div class="form-group form-md-line-input has-success form-md-floating-label">
                             <div class="input-icon">
                                 <input type="text" name="name" ng-model="newVideo.name" class="form-control edited">
                                 <label for="form_control_1">نام</label>
                                 <i class="fa fa-user-o"></i>
                             </div>
                         </div>
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="caption" ng-model="newVideo.caption" class="form-control edited">
+                                <label for="form_control_1">عنوان</label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newVideo.descriptionFa" class="form-control edited">
+                                <label for="form_control_1">توضیح</label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                       
                         <div class="form-group form-md-line-input has-success form-md-floating-label">
                             <div class="input-icon">
                                 <input type="text" name="name" ng-model="newVideo.order" class="form-control edited">
@@ -55,21 +63,12 @@
                         <div class="form-group form-md-line-input has-success form-md-floating-label">
                             <div class="input-icon">
                                 <input type="text" name="lastName" class="form-control edited"
-                                       ng-model="newVideo.englishVideoLengthSeconds">
-                                <label for="form_control_1">مدت زمان فیلم انگلیسی </label>
+                                       ng-model="newVideo.videoLengthSeconds">
+                                <label for="form_control_1">مدت زمان فیلم (ثانیه)</label>
                                 <i class="fa fa-user-o"></i>
                             </div>
                         </div>
-                        <!-- password input -->
-                        <div class="form-group form-md-line-input has-success form-md-floating-label">
-                            <div class="input-icon">
-                                <input type="text" name="password" class="form-control edited"
-                                       ng-model="newVideo.farsiVideoLengthSeconds">
-                                <label for="form_control_1"> مدت زمان فیلم انگلیسی</label>
-                                <!-- <span class="help-block">لطفا از حروف فارسی استفاده کنید</span> -->
-                                <i class="fa fa-key"></i>
-                            </div>
-                        </div>
+
 
 
                         <!-- user name input -->
@@ -110,9 +109,25 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Video url persian -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newVideo.farsiVideoUrl" class="form-control edited">
+                                <label for="form_control_1">ادرس رسانه (فارسی)</label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- Video url english -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newVideo.englishVideoUrl" class="form-control edited">
+                                <label for="form_control_1">ادرس رسانه (انگلیسی)</label>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
                         <!-- end cover -->
 
-                        <div id='onlymedia'>
+                    <!--     <div id='onlymedia'>
                             <p><b>انتخاب فایل انگلیسی</b></p>
                             <div class="input-group">
                                 <input type="text" class="form-control input-lg" readonly="true" ng-value="englishFileName">
@@ -151,7 +166,7 @@
                             <div ng-show="contentIsVideo()">
                                 <img id="contentImage" ng-src="{{contentSource}}" style="width: 130px;"/>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                     <div class="form-actions noborder">
