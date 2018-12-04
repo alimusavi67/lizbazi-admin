@@ -119,6 +119,8 @@ angular.module('MetronicApp')
                     for (item of $scope.resortItem.features) {
                         if (item.id === featureId) {
                             $scope.newResort = item;
+                            $scope.newResort.iconMediaId = $scope.newResort.iconMedia.id;
+                            debugger
                         }
                     }
                     // listingDate2();

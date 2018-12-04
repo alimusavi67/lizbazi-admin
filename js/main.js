@@ -441,12 +441,15 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
 
                             '../assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
+                            '../assets/global/plugins/datatables/datatables.all.min.js',
+                            '../assets/pages/scripts/table-datatables-managed.min.js',
                             '../assets/global/plugins/select2/js/select2.full.min.js',
                             '../assets/pages/scripts/components-select2.min.js',
                             '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
                             '../assets/global/plugins/persian-datepicker/js/persian-date.js',
                             '../assets/global/plugins/persian-datepicker/js/persian-datepicker-0.4.5.min.js',
                             '../assets/pages/scripts/ui-toastr.js',
+                            '../assets/pages/scripts/ui-confirmations.js',
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 

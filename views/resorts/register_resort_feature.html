@@ -73,7 +73,7 @@
                             <div class="input-icon">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                        <img ng-src="{{(newResort.iconMedia)? '/api/media/' + newResort.iconMedia.id + '/file?preview=true' : '../../assets/no-image.png'}}" alt="" /> </div>
+                                        <img ng-src="{{(newResort.iconMedia)?  newResort.iconMedia.previewUrl  : '../../assets/no-image.png'}}" alt="" /> </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
                                     <div>
                                         <span class="btn green btn-file uplodp-btn">
