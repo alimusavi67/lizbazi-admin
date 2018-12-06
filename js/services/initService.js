@@ -15,6 +15,7 @@ angular.module('MetronicApp')
         var deferred = $q.defer();
         var config = Constants.defaultHeader();
         var url = Constants.serverUrl + '/' + url;
+        config.params = data.params;
         var That = this;
         $http.get(url, config)
             .then(function (response) {

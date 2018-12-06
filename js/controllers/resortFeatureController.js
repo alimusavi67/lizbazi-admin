@@ -126,7 +126,7 @@ angular.module('MetronicApp')
                     // listingDate2();
                 }
 	            $timeout(function(){
-                    initTable();
+                    initTable();activity.html
 	      			toolTipHandler();
                     UIConfirmations.init();
 	            },100);
