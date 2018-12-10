@@ -51,11 +51,11 @@ angular.module('MetronicApp')
 
             initService.getMethod(data, 'notification/admin')
                 .then(function (resault) {
-                    $scope.notifList = resault.data.data;
-                    // for(att of $scope.notifList){
-                    //     var date = parseInt(att.created_at * 1000);
-                    //     att.created_at = convertDate(date);
-                    // }
+                    $scope.notifList = resault.data.content.notifications;
+                    for(att of $scope.notifList){
+                        var date = parseInt(att.creationDate);
+                        att.creationDate = convertDate(date);
+                    }
                     if ( $.fn.DataTable.isDataTable('#users_table') ) {
                         $('#users_table').DataTable().destroy();
                         $timeout(function(){
@@ -289,7 +289,6 @@ angular.module('MetronicApp')
         }
 
         function convertDate(date) {
-            date = parseInt(date) * 1000;
             var day = new persianDate(date).format('YYYY/MM/DD');
             return day;
         }
