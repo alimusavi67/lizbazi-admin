@@ -1,0 +1,86 @@
+[
+      {
+        "iconMediaId": "f65f7b85-7aa1-4036-926f-0699cd8a84ec",
+        "title": "Cable car Lift",
+        "value": "0",
+        "color": "7387d0",
+        "displayOrder": 9
+      },
+      {
+        "iconMediaId": "e316570c-f4d4-4faf-9cd4-4785b11a94dd",
+        "title": "Ticket Price WE",
+        "value": "98000 t",
+        "color": "73d0b2",
+        "displayOrder": 5
+      },
+      {
+        "iconMediaId": "a0e40c9b-b56a-4a9a-81de-fe1bf8bb8ae6",
+        "title": "Resturant",
+        "value": "1",
+        "color": "73d0cd",
+        "displayOrder": 4
+      },
+      {
+        "iconMediaId": "c8bd47e3-f7f6-4fa9-bf95-1d3c6eed9704",
+        "title": "Ticket Price",
+        "value": "98000 t",
+        "color": "73c2d0",
+        "displayOrder": 6
+      },
+      {
+        "iconMediaId": "632d7c0a-13ef-42ec-9c0a-a11a7d1f92e5",
+        "title": "Train",
+        "value": "Tehran",
+        "color": "d07394",
+        "displayOrder": 2
+      },
+      {
+        "iconMediaId": "670e21fe-0520-48a0-b8d7-b07b91c13ab0",
+        "title": "Phone",
+        "value": "+982124875000",
+        "color": "80d073",
+        "displayOrder": 7
+      },
+      {
+        "iconMediaId": "f3d28aaa-fd0f-454c-b91e-4e3836c896e1",
+        "title": "Website",
+        "value": "http://tochal.org/",
+        "color": "c2d073",
+        "displayOrder": 8
+      },
+      {
+        "iconMediaId": "8c71414f-5fb1-48fb-9cde-ad6b78e7ae92",
+        "title": "Ski lift",
+        "value": "2",
+        "color": "b773d0",
+        "displayOrder": 12
+      },
+      {
+        "iconMediaId": "2a827c23-23b9-41cf-8f28-b1ed186cc58d",
+        "title": "Airport",
+        "value": "Tehran",
+        "color": "cf73d0",
+        "displayOrder": 1
+      },
+      {
+        "iconMediaId": "11f8a49a-405d-495c-95a0-6c9855104b9f",
+        "title": "Hotel",
+        "value": "1",
+        "color": "d08273",
+        "displayOrder": 3
+      },
+      {
+        "iconMediaId": "d82f264c-1455-4e45-8973-cf63b127c155",
+        "title": "Cable car",
+        "value": "0",
+        "color": "8773d0",
+        "displayOrder": 10
+      },
+      {
+        "iconMediaId": "347332c5-1c48-40a5-a5a5-e21d034e6072",
+        "title": "Chairlift",
+        "value": "2",
+        "color": "9a73d0",
+        "displayOrder": 11
+      }
+]

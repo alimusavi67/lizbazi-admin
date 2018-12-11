@@ -125,7 +125,7 @@ angular.module('MetronicApp')
                     // listingDate2();
                 }
 	            $timeout(function(){
-                    initTable();activity.html
+                    initTable();
 	      			toolTipHandler();
                     UIConfirmations.init();
 	            },100);
@@ -373,7 +373,7 @@ angular.module('MetronicApp')
                     }
                 ],
                 "order": [
-                    [1, "asc"]
+                    [0, "asc"]
                 ], // set first column as a default sort by asc
                 "language": Constants.tableTranslations
             });

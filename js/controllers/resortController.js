@@ -10,8 +10,8 @@
 
 angular.module('MetronicApp')
 .controller('resortController',
-	['$timeout','$rootScope','$location','$stateParams', '$state', '$window', '$scope','$q','$cookieStore', '$timeout','settings','initService','$state','Constants','$interval',
- function($timeout,$rootScope,$location,$stateParams, $state, $window,  $scope,$q,$cookieStore, $timeout, settings,initService,$state,Constants,$interval) {
+	['$timeout','$rootScope','$location','$stateParams', '$state', '$window', '$scope','$q','$cookieStore', '$timeout','settings','initService','$state','Constants','$interval', '$http',
+ function($timeout,$rootScope,$location,$stateParams, $state, $window,  $scope,$q,$cookieStore, $timeout, settings,initService,$state,Constants,$interval, $http) {
     $scope.$on('$viewContentLoaded', function() {   
         // initialize core components
         App.initAjax();
@@ -37,6 +37,7 @@ angular.module('MetronicApp')
         $scope.userAdded = true;
         $scope.imageList = [];
         // $scope.newResort.photoMediaIds = [];
+        getFeatureList();
 
         if ($stateParams.resortId) { // If user id is set so Mode is update
             var resortId = $stateParams.resortId;
@@ -59,10 +60,11 @@ angular.module('MetronicApp')
                 initService.postMethod($scope.newResort, 'resort')
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
-                        if ( resault.code === 0 ) {
+                        if ( resault.data.code === 0 ) {
                             var msg = 'عملیات با موفقیت انجام شد';
                             UIToastr.init('success', msg);
-                            $location.path('resorts/all')
+                            $location.path('resorts/all');
+                            submitDefaultFeature(resault.data.content.id);
                         }
                         else {
                             var msg = resault.data.message;
@@ -593,22 +595,22 @@ angular.module('MetronicApp')
                 // set the initial value
                 "pageLength": 5,            
                 "pagingType": "bootstrap_full_number",
-                "columnDefs": [
+                 "columnDefs": [
                     {  // set default column settings
                         'orderable': false,
                         'targets': [0]
-                    }, 
+                    },
                     {
                         "searchable": false,
                         "targets": [0]
                     },
                     {
-                        "className": "dt-right", 
+                        "className": "dt-right",
                         //"targets": [2]
                     }
                 ],
                 "order": [
-                    [1, "asc"]
+                    [0, "asc"]
                 ], // set first column as a default sort by asc
                 "language": Constants.tableTranslations
             });
@@ -650,14 +652,6 @@ angular.module('MetronicApp')
             return out;
         }
 
-        function fillBirthDateValue(time) {
-            if (time != null && time != "") {
-                var time_stamp = parseInt(time);
-                val = convertDate(time_stamp)
-                listingDate2(time_stamp);
-            }
-        }
-
         function convertDate(date) {
             var day = new persianDate(date).format('YYYY/MM/DD');
             return day;
@@ -678,6 +672,31 @@ angular.module('MetronicApp')
                 }
             });
         });
+        // ========== Get default features
+        function getFeatureList()
+        {
+            $http.get('views/resorts/resortFeatures.json').then(function(response) {
+               $scope.defaultFeature = response.data;
+            });
+        }
+        // ========== submit default features
+        function submitDefaultFeature(resortId)
+        {
+            debugger
+            let i = 0;
+            for(feature of $scope.defaultFeature)
+            {
+                var url = `resort/${resortId}/features`
+                initService.postMethod(feature, url)
+                    .then(function (resault) {
+                        console.log(`Feature ${i} stored !`);
+                        i ++;
+                    })
+                    .catch(function (error) {
+                        // TODO : if smth went wrong re store feature
+                    });
+            }
+        }
 
     });
 }]);
