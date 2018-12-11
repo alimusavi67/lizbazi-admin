@@ -159,7 +159,6 @@ angular.module('MetronicApp')
                     $scope.newinstructor.contactInfoPhotoMediaId =  $scope.newinstructor.contactInfoPhotoMedia.id;
                 }
 
-                debugger
                 $timeout(function(){
                     ComponentsSelect2.init();
                 }, 500);

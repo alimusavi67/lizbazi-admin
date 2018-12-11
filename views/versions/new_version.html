@@ -56,9 +56,7 @@
                         <!-- active  -->
                         <div class="form-group form-md-line-input has-success form-md-floating-label">
                             <div class="input-icon">
-                                <select ng-model="newVersiom.active" name="roles" class="form-control select2 edited">
-                                    <option value="true" selected>فعال</option>
-                                    <option value="false">غیر فعال</option>
+                                <select ng-model="newVersiom.active" name="active" class="form-control select2 edited" ng-options="item.value as item.name for item in trueFalseState">
                                 </select>
                                 <label for="form_control_1"> وضعیت </label>
                             </div>
@@ -67,9 +65,8 @@
                         <!-- published  -->
                         <div class="form-group form-md-line-input has-success form-md-floating-label">
                             <div class="input-icon">
-                                <select ng-model="newVersiom.published" name="roles" class="form-control select2 edited">
-                                    <option value="true" selected>فعال</option>
-                                    <option value="false">غیر فعال</option>
+                                <select ng-model="newVersiom.published" name="published" class="form-control select2 edited" ng-options="item.value as item.name for item in trueFalseState">
+                                    
                                 </select>
                                 <label for="form_control_1"> وضعیت انتشار </label>
                             </div>
@@ -79,8 +76,9 @@
                         <div class="form-group form-md-line-input has-success form-md-floating-label">
                             <div class="input-icon">
                                 <select ng-model="newVersiom.platform" name="roles" class="form-control select2 edited">
-                                    <option value="Android" selected>Android</option>
-                                    <option value="IOS">IOS </option>
+                                    <option value="Android">Android</option>
+                                    <option value="IOS">IOS</option>
+                                    <option value="IOS">Web</option>
                                 </select>
                                 <label for="form_control_1"> platform  </label>
                             </div>

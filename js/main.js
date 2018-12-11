@@ -58,7 +58,6 @@ MetronicApp.controller('AppController',
         $rootScope.currentUser = false;
 
         $rootScope.logUserOut = function () {
-            debugger
             $rootScope.currentUser = null;
             cookieService.logout();
         };
@@ -860,6 +859,8 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js',
                             '../assets/pages/scripts/ui-confirmations.js',
                             '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+                            '../assets/global/plugins/persian-datepicker/js/persian-date.js',
+                            '../assets/global/plugins/persian-datepicker/js/persian-datepicker-0.4.5.min.js',
                             '../assets/pages/scripts/ui-toastr.js',
                             '../assets/pages/scripts/ui-buttons.js',
 
@@ -899,6 +900,46 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-confirmations.js',
                             '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
+                            '../assets/pages/scripts/ui-toastr.js',
+                            '../assets/pages/scripts/ui-buttons.js',
+
+                            'js/controllers/versionController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        // Store new version
+        .state('editVersion', {
+            url: "/version/:versionId/edit",
+            templateUrl: "views/versions/new_version.html",
+            data: {
+                pageTitle: 'ویرایش نسخه'
+            },
+            controller: "versionController",
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        files: [
+                            '../assets/global/plugins/datatables/datatables.min.css',
+                            '../assets/global/plugins/select2/css/select2.min.css',
+                            '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
+                            '../assets/global/plugins/bootstrap-toastr/toastr-rtl.min.css',
+                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
+
+                            '../assets/global/plugins/datatables/datatables.all.min.js',
+                            '../assets/pages/scripts/table-datatables-managed.min.js',
+                            '../assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
+                            '../assets/global/plugins/select2/js/select2.full.min.js',
+                            '../assets/pages/scripts/components-select2.min.js',
+                            '../assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js',
+                            '../assets/pages/scripts/ui-confirmations.js',
+                            '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
+                            '../assets/global/plugins/persian-datepicker/js/persian-date.js',
+                            '../assets/global/plugins/persian-datepicker/js/persian-datepicker-0.4.5.min.js',
                             '../assets/pages/scripts/ui-toastr.js',
                             '../assets/pages/scripts/ui-buttons.js',
 

@@ -7,7 +7,6 @@
 = ~Date       : 1397/08/01 
 =================================================================================
 */
-debugger
 angular.module('MetronicApp').controller('DashboardController',
  function($rootScope, $scope, $http, $timeout, $cookies, $location,initService) {
     $scope.$on('$viewContentLoaded', function() {   

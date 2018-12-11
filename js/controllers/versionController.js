@@ -19,7 +19,7 @@ angular.module('MetronicApp')
         $rootScope.settings.layout.pageContentWhite = true;
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
-        ComponentsSelect2.init();
+        // ComponentsSelect2.init();
         $('.page-content').attr('style','');
         // ================Init process========================
         var token = $cookieStore.get(Constants.cookieName).token;
@@ -28,13 +28,16 @@ angular.module('MetronicApp')
         $scope.editStudentItem = {};
         $scope.studentExtraData = {};
         $scope.versionList = [];
-        
+        $scope.trueFalseState = [
+            { name: 'فعال',value: true },
+            { name: 'غیر فعال',value: false },
+        ];
         $scope.resortItem = {};
 
-        if ($stateParams.countryId) {
+        if ($stateParams.versionId) {
             var mode = 'update';
-            var countryId = $stateParams.countryId;
-            getCountry();
+            var versionId = $stateParams.versionId;
+            getVersion();
         }
         else {
             getAllVersions();
@@ -107,7 +110,10 @@ angular.module('MetronicApp')
         	initService.getMethod(data, 'version')
 	        .then(function (resault) {
 	            $scope.versionList = resault.data.content.versions;
-            
+                for(att of $scope.versionList){
+                        var date = parseInt(att.creationDate);
+                        att.creationDate = convertDate(date);
+                    }
 	            $timeout(function(){
                     initTable();
 	      			toolTipHandler();
@@ -119,10 +125,11 @@ angular.module('MetronicApp')
 	        });
         }
         // ======== Get country by id
-        function getCountry()
+        function getVersion()
         {
             var data = {'params' :{}};
-            initService.getMethod(data, `baseInfo/countries/${countryId}`)
+
+            initService.getMethod(data, `version/${versionId}`)
             .then(function (resault) {
                 $scope.newVersiom = resault.data.content;
                 if ($scope.newVersiom.flagPhoto) {
@@ -130,24 +137,12 @@ angular.module('MetronicApp')
                 }
                 $timeout(function(){
                     ComponentsSelect2.init();
-                }, 500);
+                }, 1000);
             })
             .catch(function (error) {
                
             });
         }
-        $scope.goToEditFeature = function(feature) {
-        	var	url = '';
-        	if (feature.id) {
-        		url = '/resort/'+ resortId +'/feature/' + feature.id + '/edit';
-                $location.path(url);
-        	}
-        };
-        // ======== generate insert link
-        $scope.goToAddFeature = function() {
-                url = '#/resort/'+ resortId +'/feature/register';
-                return url
-        };
         // =============== Delete a resort feature ================
         $scope.deleteMethod = function(feature,index) {
             var data = {};
@@ -269,10 +264,10 @@ angular.module('MetronicApp')
                 "language": Constants.tableTranslations
             });
         };
-        $scope.goToEditCountry = function(country) {
+        $scope.goToEdit = function(object) {
             var url = '';
-            if (country.id) {
-                url = '/country/'+ country.id +'/edit';
+            if (object.id) {
+                url = '/version/'+ object.id +'/edit';
                 $location.path(url);
             }
         };
