@@ -218,14 +218,14 @@ angular.module('MetronicApp')
         // =============== Delete a user ================
         deleteMethod = function(uniqueId,index) {
             var data = {};
-            var url = 'suggestion/' + uniqueId;
+            var url = 'resort/' + uniqueId;
 
-            suggestionService.deleteMethod(data, url)
+            initService.deleteMethod(data, url)
             .then(function (resault) {
                 if ( resault.data.code === 0 ) {
                     var msg = resault.data.message;
                     UIToastr.init('success', msg);
-                    $scope.suggestionList.splice(index,1);
+                    $scope.resortList.splice(index,1);
                     $state.reload();
                 }
                 else if (resault.data.code === 101){
