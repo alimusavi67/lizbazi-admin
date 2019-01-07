@@ -147,7 +147,32 @@ angular.module('MetronicApp')
             }
 
         };
+        deleteMethod = function(id,index) {
+            var data = {};
+            var url = `notification/${id}`;
 
+            initService.deleteMethod(data, url)
+            .then(function (resault) {
+                if ( resault.data.code === 0 ) {
+                    var msg = resault.data.message;
+                    UIToastr.init('success', msg);
+                    $scope.notifList.splice(index,1);
+                    $state.reload();
+                }
+                else if (resault.data.code === 101){
+                        var msg = resault.data.message;
+                        console.log(msg);
+                    }
+                else {
+                    var msg = resault.data.message;
+                    UIToastr.init('success', msg);
+                }
+            })
+            .catch(function (error) {
+                var msg = error.data.message;
+                console.log(msg);
+            });
+        };
 
 
 

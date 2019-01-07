@@ -47,7 +47,8 @@
                         
                             <td>
                                 <i class='fa fa-pencil admin-op font-green-jungle' ng-click="goToEditInstructor(instructor)" data-toggle="tooltip" data-placement="top" title="ویرایش"></i>
-
+                                
+                                <i class="fa fa-trash-o admin-op font-red-mint" role="button" data-toggle="confirmation" data-content="{{instructor.id}}" data-index="{{$index}}"></i>
                             </td>
                         </tr>
 

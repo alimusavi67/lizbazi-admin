@@ -149,16 +149,16 @@ angular.module('MetronicApp')
                 return url
         };
         // =============== Delete a resort feature ================
-        $scope.deleteMethod = function(feature,index) {
+        deleteMethod = function(id,index) {
             var data = {};
-            var url = `resort/${resortId}/features/${feature.id}`;
+            var url = `baseInfo/countries/${id}`;
 
             initService.deleteMethod(data, url)
             .then(function (resault) {
                 if ( resault.data.code === 0 ) {
                     var msg = resault.data.message;
                     UIToastr.init('success', msg);
-                    $scope.resortItem.features.splice(index,1);
+                    $scope.countries.splice(index,1);
                     $state.reload();
                 }
                 else if (resault.data.code === 101){
@@ -375,7 +375,7 @@ angular.module('MetronicApp')
                     }
                 ],
                 "order": [
-                    [1, "asc"]
+                    [0, "asc"]
                 ], // set first column as a default sort by asc
                 "language": Constants.tableTranslations
             });

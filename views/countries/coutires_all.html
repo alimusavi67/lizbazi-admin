@@ -44,6 +44,8 @@
                         
                             <td>
                                 <i class='fa fa-pencil admin-op font-green-jungle' ng-click="goToEditCountry(country)" data-toggle="tooltip" data-placement="top" title="ویرایش"></i>
+                                
+                                <i class="fa fa-trash-o admin-op font-red-mint" role="button" data-toggle="confirmation" data-content="{{country.id}}" data-index="{{$index}}"></i>
 
                             </td>
                         </tr>

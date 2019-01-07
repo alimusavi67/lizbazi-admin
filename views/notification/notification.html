@@ -87,6 +87,7 @@
                             <th> زیر عنوان</th>
                             <th> متن </th>
                             <th> تاریخ </th>
+                            <th> عملیات </th>
 
                         </tr>
                         </thead>
@@ -98,6 +99,10 @@
                             <td ng-bind="user.subTitle"></td>
                             <td ng-bind="user.body"></td>
                             <td ng-bind="user.creationDate"></td>
+                            <td>
+                                
+                                <i class="fa fa-trash-o admin-op font-red-mint" role="button" data-toggle="confirmation" data-content="{{user.id}}" data-index="{{$index}}"></i>
+                            </td>
 
                         </tr>
 

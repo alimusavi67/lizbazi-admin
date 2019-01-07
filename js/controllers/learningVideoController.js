@@ -186,14 +186,14 @@ angular.module('MetronicApp')
         // =============== Delete a user ================
         deleteMethod = function(uniqueId,index) {
             var data = {};
-            var url = 'suggestion/' + uniqueId;
+            var url = 'learningVideo/' + uniqueId;
 
-            suggestionService.deleteMethod(data, url)
+            initService.deleteMethod(data, url)
             .then(function (resault) {
                 if ( resault.data.code === 0 ) {
                     var msg = resault.data.message;
                     UIToastr.init('success', msg);
-                    $scope.suggestionList.splice(index,1);
+                    $scope.videoList.splice(index,1);
                     $state.reload();
                 }
                 else if (resault.data.code === 101){
@@ -677,7 +677,7 @@ angular.module('MetronicApp')
                     }
                 ],
                 "order": [
-                    [1, "asc"]
+                    [0, "asc"]
                 ], // set first column as a default sort by asc
                 "language": Constants.tableTranslations
             });
