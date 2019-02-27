@@ -28,10 +28,12 @@ angular.module('MetronicApp')
         // ================Init process========================
         var token = $cookieStore.get(Constants.cookieName).token;
         var mode = 'create';
+        getSportFields();
         $scope.newVideo = {};
         $scope.editStudentItem = {};
         $scope.studentExtraData = {};
         $scope.resortList = [];
+        $scope.sportFields =[];
         $scope.userRoles = [];
         $scope.userPass = {};
         $scope.userAdded = true;
@@ -100,9 +102,21 @@ angular.module('MetronicApp')
 
         };
 
-       
+       function getSportFields()
+        {
+            var data = {
+                'params' :{
 
-       
+                }
+            };
+            initService.getMethod(data, 'baseInfo/sportFields')
+                .then(function (resault) {
+                    $scope.sportFields = resault.data.content;
+                })
+                .catch(function (error) {
+
+                });
+        }
         // =============== Show all users ================
         function getAllVideos()
         {
