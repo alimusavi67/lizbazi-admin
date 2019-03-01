@@ -112,6 +112,7 @@ angular.module('MetronicApp')
             initService.getMethod(data, 'baseInfo/sportFields')
                 .then(function (resault) {
                     $scope.sportFields = resault.data.content;
+                    debugger
                 })
                 .catch(function (error) {
 
