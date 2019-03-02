@@ -213,7 +213,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/jquery.sparkline.min.js',
                             '../assets/global/plugins/jquery.sparkline.min.js',
                             '../assets/pages/scripts/dashboard.min.js',
-                            'js/controllers/DashboardController.js',
+                            '../assets/main/controll/DashboardController.js',
                         ]
                     });
                 }]
@@ -239,7 +239,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/backstretch/jquery.backstretch.min.js',
                             '../assets/pages/scripts/ui-buttons.js',
 
-                            'js/controllers/loginController.js',
+                            '../assets/main/controll/loginController.js',
                         ]
                     });
                 }]
@@ -265,7 +265,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/backstretch/jquery.backstretch.min.js',
                             '../assets/pages/scripts/ui-buttons.js',
 
-                            'js/controllers/loginController.js',
+                            '../assets/main/controll/loginController.js',
                         ]
                     });
                 }]
@@ -301,7 +301,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            'js/controllers/resortController.js'
+                            '../assets/main/controll/resortController.js'
                         ]
                     });
                 }]
@@ -338,7 +338,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            'js/controllers/resortController.js'
+                            '../assets/main/controll/resortController.js'
                         ]
                     });
                 }]
@@ -375,7 +375,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            'js/controllers/resortController.js'
+                            '../assets/main/controll/resortController.js'
                         ]
                     });
                 }]
@@ -412,7 +412,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            'js/controllers/resortFeatureController.js'
+                            '../assets/main/controll/resortFeatureController.js'
                         ]
                     });
                 }]
@@ -452,7 +452,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            'js/controllers/resortFeatureController.js'
+                            '../assets/main/controll/resortFeatureController.js'
                         ]
                     });
                 }]
@@ -489,7 +489,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            'js/controllers/resortFeatureController.js'
+                            '../assets/main/controll/resortFeatureController.js'
                         ]
                     });
                 }]
@@ -525,7 +525,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            'js/controllers/learningVideoController.js'
+                            '../assets/main/controll/learningVideoController.js'
                         ]
                     });
                 }]
@@ -562,7 +562,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            'js/controllers/learningVideoController.js'
+                            '../assets/main/controll/learningVideoController.js'
                         ]
                     });
                 }]
@@ -599,7 +599,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            'js/controllers/learningVideoController.js'
+                            '../assets/main/controll/learningVideoController.js'
                         ]
                     });
                 }]
@@ -636,7 +636,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
 
 
-                            'js/controllers/countryController.js'
+                            '../assets/main/controll/countryController.js'
                         ]
                     });
                 }]
@@ -674,7 +674,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
                             '../assets/pages/scripts/ui-buttons.js',
 
-                            'js/controllers/countryController.js'
+                            '../assets/main/controll/countryController.js'
                         ]
                     });
                 }]
@@ -712,7 +712,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
                             '../assets/pages/scripts/ui-buttons.js',
 
-                            'js/controllers/countryController.js'
+                            '../assets/main/controll/countryController.js'
                         ]
                     });
                 }]
@@ -748,7 +748,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            'js/controllers/instructorController.js'
+                            '../assets/main/controll/instructorController.js'
                         ]
                     });
                 }]
@@ -787,7 +787,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
 
 
-                            'js/controllers/instructorController.js'
+                            '../assets/main/controll/instructorController.js'
                         ]
                     });
                 }]
@@ -826,7 +826,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
 
 
-                            'js/controllers/instructorController.js'
+                            '../assets/main/controll/instructorController.js'
                         ]
                     });
                 }]
@@ -865,7 +865,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
 
 
-                            'js/controllers/versionController.js'
+                            '../assets/main/controll/versionController.js'
                         ]
                     });
                 }]
@@ -903,7 +903,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
                             '../assets/pages/scripts/ui-buttons.js',
 
-                            'js/controllers/versionController.js'
+                            '../assets/main/controll/versionController.js'
                         ]
                     });
                 }]
@@ -943,7 +943,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
                             '../assets/pages/scripts/ui-buttons.js',
 
-                            'js/controllers/versionController.js'
+                            '../assets/main/controll/versionController.js'
                         ]
                     });
                 }]
@@ -982,7 +982,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            'js/controllers/notificationController.js'
+                            '../assets/main/controll/notificationController.js'
                         ]
                     });
                 }]
@@ -1019,7 +1019,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            'js/controllers/notificationController.js'
+                            '../assets/main/controll/notificationController.js'
                         ]
                     });
                 }]
