@@ -36,7 +36,10 @@ angular.module('MetronicApp')
         $scope.userPass = {};
         $scope.userAdded = true;
         $scope.imageList = [];
+        $scope.sportFields = [];
+        getSportFields();
         // $scope.newResort.photoMediaIds = [];
+        getFeatureList();
         getFeatureList();
 
         if ($stateParams.resortId) { // If user id is set so Mode is update
@@ -696,6 +699,17 @@ angular.module('MetronicApp')
                         // TODO : if smth went wrong re store feature
                     });
             }
+        }
+        function getSportFields()
+        {
+            var data = {'params' :{}};
+            initService.getMethod(data, 'baseInfo/sportFields')
+                .then(function (resault) {
+                    $scope.sportFields = resault.data.content;
+                })
+                .catch(function (error) {
+
+                });
         }
 
     });
