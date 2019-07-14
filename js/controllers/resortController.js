@@ -20,6 +20,7 @@ angular.module('MetronicApp')
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
         ComponentsSelect2.init();
+        getSportFields();
         $('.page-content').attr('style','');
         UIIdleTimeout.init($location.$$url);
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
@@ -36,6 +37,7 @@ angular.module('MetronicApp')
         $scope.userPass = {};
         $scope.userAdded = true;
         $scope.imageList = [];
+        $scope.sportFields = [];
         // $scope.newResort.photoMediaIds = [];
         getFeatureList();
 
@@ -69,7 +71,6 @@ angular.module('MetronicApp')
                         else {
                             var msg = resault.data.message;
                             UIToastr.init('info', msg);
-                            $scope.newResort = {};
                         }
 
                     })
@@ -696,6 +697,17 @@ angular.module('MetronicApp')
                         // TODO : if smth went wrong re store feature
                     });
             }
+        }
+        function getSportFields()
+        {
+            var data = {'params' :{}};
+            initService.getMethod(data, 'baseInfo/sportFields')
+                .then(function (resault) {
+                    $scope.sportFields = resault.data.content;
+                })
+                .catch(function (error) {
+
+                });
         }
 
     });
