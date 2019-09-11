@@ -122,6 +122,21 @@ angular.module('MetronicApp')
                     UIToastr.init('warning', 'خطای سرور');
                 });
         }
+        $scope.verifyUser = function(user) {
+            let data = {};
+            data.username = user.username;
+            initService.postMethod(data, `user/verify`)
+                .then(function (resault) {
+                    debugger
+                   if (resault.status == 200) {
+
+                    UIToastr.init('info', 'با موفقیت انجام شد');
+                   }
+                })
+                .catch(function (error) {
+                    UIToastr.init('warning', 'خطای سرور');
+                });
+        }
         // ================= get all parent ==========
         function getAllCountry()
         {

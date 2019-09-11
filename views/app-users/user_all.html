@@ -27,6 +27,7 @@
                             <th> نام کاربری </th>
                             <th> رشته ورزشی  </th>
                             <th> تصوییر پروفایل  </th>
+                            <th> ایمیل </th>
                             <th> وضعیت  </th>
                            
                             <th> عملیات </th>
@@ -38,10 +39,11 @@
                             <td ng-bind="$index + 1"></td>
                             <td ng-bind="user.fullName"></td>
                             <td ng-bind="user.username"></td>
-                            <td ng-bind="user.sportField"></td>
+                            <td>{{(user.sportField)?user.sportField.value : 'تعریف نشده'}}</td>
                             <td class="center img-box">
                                 <img src="{{user.profilePicture.previewUrl}}" alt="">
                             </td>
+                            <td ng-bind="user.email"></td>
                             <td>
                                 <a href="#" ng-click="activateUser(user)">
                                     {{ (user.active)?'فعال':'غیر فعال'}}
@@ -51,10 +53,12 @@
                                 <i class='fa fa-pencil admin-op font-green-jungle' ng-click="goToEdit(resort)" data-toggle="tooltip" data-placement="top" title="ویرایش"></i>
                                 <!-- <i class='fa fa-book admin-op font-green-jungle' ng-click="goToResortFeature(resort)" data-toggle="tooltip" data-placement="top" title="ویژگی ها"></i> -->
 
-                               <!--  <i class="user-status fa admin-op" ng-click="activateUser(user,$event)" data-toggle="tooltip" data-placement="top"
+                                <i class="user-status fa admin-op" ng-click="activateUser(user,$event)" data-toggle="tooltip" data-placement="top"
                                 title="{{(user.active)?'غیر فعال کردن':'فعال کردن'}}"
-                                ng-class="(user.active) ? 'fa-check-circle-o font-green-seagreen' : 'fa-times-circle-o font-yellow-gold'"></i> -->
-
+                                ng-class="(user.active) ? 'fa-check-circle-o font-green-seagreen' : 'fa-times-circle-o font-yellow-gold'"></i>
+                                <i class="user-status fa admin-op" ng-click="verifyUser(user,$event)" data-toggle="tooltip" data-placement="top"
+                                title="{{(user.verify)?'عدم تصدیق هویت' : 'تصدیق هویت'}}"
+                                ng-class="(user.verify) ? 'fa-check-circle-o font-green-seagreen' : 'fa-times-circle-o font-yellow-gold'"></i>
                                 <i class="fa fa-trash-o admin-op font-red-mint" role="button" data-toggle="confirmation" data-content="{{resort.id}}" data-index="{{$index}}"></i>
                             </td>
                         </tr>
