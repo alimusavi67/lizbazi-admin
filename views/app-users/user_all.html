@@ -28,8 +28,7 @@
                             <th> رشته ورزشی  </th>
                             <th> تصوییر پروفایل  </th>
                             <th> ایمیل </th>
-                            <th> وضعیت  </th>
-                           
+                            <th> شماره موبایل </th>
                             <th> عملیات </th>
                         </tr>
                     </thead>
@@ -43,12 +42,8 @@
                             <td class="center img-box">
                                 <img src="{{user.profilePicture.previewUrl}}" alt="">
                             </td>
-                            <td ng-bind="user.email"></td>
-                            <td>
-                                <a href="#" ng-click="activateUser(user)">
-                                    {{ (user.active)?'فعال':'غیر فعال'}}
-                                </a>
-                            </td>
+                            <td>{{(user.email ? user.email : 'ثبت نشده')}}</td>
+                            <td>{{(user.mobileNo ? user.mobileNo : 'ثبت نشده')}}</td>
                             <td>
                                 <i class='fa fa-pencil admin-op font-green-jungle' ng-click="goToEdit(resort)" data-toggle="tooltip" data-placement="top" title="ویرایش"></i>
                                 <!-- <i class='fa fa-book admin-op font-green-jungle' ng-click="goToResortFeature(resort)" data-toggle="tooltip" data-placement="top" title="ویژگی ها"></i> -->
