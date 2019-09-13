@@ -198,7 +198,13 @@ angular.module('MetronicApp')
                 $location.path(url);
             }
         };
-
+        $scope.goToResortComments = function(resort) {
+            var    url = '';
+            if (resort.id) {
+                url = '/comments/resort/' + resort.id;
+                $location.path(url);
+            }
+        };
         // =============== delete image =================
         $scope.deleteImage = function(index, img) {
             $scope.imageList.splice(index, 1);
@@ -685,7 +691,6 @@ angular.module('MetronicApp')
         // ========== submit default features
         function submitDefaultFeature(resortId)
         {
-            debugger
             let i = 0;
             for(feature of $scope.defaultFeature)
             {

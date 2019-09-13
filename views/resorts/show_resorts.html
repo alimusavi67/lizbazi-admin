@@ -53,6 +53,8 @@
                                 ng-class="(user.active) ? 'fa-check-circle-o font-green-seagreen' : 'fa-times-circle-o font-yellow-gold'"></i> -->
 
                                 <i class="fa fa-trash-o admin-op font-red-mint" role="button" data-toggle="confirmation" data-content="{{resort.id}}" data-index="{{$index}}"></i>
+                                <i class='fa fa-comment admin-op font-green-jungle' ng-click="goToResortComments(resort)" data-toggle="tooltip" data-placement="top" title="نظرات"></i>
+
                             </td>
                         </tr>
 

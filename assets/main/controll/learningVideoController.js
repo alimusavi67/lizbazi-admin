@@ -197,6 +197,13 @@ angular.module('MetronicApp')
                 $location.path(url);
             }
         };
+        $scope.goToResortComments = function(video) {
+            var    url = '';
+            if (video.id) {
+                url = '/comments/video/' + video.id;
+                $location.path(url);
+            }
+        };
         // =============== Delete a user ================
         deleteMethod = function(uniqueId,index) {
             var data = {};
