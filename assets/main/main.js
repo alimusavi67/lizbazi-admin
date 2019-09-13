@@ -301,7 +301,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/resortController.js?1502'
+                            '../assets/main/controll/resortController.js?1503'
                         ]
                     });
                 }]
@@ -338,7 +338,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            '../assets/main/controll/resortController.js'
+                            '../assets/main/controll/resortController.js?1503'
                         ]
                     });
                 }]
@@ -375,7 +375,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            '../assets/main/controll/resortController.js'
+                            '../assets/main/controll/resortController.js?1503'
                         ]
                     });
                 }]
