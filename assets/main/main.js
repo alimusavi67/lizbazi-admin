@@ -1089,12 +1089,14 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/select2/js/select2.full.min.js',
                             '../assets/pages/scripts/components-select2.min.js',
                             '../assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js',
+                            '../assets/global/plugins/persian-datepicker/js/persian-date.js',
+                            '../assets/global/plugins/persian-datepicker/js/persian-datepicker-0.4.5.min.js',
                             '../assets/pages/scripts/ui-confirmations.js',
                             '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/commentController.js?1503'
+                            '../assets/main/controll/commentController.js?1504'
                         ]
                     });
                 }]
