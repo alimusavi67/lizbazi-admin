@@ -301,7 +301,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/resortController.js?1504'
+                            '../assets/main/controll/resortController.js?1505'
                         ]
                     });
                 }]
@@ -338,7 +338,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            '../assets/main/controll/resortController.js?1504'
+                            '../assets/main/controll/resortController.js?1505'
                         ]
                     });
                 }]
@@ -375,7 +375,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            '../assets/main/controll/resortController.js?1504'
+                            '../assets/main/controll/resortController.js?1505'
                         ]
                     });
                 }]
@@ -525,7 +525,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/learningVideoController.js?1500'
+                            '../assets/main/controll/learningVideoController.js?1501'
                         ]
                     });
                 }]
@@ -562,7 +562,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            '../assets/main/controll/learningVideoController.js?1500'
+                            '../assets/main/controll/learningVideoController.js?1501'
                         ]
                     });
                 }]
@@ -599,7 +599,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            '../assets/main/controll/learningVideoController.js?1500'
+                            '../assets/main/controll/learningVideoController.js?1501'
                         ]
                     });
                 }]
