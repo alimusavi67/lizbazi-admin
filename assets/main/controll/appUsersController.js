@@ -28,7 +28,6 @@ angular.module('MetronicApp')
         // ================Init process========================
         var token = $cookieStore.get(Constants.cookieName).token;
         var mode = 'create';
-        $scope.countryId = '01ccdbdf-1907-48a5-9bce-e6913b2f4e66';
         getAllCountry();
         $scope.userList = {};
 
