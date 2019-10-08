@@ -192,3 +192,8 @@ i.fileinput-exists:hover {
   height: 100%;
   object-fit: contain;
 }
+.filter-holder {
+    background-color: #f0f0f0;
+    padding: 15px 5px;
+    box-shadow: 2px 2px 5px 0px;
+}

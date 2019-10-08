@@ -101,7 +101,6 @@ angular.module('MetronicApp')
             initService.getMethod(data, 'user')
                 .then(function (resault) {
                     $scope.userList = resault.data.content;
-                    debugger
                 })
                 .catch(function (error) {
 
