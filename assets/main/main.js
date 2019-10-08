@@ -865,7 +865,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
 
 
-                            '../assets/main/controll/appUsersController.js?1503'
+                            '../assets/main/controll/appUsersController.js?1504'
                         ]
                     });
                 }]

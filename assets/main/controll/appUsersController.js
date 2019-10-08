@@ -712,7 +712,7 @@ angular.module('MetronicApp')
                             "size": d.length,
                             "countryId": $scope.countryId,
                             "mobileNo": $scope.mobileNo,
-                            "username": $scope.username,
+                            "username": $scope.username
                         });
                     }
                 },
