@@ -690,8 +690,9 @@ angular.module('MetronicApp')
                         },
                     dataSrc: function(json){
                        json.draw = json.content.draw;
-                       json.recordsTotal = Number(json.content.filteredRecordsCount);
-                       json.recordsFiltered = Number(json.content.totalRecordsCount);
+                       json.recordsTotal = Number(json.content.totalRecordsCount);
+                       json.recordsFiltered = Number(json.content.filteredRecordsCount);
+                       debugger
                        return json.content.users;
                     },
                     'beforeSend': function (request) {

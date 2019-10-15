@@ -865,7 +865,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
 
 
-                            '../assets/main/controll/appUsersController.js?1507'
+                            '../assets/main/controll/appUsersController.js?1509'
                         ]
                     });
                 }]
@@ -1066,7 +1066,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         })
         // Show Comments
         .state('showComments', {
-            url: "/comments/:mediaType/:mediaId",
+            url: "/comments/:mediaType",
             templateUrl: "views/comments/comments_all.html",
             data: {
                 pageTitle: 'کامنت ها'
@@ -1096,7 +1096,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/commentController.js?1504'
+                            '../assets/main/controll/commentController.js?1506'
                         ]
                     });
                 }]

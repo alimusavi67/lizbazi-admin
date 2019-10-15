@@ -32,29 +32,27 @@ angular.module('MetronicApp')
         $scope.mediaType = '';
         $scope.desUrl = '';
         $scope.userList = {};
+        $scope.moderationStatus = 'WaitForApprove';
 
         if ($stateParams.mediaType) { // If user id is set so Mode is update
             $scope.mediaType = $stateParams.mediaType;
-            let data = {'params' :{}};
+            let data = {'params' :{
+                page: 1,
+                size: 10
+            }};
             switch($scope.mediaType) {
                 case 'resort':
-                    $scope.desUrl = `comment/resort/${$stateParams.mediaId}`;
+                    $scope.desUrl = `/api/comment/resort/filter`;
                     $scope.moderateUrl = 'comment/resort/';
                     break;
                 case 'video':
-                    $scope.desUrl = `comment/learningVideo/${$stateParams.mediaId}`;
+                    $scope.desUrl = `/api/comment/learningVideo/filter`;
                     $scope.moderateUrl = 'comment/learningVideo/';
                     break;
             }
-            getComments(data)
+            initil_table();
             mode = 'create';
-        } else if ($location.$$url == '/users/all') {
-            getAllUsers();
-        } else {
-            
         }
-
-
         $scope.registerVideo = function() {
             // create a new user when mode is `create`
             if (mode === 'create'){
@@ -751,13 +749,8 @@ angular.module('MetronicApp')
         }
 
         function convertDate(date) {
-            var day = new persianDate(date).format('YYYY/MM/DD');
+            var day = new persianDate(date).format('LLLL');
             return day;
-        }
-        $scope.openData = function(comment)
-        {
-            $scope.commentObj = comment;
-            $('#idle-timeout-dialog').modal('show');
         }
        $scope.approveComment = function() {
            let data = {
@@ -792,6 +785,195 @@ angular.module('MetronicApp')
             let day = new persianDate(fromDate).format('LLLL');
              return day
           }
+         // ============== initil functions ================
+        //
+        function initil_table() {
+            var oldExportAction = function(self, e, dt, button, config) {
+                    if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        if ($.fn.dataTable.ext.buttons.excelHtml5.available(dt, config)) {
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config);
+                        } else {
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                        }
+                    } else if (button[0].className.indexOf('buttons-print') >= 0) {
+                        $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+                    }
+            };
+            var newExportAction = function(e, dt, button, config) {
+                var self = this;
+                var oldStart = dt.settings()[0]._iDisplayStart;
+
+                dt.one('preXhr', function(e, s, data) {
+                    // Just this once, load all data from the server...
+                    data.start = 0;
+                    data.limit = -1;
+
+                    dt.one('preDraw', function(e, settings) {
+                        // Call the original action function 
+                        oldExportAction(self, e, dt, button, config);
+
+                        dt.one('preXhr', function(e, s, data) {
+                            // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                            // Set the property to what it was before exporting.
+                            settings._iDisplayStart = oldStart;
+                            data.start = oldStart;
+                        });
+
+                        // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                        setTimeout(dt.ajax.reload, 0);
+
+                        // Prevent rendering of the full data to the DOM
+                        return false;
+                    });
+                });
+
+                // Requery the server with the new one-time export settings
+                dt.ajax.reload();
+            };
+            var table = $('#users_table2').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "bFilter": false,
+                "info": false,
+
+                "lengthMenu": [
+                    [5, 15, 20],
+                    [5, 15, 20] // change per page values here
+                ],
+                "pagingType": "full_numbers",
+                "ajax": {
+                    "url": $scope.desUrl,                    
+                    error: function( objAJAXRequest, strError ){
+                        $("#balance_report_processing").css("height", "60px");
+
+                        $( "#balance_report_processing" ).text(
+                       "پاسخ در زمان مناسب دریافت نشد"
+                        );
+                        },
+                    dataSrc: function(json){
+                       json.draw = json.content.draw;
+                       json.recordsTotal = Number(json.content.totalRecordsCount);
+                       json.recordsFiltered = Number(json.content.filteredRecordsCount);
+                       $scope.comments = json.content.comments;
+                       return json.content.comments;
+                    },
+                    'beforeSend': function (request) {
+                        request.setRequestHeader('Content-Type','application/json;charset=utf-8');
+                        request.setRequestHeader('Accept','application/json');
+                        request.setRequestHeader("X-Platform" ,"Web");
+                        request.setRequestHeader("X-Version" ,"1.0");
+                        request.setRequestHeader("X-BuildNo" ,"1");
+                    },
+                    "data": function(d) {
+                        // get time and convert
+                        $scope.pageIndex = (d.start / d.length);
+                        $scope.pageSize = d.length;
+                        return $.extend({}, d, {
+                            "page": (d.start / d.length),
+                            "size": d.length,
+                            "moderationStatus": $scope.moderationStatus
+                        });
+                    }
+                },
+                // ======== Read data from server and show in rows
+                // ======== Add default column for show details
+                "aoColumnDefs": [
+                    { bSortable: false, aTargets: [0,1,2,3,4] },
+                    {
+                        "aTargets": [ 0 ],
+                        "mData": "rowNumber",
+                        "mRender": function ( data, type, full, rowData ) {
+                             let row = ($scope.pageIndex  * $scope.pageSize)+ (rowData.row + 1)
+                            return row;
+                        }
+                    }, 
+                    {
+                      "aTargets": [ 1 ],
+                      "mData": "author",
+                      "mRender": function ( data, type, full ) {
+                        return data.fullName;
+                      }
+                    },
+                    {
+                        "aTargets": [ 2 ],
+                        "data": "country",
+                        "mRender": function ( data, type, full ) {
+                            return data.name;
+                        }
+                    },
+                    {
+                    "aTargets": [ 3 ],
+                      "mData": "creationDate",
+                      "mRender": function ( data, type, full ) {
+                          let day = '---';
+                          if (data) {
+                              day = convertDate(data);
+                          }
+                        return day;
+                      }
+                    },
+                     {
+                      "aTargets": [ 4 ],
+                      "mData": "text",
+                      "mRender": function ( data, type, full,rowdata ) {
+                          let content = '---'
+                          if (data) {
+                              content = `<a data-text="${rowdata.row}" class="cm-text"> 
+                                    ${data.substr(0, 160)}...
+                                </a>`;
+                          }
+                            return content;
+                      }
+                    }
+                ],
+                "columnDefs": [{ // set default column settings
+                    'orderable': false,
+                    'targets': [0, 1, 2, 3, 4]
+                }],
+                "language": Constants.tableTranslations,
+                dom: 'Blfrtip',
+                buttons: [{
+                        extend: 'excelHtml5',
+                        title: 'گزارش موجودی',
+                        text: 'خروجی excel',
+                        action: newExportAction,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4]
+                        },
+                    },
+
+                    {
+                        extend: 'print',
+                        title: 'گزارش موجودی',
+                        text: 'پرینت لیست',
+                        action: newExportAction,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        customize: function(win) {
+                            $(win.document.body)
+                                .css('font-size', '10pt')
+                                .css('text-align', 'center')
+                                .css('padding-right', '10%')
+                                .css('background-color', '#c2c2c2')
+                                .prepend(
+                                    '<span>همراه کارت</span>'
+                                );
+
+                            $(win.document.body).find('table')
+                                .addClass('print-preview')
+                        }
+                    }
+                ],
+
+            });
+            $scope.dataTableObj = table;
+        }
+        // =================== Get report data by ajax =============
+        $scope.getAjaxData = function()
+        {
+            $scope.dataTableObj.draw();
+        }
         // ================== Jquery handler ==================
         $(document).on('click','ul.pagination > li  ',function(event){
             $timeout(function(){
@@ -805,6 +987,15 @@ angular.module('MetronicApp')
                     return false;
                 }
             });
+        });
+        function setCommentObj(index) {
+            $scope.commentObj = $scope.comments[index];
+            $scope.$apply();
+            $('#idle-timeout-dialog').modal('show');
+        }
+        $(document).on('click', '.cm-text', function(e){
+            let index = $(this).attr('data-text');
+            setCommentObj(index)
         });
 
     });

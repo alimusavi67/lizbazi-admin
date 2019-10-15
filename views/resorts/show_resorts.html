@@ -9,10 +9,16 @@
                     <span class="caption-subject bold uppercase">فهرست  پیست ها</span>
                 </div>
             </div>
-            <div class="col-sm-3 col-xs-12 pull-left">
+            <div class="col-sm-2 col-xs-12 pull-left">
                 <span class="input-group-btn">
                     <a href="/#/resort/register" class="btn green" id="username1_checker">
                         <i class="fa fa-plus add-new-row"></i>ثبت پیست</a>
+                </span>
+            </div>
+            <div class="col-sm-2 col-xs-12 pull-left">
+                <span class="input-group-btn">
+                    <a href="/#/comments/resort" class="btn green" id="username1_checker">
+                        <i class="fa fa-comment add-new-row"></i>مشاهده نظرات</a>
                 </span>
             </div>
             <div class="portlet-body">
@@ -53,7 +59,7 @@
                                 ng-class="(user.active) ? 'fa-check-circle-o font-green-seagreen' : 'fa-times-circle-o font-yellow-gold'"></i> -->
 
                                 <i class="fa fa-trash-o admin-op font-red-mint" role="button" data-toggle="confirmation" data-content="{{resort.id}}" data-index="{{$index}}"></i>
-                                <i class='fa fa-comment admin-op font-green-jungle' ng-click="goToResortComments(resort)" data-toggle="tooltip" data-placement="top" title="نظرات"></i>
+                                <!-- <i class='fa fa-comment admin-op font-green-jungle' ng-click="goToResortComments(resort)" data-toggle="tooltip" data-placement="top" title="نظرات"></i> -->
 
                             </td>
                         </tr>
