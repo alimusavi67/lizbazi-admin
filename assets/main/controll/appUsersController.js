@@ -106,10 +106,10 @@ angular.module('MetronicApp')
 
                 });
         }
-        $scope.activateUser = function(user) {
+        $scope.activateUser = function(userId) {
             let data = {};
-            data.userId = user.id;
-            initService.postMethod(data, `user/${user.id}/active`)
+            data.userId = userId;
+            initService.postMethod(data, `user/${userId}/active`)
                 .then(function (resault) {
                    if (resault.status == 200) {
                     UIToastr.init('info', 'با موفقیت انجام شد');
@@ -119,15 +119,19 @@ angular.module('MetronicApp')
                     UIToastr.init('warning', 'خطای سرور');
                 });
         }
-        $scope.verifyUser = function(user) {
+        $scope.verifyUser = function(username) {
             let data = {};
-            data.username = user.username;
+            data.username = username;
             initService.postMethod(data, `user/verify`)
                 .then(function (resault) {
-                    debugger
                    if (resault.status == 200) {
-
-                    UIToastr.init('info', 'با موفقیت انجام شد');
+                       if (resault.data.code != 0) {
+                          UIToastr.init('warning', resault.data.message);
+                       }
+                       else {
+                          UIToastr.init('info', 'با موفقیت انجام شد');
+                       }
+                    
                    }
                 })
                 .catch(function (error) {
@@ -778,9 +782,11 @@ angular.module('MetronicApp')
                     },
                     {
                       "aTargets": [ 8 ],
-                      "mData": "requestUniqueId",
+                      "mData": "id",
                       "mRender": function ( data, type, full ) {
-                        return '<a href="#/reports/details/'+data+'" target="_blank"><i class="fa fa-search fa-report-details"></i>';
+                        const opList = `<a class="actiovation-user" title="فعال سازی" data-userid="${data}"><i class="fa fa-check fa-report-details"></i>
+                                        <a class="verify-user" title="تایید هویت" data-userid="${full.username}"><i class="fa fa-user fa-report-details"></i>`;
+                        return opList;
                       }
                     }
              
@@ -896,6 +902,14 @@ angular.module('MetronicApp')
                     return false;
                 }
             });
+        });
+        $(document).on('click','.actiovation-user',function(event){
+            let userId = $(this).attr('data-userid');
+            $scope.activateUser(userId);
+        });
+        $(document).on('click','.verify-user',function(event){
+            let username = $(this).attr('data-userid');
+            $scope.verifyUser(username);
         });
 
     });
