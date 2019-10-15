@@ -37,7 +37,6 @@ angular.module('MetronicApp')
             mode = 'create';
             // listingDate2();
         } else if ($location.$$url == '/users/all') {
-            // getAllUsers();
             initil_table();
         } else {
             
@@ -102,10 +101,6 @@ angular.module('MetronicApp')
             initService.getMethod(data, 'user')
                 .then(function (resault) {
                     $scope.userList = resault.data.content.users;
-                    $timeout(()=>{
-                        // initTable();
-                        initil_table();
-                    },500)
                 })
                 .catch(function (error) {
 
@@ -691,8 +686,8 @@ angular.module('MetronicApp')
                         },
                     dataSrc: function(json){
                        json.draw = json.content.draw;
-                       json.recordsTotal = json.content.totalRecordsCount;
-                       json.recordsFiltered = json.content.filteredRecordsCount;
+                       json.recordsTotal = Number(json.content.filteredRecordsCount);
+                       json.recordsFiltered = Number(json.content.totalRecordsCount);
                        return json.content.users;
                     },
                     'beforeSend': function (request) {
