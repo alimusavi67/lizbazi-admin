@@ -852,8 +852,8 @@ angular.module('MetronicApp')
                         },
                     dataSrc: function(json){
                        json.draw = json.content.draw;
-                       json.recordsTotal = Number(json.content.totalRecordsCount);
-                       json.recordsFiltered = Number(json.content.filteredRecordsCount);
+                       json.recordsTotal = Number(json.content.totalCount);
+                       json.recordsFiltered = Number(json.content.filteredCount);
                        $scope.comments = json.content.comments;
                        return json.content.comments;
                     },
@@ -916,7 +916,7 @@ angular.module('MetronicApp')
                       "aTargets": [ 4 ],
                       "mData": "text",
                       "mRender": function ( data, type, full,rowdata ) {
-                          let content = '---'
+                          let content = `<a data-text="${rowdata.row}" class="cm-text">---</a>`
                           if (data) {
                               content = `<a data-text="${rowdata.row}" class="cm-text"> 
                                     ${data.substr(0, 160)}...
