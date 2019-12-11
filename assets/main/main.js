@@ -165,12 +165,130 @@ MetronicApp.constant('Constants', {
         }
     },
     accessZone: {
-        '/login.html' : {
+        '/login' : {
             menuName : 'login',
             url : '/login',
-            roles: 'R_Admin,R_Expert'
+            roles: 'Admin'
         },
-        
+        // =================== Resorts
+        '/resorts/all' : {
+            menuName : 'showresorts',
+            url : '/login',
+            roles: 'Admin,Agent'
+        },
+        '/resort/register' : {
+            menuName : 'newresort',
+            url : '/resort/register',
+            roles: 'Admin'
+        },
+        '/resort/:resortId/edit' : {
+            menuName : 'editresort',
+            url : '/resort/:resortId/edit',
+            roles: 'Admin'
+        },
+        // =================== Resort Features
+        '/resort/:resortId/feature' : {
+            menuName : 'showresortsfeature',
+            url : '/resort/:resortId/feature',
+            roles: 'Admin'
+        },
+        '/resort/:resortId/feature/register' : {
+            menuName : 'newresortfeature',
+            url : '/resort/:resortId/feature/register',
+            roles: 'Admin'
+        },
+        '/resort/:resortId/feature/:featureId/edit' : {
+            menuName : 'editresortfeature',
+            url : '/resort/:resortId/edit',
+            roles: 'Admin'
+        },
+        // =================== Show all learning videos
+        '/videos/all' : {
+            menuName : 'showvideos',
+            url : '/videos/all',
+            roles: 'Admin'
+        },
+        '/video/register' : {
+            menuName : 'newvideo',
+            url : '/video/register',
+            roles: 'Admin'
+        },
+        '/video/:videoId' : {
+            menuName : 'editvideo',
+            url : '/video/:videoId',
+            roles: 'Admin'
+        },
+        // =================== allCountries
+        '/country/all' : {
+            menuName : 'allCountries',
+            url : '/country/all',
+            roles: 'Admin'
+        },
+        '/country/new' : {
+            menuName : 'storeCountry',
+            url : '/country/new',
+            roles: 'Admin'
+        },
+        '/country/:countryId/edit' : {
+            menuName : 'editCountry',
+            url : '/country/:countryId/edit',
+            roles: 'Admin'
+        },
+        // =================== Show all instructor
+        '/instructor/all' : {
+            menuName : 'allInstructor',
+            url : '/instructor/all',
+            roles: 'Admin'
+        },
+        '/instructor/new' : {
+            menuName : 'storeInstructor',
+            url : '/instructor/new',
+            roles: 'Admin'
+        },
+        '/instructor/:instructorId/edit' : {
+            menuName : 'editInstructor',
+            url : '/instructor/:instructorId/edit',
+            roles: 'Admin'
+        },
+        // =================== Show all instructor
+        '/users/all' : {
+            menuName : 'allUsers',
+            url : '/users/all',
+            roles: 'Admin'
+        },
+        // =================== Show all version
+        '/version/all' : {
+            menuName : 'allVersions',
+            url : '/version/all',
+            roles: 'Admin'
+        },
+        '/version/new' : {
+            menuName : 'storeVersion',
+            url : '/version/new',
+            roles: 'Admin'
+        },
+        '/version/:versionId/edit' : {
+            menuName : 'editVersion',
+            url : '/version/:versionId/edit',
+            roles: 'Admin'
+        },
+        // =================== Show all version
+        '/notification/all' : {
+            menuName : 'notification',
+            url : '/notification/all',
+            roles: 'Admin'
+        },
+        '/notification/insert' : {
+            menuName : 'newnotif',
+            url : '/notification/insert',
+            roles: 'Admin'
+        },
+        // =================== Show all version
+        '/comments/:mediaType' : {
+            menuName : 'showComments',
+            url : '/comments/:mediaType',
+            roles: 'Admin'
+        },
     }
 });
 /* Setup Rounting For All Pages */
@@ -1092,8 +1210,8 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
 
 }]);
 /* Init global settings and run the app */
-MetronicApp.run(["$rootScope", "settings", "$state",'$timeout', 'cookieService', 'userService',
- function($rootScope, settings, $state, $timeout, cookieService, userService) {
+MetronicApp.run(["$rootScope", "authService","settings", "$state",'$timeout', 'cookieService', 'userService',
+ function($rootScope, authService, settings, $state, $timeout, cookieService, userService) {
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
@@ -1108,6 +1226,8 @@ MetronicApp.run(["$rootScope", "settings", "$state",'$timeout', 'cookieService',
             if (toState.name != 'dashboard')
                 $rootScope.loggedIn = true;
                 $rootScope.setCurrentUser(user);
+                authService.accessUrlControl(user);
+                authService.setMenusAccessability(user);
         }
     })
 }]);

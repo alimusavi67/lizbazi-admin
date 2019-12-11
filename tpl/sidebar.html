@@ -23,32 +23,32 @@
             </a>
             <ul class="sub-menu">
                 <li>
-                    <a ui-sref="showresorts">
+                    <a ui-sref="showresorts" ng-show="menuAccess['showresorts']">
                         <i class="icon-compass"></i>همه پیست ها</span>
                     </a>
                 </li>
                 <li>
-                    <a ui-sref="showvideos">
+                    <a ui-sref="showvideos" ng-show="menuAccess['showvideos']">
                         <i class="icon-compass"></i>همه فیلم های آموزشی</span>
                     </a>
                 </li>
                 <li>
-                    <a ui-sref="allCountries">
+                    <a ui-sref="allCountries" ng-show="menuAccess['allCountries']">
                         <i class="icon-compass"></i>کشور ها</span>
                     </a>
                 </li>
                 <li>
-                    <a ui-sref="allInstructor">
+                    <a ui-sref="allInstructor" ng-show="menuAccess['allInstructor']">
                         <i class="icon-compass"></i>مربیان</span>
                     </a>
                 </li>
                 <li>
-                    <a ui-sref="allVersions">
+                    <a ui-sref="allVersions" ng-show="menuAccess['allVersions']">
                         <i class="icon-compass"></i>نسخه ها</span>
                     </a>
                 </li>
                 <li>
-                    <a ui-sref="notification">
+                    <a ui-sref="notification" ng-show="menuAccess['notification']">
                         <i class="icon-compass"></i>پیام ها</span>
                     </a>
                 </li>
@@ -63,7 +63,7 @@
             </a>
             <ul class="sub-menu">
                 <li>
-                    <a ui-sref="allUsers">
+                    <a ui-sref="allUsers" ng-show="menuAccess['allUsers']">
                         <i class="icon-compass"></i>کاربران شبکه</span>
                     </a>
                 </li>
