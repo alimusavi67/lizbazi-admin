@@ -170,20 +170,7 @@ MetronicApp.constant('Constants', {
             url : '/login',
             roles: 'R_Admin,R_Expert'
         },
-        '/resorts/all' : {
-            menuName : 'showresorts',
-            url : '/resorts/all',
-            roles: 'R_Admin'
-        },
-        '/student/register' : {
-            menuName : 'registeruser',
-            url : '/student/register',
-            roles: 'R_Admin'
-        },'/student/:studentId/edit' : {
-            menuName : 'editruser',
-            url : '/student/:studentId/edit',
-            roles: 'R_Admin'
-        }
+        
     }
 });
 /* Setup Rounting For All Pages */
