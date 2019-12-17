@@ -23,6 +23,7 @@ angular.module('MetronicApp')
         }
         var rquested_url = $location.$$url;
         var user_roles = user.role;
+        $rootScope.userRole = user.role;
         if ( Constants.accessZone.hasOwnProperty(rquested_url) ) {
             var allowd_roles = Constants.accessZone[rquested_url].roles;
             if (!allowd_roles.includes(user_roles)) {
@@ -32,7 +33,6 @@ angular.module('MetronicApp')
     }
     // Check menus is accessable for current user or no
     this.setMenusAccessability = function(user) {
-        debugger
         $rootScope.menuAccess = {};
         var accessList = Constants.accessZone;
         var user_roles = user.role;
