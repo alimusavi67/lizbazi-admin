@@ -111,8 +111,7 @@ angular.module('MetronicApp')
             };
             initService.getMethod(data, 'baseInfo/sportFields')
                 .then(function (resault) {
-                    $scope.sportFields = resault.data.content;
-                    debugger
+                    $scope.sportFields = resault.data.content
                 })
                 .catch(function (error) {
 
@@ -195,6 +194,13 @@ angular.module('MetronicApp')
             var	url = '';
             if (resort.id) {
                 url = '/resort/'+ resort.id +'/feature';
+                $location.path(url);
+            }
+        };
+        $scope.goToResortComments = function(video) {
+            var    url = '';
+            if (video.id) {
+                url = '/comments/video/' + video.id;
                 $location.path(url);
             }
         };

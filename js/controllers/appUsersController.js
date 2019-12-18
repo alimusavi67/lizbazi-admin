@@ -36,8 +36,8 @@ angular.module('MetronicApp')
             getVideo();
             mode = 'create';
             // listingDate2();
-        } else if ($location.$$url == '/app-users/all') {
-            getAllUsers();
+        } else if ($location.$$url == '/users/all') {
+            initil_table();
         } else {
             
         }
@@ -100,10 +100,42 @@ angular.module('MetronicApp')
             var data = {'params' :{}};
             initService.getMethod(data, 'user')
                 .then(function (resault) {
-                    $scope.userList = resault.data.content;
+                    $scope.userList = resault.data.content.users;
                 })
                 .catch(function (error) {
 
+                });
+        }
+        $scope.activateUser = function(userId) {
+            let data = {};
+            data.userId = userId;
+            initService.postMethod(data, `user/${userId}/active`)
+                .then(function (resault) {
+                   if (resault.status == 200) {
+                    UIToastr.init('info', 'با موفقیت انجام شد');
+                   }
+                })
+                .catch(function (error) {
+                    UIToastr.init('warning', 'خطای سرور');
+                });
+        }
+        $scope.verifyUser = function(username) {
+            let data = {};
+            data.username = username;
+            initService.postMethod(data, `user/verify`)
+                .then(function (resault) {
+                   if (resault.status == 200) {
+                       if (resault.data.code != 0) {
+                          UIToastr.init('warning', resault.data.message);
+                       }
+                       else {
+                          UIToastr.init('info', 'با موفقیت انجام شد');
+                       }
+                    
+                   }
+                })
+                .catch(function (error) {
+                    UIToastr.init('warning', 'خطای سرور');
                 });
         }
         // ================= get all parent ==========
@@ -591,78 +623,223 @@ angular.module('MetronicApp')
                 $(target).addClass('fa-check-circle-o');
             }
         }
-    
-        function initTable() {
-            var table = $('#users_table');
+        // ============== initil functions ================
+        //
+        function initil_table() {
+            var oldExportAction = function(self, e, dt, button, config) {
+                    if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        if ($.fn.dataTable.ext.buttons.excelHtml5.available(dt, config)) {
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config);
+                        } else {
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                        }
+                    } else if (button[0].className.indexOf('buttons-print') >= 0) {
+                        $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+                    }
+            };
+            var newExportAction = function(e, dt, button, config) {
+                var self = this;
+                var oldStart = dt.settings()[0]._iDisplayStart;
 
-            table.dataTable({
-                "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+                dt.one('preXhr', function(e, s, data) {
+                    // Just this once, load all data from the server...
+                    data.start = 0;
+                    data.limit = -1;
+
+                    dt.one('preDraw', function(e, settings) {
+                        // Call the original action function 
+                        oldExportAction(self, e, dt, button, config);
+
+                        dt.one('preXhr', function(e, s, data) {
+                            // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                            // Set the property to what it was before exporting.
+                            settings._iDisplayStart = oldStart;
+                            data.start = oldStart;
+                        });
+
+                        // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                        setTimeout(dt.ajax.reload, 0);
+
+                        // Prevent rendering of the full data to the DOM
+                        return false;
+                    });
+                });
+
+                // Requery the server with the new one-time export settings
+                dt.ajax.reload();
+            };
+            var table = $('#users_table2').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "bFilter": false,
+                "info": false,
 
                 "lengthMenu": [
-                    [5, 15, 20, -1],
-                    [5, 15, 20, "همه"] // change per page values here
+                    [5, 15, 20],
+                    [5, 15, 20] // change per page values here
                 ],
-                "fnDrawCallback": function( oSettings ) {
-                    $timeout(function(){
-                        toolTipHandler();
-                        UIConfirmations.init();
-                    }, 100);        
-                },
-                dom: 'Blfrtip',
-                 buttons: [
-                     {
-                        extend: 'excelHtml5',
-                        title: 'لیست کاربران',
-                        text: 'خروجی excel',
-                        exportOptions: {
-                            columns: [ 1, 2, 3, 4]
+                "pagingType": "full_numbers",
+                "ajax": {
+                    "url": "/api/user",                    
+                    error: function( objAJAXRequest, strError ){
+                        $("#balance_report_processing").css("height", "60px");
+
+                        $( "#balance_report_processing" ).text(
+                       "پاسخ در زمان مناسب دریافت نشد"
+                        );
                         },
+                    dataSrc: function(json){
+                       json.draw = json.content.draw;
+                       json.recordsTotal = Number(json.content.totalRecordsCount);
+                       json.recordsFiltered = Number(json.content.filteredRecordsCount);
+                       debugger
+                       return json.content.users;
+                    },
+                    'beforeSend': function (request) {
+                        request.setRequestHeader('Content-Type','application/json;charset=utf-8');
+                        request.setRequestHeader('Accept','application/json');
+                        request.setRequestHeader("X-Platform" ,"Web");
+                        request.setRequestHeader("X-Version" ,"1.0");
+                        request.setRequestHeader("X-BuildNo" ,"1");
+                    },
+                    "data": function(d) {
+                        // get time and convert
+                        $scope.pageIndex = (d.start / d.length);
+                        $scope.pageSize = d.length;
+                        return $.extend({}, d, {
+                            "page": (d.start / d.length),
+                            "size": d.length,
+                            "countryId": $scope.countryId,
+                            "mobileNo": $scope.mobileNo,
+                            "username": $scope.username
+                        });
+                    }
+                },
+                // ======== Read data from server and show in rows
+                // ======== Add default column for show details
+                "aoColumnDefs": [
+                    { bSortable: false, aTargets: [0,1,2,3,4,5,6,7,8] },
+                    {
+                        "aTargets": [ 0 ],
+                        "mData": "rowNumber",
+                        "mRender": function ( data, type, full, rowData ) {
+                             let row = ($scope.pageIndex  * $scope.pageSize)+ (rowData.row + 1)
+                            return row;
+                        }
+                    }, 
+                    {
+                      "aTargets": [ 1 ],
+                      "mData": "fullName",
+                      "mRender": function ( data, type, full ) {
+                        return data;
+                      }
                     },
                     {
-                        extend: 'print',
-                        title: 'لیست کاربران',
-                        text: 'پرینت لیست',
+                        "aTargets": [ 2 ],
+                        "data": "username",
+                        "mRender": function ( data, type, full ) {
+                            return data;
+                        }
+                    },
+                    {
+                    "aTargets": [ 3 ],
+                      "mData": "sportField",
+                      "mRender": function ( data, type, full ) {
+                        return (data)?data.value : 'تعریف نشده'
+                      }
+                    },
+                     {
+                      "aTargets": [ 4 ],
+                      "mData": "profilePicture",
+                      "mRender": function ( data, type, full ) {
+                          let content = '---'
+                          if (data) {
+                              content = `<img style="width:150px" src="${data.previewUrl}" alt="">`;
+                          }
+                            return content;
+                      }
+                    },
+                    {
+                        "aTargets": [ 5 ],
+                        "data": "email",
+                        "mRender": function ( data, type, full ) {
+                            return data || 'ثبت نشده';
+                        }
+                    },
+                     {
+                      "aTargets": [ 6 ],
+                      "mData": "email",
+                      "mRender": function ( data, type, full ) {
+                        return data || 'ثبت نشده';
+                      }
+                    },
+                    {
+                      "aTargets": [ 7 ],
+                      "mData": "country",
+                      "mRender": function ( data, type, full ) {
+                        let countryName = data ? data.name : '---'
+                        return countryName;
+                      }
+                    },
+                    {
+                      "aTargets": [ 8 ],
+                      "mData": "id",
+                      "mRender": function ( data, type, full ) {
+                        const opList = `<a class="actiovation-user" title="فعال سازی" data-userid="${data}"><i class="fa fa-check fa-report-details"></i>
+                                        <a class="verify-user" title="تایید هویت" data-userid="${full.username}"><i class="fa fa-user fa-report-details"></i>`;
+                        return opList;
+                      }
+                    }
+             
+                ],
+                "columnDefs": [{ // set default column settings
+                    'orderable': false,
+                    'targets': [0, 1, 2, 3, 4, 5]
+                }],
+                "language": Constants.tableTranslations,
+                dom: 'Blfrtip',
+                buttons: [{
+                        extend: 'excelHtml5',
+                        title: 'گزارش موجودی',
+                        text: 'خروجی excel',
+                        action: newExportAction,
                         exportOptions: {
-                            columns: [ 1, 2, 3, 4]
+                            columns: [0, 1, 2, 3, 4, 5]
                         },
-                        customize: function ( win ) {
-                        $(win.document.body)
-                        .css( 'font-size', '10pt' )
-                        .css( 'text-align', 'center' )
-                        .css( 'padding-right', '10%' )
-                        .prepend(
-                            '<span>چتر سبز</span>'
-                        );
- 
-                        $(win.document.body).find( 'table' )
-                        .addClass( 'print-preview' )
+                    },
+
+                    {
+                        extend: 'print',
+                        title: 'گزارش موجودی',
+                        text: 'پرینت لیست',
+                        action: newExportAction,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        customize: function(win) {
+                            $(win.document.body)
+                                .css('font-size', '10pt')
+                                .css('text-align', 'center')
+                                .css('padding-right', '10%')
+                                .css('background-color', '#c2c2c2')
+                                .prepend(
+                                    '<span>همراه کارت</span>'
+                                );
+
+                            $(win.document.body).find('table')
+                                .addClass('print-preview')
                         }
                     }
                 ],
-                // set the initial value
-                "pageLength": 5,            
-                "pagingType": "bootstrap_full_number",
-                "columnDefs": [
-                    {  // set default column settings
-                        'orderable': false,
-                        'targets': [0]
-                    }, 
-                    {
-                        "searchable": false,
-                        "targets": [0]
-                    },
-                    {
-                        "className": "dt-right", 
-                        //"targets": [2]
-                    }
-                ],
-                "order": [
-                    [0, "asc"]
-                ], // set first column as a default sort by asc
-                "language": Constants.tableTranslations
-            });
-        };
 
+            });
+            $scope.dataTableObj = table;
+        }
+        // =================== Get report data by ajax =============
+        $scope.getAjaxData = function()
+        {
+            $scope.dataTableObj.draw();
+        }
         // ================= date settings ===================
         function listingDate() {
             $timeout(function(){
@@ -726,6 +903,14 @@ angular.module('MetronicApp')
                     return false;
                 }
             });
+        });
+        $(document).on('click','.actiovation-user',function(event){
+            let userId = $(this).attr('data-userid');
+            $scope.activateUser(userId);
+        });
+        $(document).on('click','.verify-user',function(event){
+            let username = $(this).attr('data-userid');
+            $scope.verifyUser(username);
         });
 
     });
