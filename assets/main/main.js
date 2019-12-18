@@ -174,7 +174,7 @@ MetronicApp.constant('Constants', {
         '/resorts/all' : {
             menuName : 'showresorts',
             url : '/login',
-            roles: 'Admin,Agent'
+            roles: 'Admin'
         },
         '/resort/register' : {
             menuName : 'newresort',
