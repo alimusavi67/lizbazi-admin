@@ -988,7 +988,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
 
 
-                            '../assets/main/controll/appUsersController.js?1509'
+                            '../assets/main/controll/appUsersController.js?1510'
                         ]
                     });
                 }]
@@ -1256,7 +1256,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/agenda/agendaResortController.js?1506'
+                            '../assets/main/controll/agenda/agendaResortController.js?1507'
                         ]
                     });
                 }]

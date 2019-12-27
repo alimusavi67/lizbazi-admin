@@ -710,13 +710,14 @@ angular.module('MetronicApp')
         // ========== CLose And Open Resort
         $scope.activateResort = function(text)
         {
-            let status = text + ',' + $scope.activateText
+            let status = text;
+            if ($scope.activateText) {
+               status +=  ',' + $scope.activateText;
+            }
             let target = $(event.target);
-             if ( target.hasClass('fa-check-circle-o') ) {
-                 data.status = "Close";
-             }
             initService.putMethod({}, `resort/${$scope.activeResortId}?status=${status}`)
                 .then(function (resault) {
+                    $scope.activateText = ''
                     if (resault.data.code === 0) {
                         UIToastr.init('success', resault.data.message);
                         $state.reload();

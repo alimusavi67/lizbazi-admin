@@ -122,7 +122,7 @@ angular.module('MetronicApp')
         $scope.verifyUser = function(username) {
             let data = {};
             data.username = username;
-            initService.postMethod(data, `user/verify`)
+            initService.postMethod(data, `user/verify?username=${username}`)
                 .then(function (resault) {
                    if (resault.status == 200) {
                        if (resault.data.code != 0) {
