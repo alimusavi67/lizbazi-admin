@@ -63,3 +63,81 @@ MetronicApp.directive('dropdownMenuHover', function () {
     }
   };  
 });
+// ================= Make from time
+MetronicApp.directive('fromTime', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            userdate: '@',
+        },
+        templateUrl: 'templates/fromTimePicker.html',
+        require: 'ngModel',
+        link: function (scope, element, attrs, ngModelCtrl) {
+            scope.$watch('userdate', function(newValue, oldValue) {
+                if (newValue && typeof scope.userdate !== typeof undefined) {
+                    if (scope.userdate !== "") {
+                        var fromDate = parseInt(scope.userdate);
+                        var fromTime = $('#from-time').val();
+                        fromTime = fromTime.split(':')
+                        var date = new Date(fromDate);
+                        fromDate = date.setHours(fromTime[0],fromTime[1],0,0);
+                        ngModelCtrl.$setViewValue(fromDate);
+                        ngModelCtrl.$render();
+                    }
+                }
+            }, true);
+            $(document).on('change','#from-time',function(){
+                if (typeof scope.userdate !== typeof undefined) {
+                    if (scope.userdate !== "") {
+                        var fromDate = parseInt(scope.userdate);
+                        var fromTime = $('#from-time').val();
+                        fromTime = fromTime.split(':')
+                        var date = new Date(fromDate);
+                        fromDate = date.setHours(fromTime[0],fromTime[1],0,0);
+                        ngModelCtrl.$setViewValue(fromDate);
+                        ngModelCtrl.$render();
+                    }
+                }
+            })
+        }
+    }
+});
+// ================= Make to time
+MetronicApp.directive('toTime', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            userdate: '@',
+        },
+        templateUrl: 'templates/toTimePicker.html',
+        require: 'ngModel',
+        link: function (scope, element, attrs, ngModelCtrl) {
+            scope.$watch('userdate', function(newValue, oldValue) {
+                if (newValue && typeof scope.userdate !== typeof undefined) {
+                    if (scope.userdate !== "") {
+                        var fromDate = parseInt(scope.userdate);
+                        var fromTime = $('#to-time').val();
+                        fromTime = fromTime.split(':');
+                        var date = new Date(fromDate);
+                        fromDate = date.setHours(fromTime[0],fromTime[1],59,999);
+                        ngModelCtrl.$setViewValue(fromDate);
+                        ngModelCtrl.$render();
+                    }
+                }
+            }, true);
+            $(document).on('change','#to-time',function(){
+                if (typeof scope.userdate !== typeof undefined) {
+                    if (scope.userdate !== "") {
+                        var fromDate = parseInt(scope.userdate);
+                        var fromTime = $('#to-time').val();
+                        fromTime = fromTime.split(':')
+                        var date = new Date(fromDate);
+                        fromDate = date.setHours(fromTime[0],fromTime[1],59,999);
+                        ngModelCtrl.$setViewValue(fromDate);
+                        ngModelCtrl.$render();
+                    }
+                }
+            })
+        }
+    }
+});

@@ -29,6 +29,8 @@ angular.module('MetronicApp')
         var token = $cookieStore.get(Constants.cookieName).token;
         var mode = 'create';
         $scope.newCampaign = {};
+        $scope.campaignStatus = true;
+        $scope.countryId = '';
         $scope.campaingList = [];
         $scope.countryList = [];
         getAllCountry();
@@ -37,75 +39,46 @@ angular.module('MetronicApp')
             mode = 'update';
         } else if ($location.$$url == '/campaign/show') {
             getAllCampaign();
+        } else if ($location.$$url == '/campaign/new') {
+            initDatePickers2();
         }
-        $scope.registerResort = function() {
-            // create a new user when mode is `create`
-            if (mode === 'create'){
-                var el = $('.mt-ladda-btn')[0];
-                UIButtons.startSpin(el);
-                initService.postMethod($scope.newResort, 'resort')
-                    .then(function (resault) {
-                        UIButtons.stopSpin(el);
-                        if ( resault.data.code === 0 ) {
-                            var msg = 'عملیات با موفقیت انجام شد';
-                            UIToastr.init('success', msg);
-                            $location.path('resorts/all');
-                            submitDefaultFeature(resault.data.content.id);
-                        }
-                        else {
-                            var msg = resault.data.message;
-                            UIToastr.init('info', msg);
-                            $scope.newResort = {};
-                        }
-
-                    })
-                    .catch(function (error) {
-                        UIButtons.stopSpin(el);
-                        var msg = error.data.message;
-                        UIToastr.init('warning', msg);
-                    });
-            } else if (mode === 'update') {
-                var el = $('.mt-ladda-btn')[0];
-                UIButtons.startSpin(el);
-                initService.postMethod($scope.newResort, `resort/${resortId}`)
-                    .then(function (resault) {
-                        UIButtons.stopSpin(el);
-                        if ( resault.data.code === 0 ) {
-                            var msg = 'عملیات با موفقیت انجام شد';
-                            UIToastr.init('success', msg);
-                            $location.path('resorts/all');
-
-                        }
-                        else {
-                            var msg = resault.data.message;
-                            UIToastr.init('info', msg);
-                            $scope.newResort = {};
-                        }
-
-                    })
-                    .catch(function (error) {
-                        UIButtons.stopSpin(el);
-                        var msg = error.data.message;
-                        UIToastr.init('warning', msg);
-                    });
-            }
-
-        };
-
-
         // =============== Show all users ================
+        $scope.getAllCampaignFilter = function() {
+           var    data = {
+                 'params' :{
+                   active: $scope.campaignStatus,
+                   countryId: $scope.countryId
+                }
+            };
+
+            initService.getMethod(data, 'campaign')
+            .then(function (resault) {
+                $scope.campaingList = resault.data.content.campaigns;
+                for (let item of $scope.campaingList) {
+                    item.startDate = new persianDate(item.startDate).format('LLLL');
+                    item.endDate = new persianDate(item.endDate).format('LLLL');
+                }
+            })
+            .catch(function (error) {
+               
+            }); 
+        }
         function getAllCampaign()
         {
      		var	data = {
      		    'params' :{
-                   active: true,
-
+                   active: $scope.campaignStatus,
+                   countryId: $scope.countryId
                 }
             };
 
         	initService.getMethod(data, 'campaign')
 	        .then(function (resault) {
 	            $scope.campaingList = resault.data.content.campaigns;
+                for (let item of $scope.campaingList) {
+                    item.startDate = new persianDate(item.startDate).format('LLLL');
+                    item.endDate = new persianDate(item.endDate).format('LLLL');
+                }
 	            $timeout(function(){
                     initTable();
 	      			toolTipHandler();
@@ -127,88 +100,13 @@ angular.module('MetronicApp')
             };
             initService.getMethod(data, 'baseInfo/countries')
                 .then(function (resault) {
-                    debugger
                     $scope.countryList = resault.data.content.countries;
                 })
                 .catch(function (error) {
 
                 });
         }
-        // =============== Get a user ================
-        function getResort()
-        {
-        
-            var	data = {
-                'params' :{
-
-                }
-            };
-            var url = 'resort/' + resortId;
-
-            initService.getMethod(data, url)
-                .then(function (resault) {
-                    $scope.newResort = resault.data.content;
-                    $scope.newResort.countryId =  $scope.newResort.country.id;
-                    if (resault.data.content.mapPhoto) {
-                        $scope.newResort.mapPhotoMediaId = resault.data.content.mapPhoto.id;
-                    }
-                    $scope.imageList =  $scope.newResort.photos;
-                    // $scope.newResort.photoMediaIds = [];
-                    // for (img of $scope.newResort.photos) {
-                    //     $scope.newResort.photoMediaIds.push(img.id);
-                    // }
-                    delete $scope.newResort.photos;
-                    $timeout(function(){
-                        ComponentsSelect2.init();
-                    }, 100);
-
-                })
-                .catch(function (error) {
-
-                });
-        }
-
-        $scope.goToEditResort = function(resort) {
-        	var	url = '';
-        	if (resort.id) {
-        		url = '/resort/'+ resort.id +'/edit';
-                $location.path(url);
-        	}
-        };
-
-        $scope.goToResortFeature = function(resort) {
-            var	url = '';
-            if (resort.id) {
-                url = '/resort/'+ resort.id +'/feature';
-                $location.path(url);
-            }
-        };
-        $scope.goToResortComments = function(resort) {
-            var    url = '';
-            if (resort.id) {
-                url = '/comments/resort/' + resort.id;
-                $location.path(url);
-            }
-        };
-        // =============== delete image =================
-        $scope.deleteImage = function(index, img) {
-            $scope.imageList.splice(index, 1);
-            // this.newResort.photoMediaIds.splice(index, 1);
-            let data = {
-                params:{photoMediaId : [img.id]}
-            }
-            let url = `resort/${resortId}/photos`;
-            initService.deleteMethod(data, url)
-                .then(function (resault) {
-                    if (resault.data.code === 0) {
-                        UIToastr.init('info', 'با موفقیت حذف شد');
-                    }
-                })
-                .catch(function (error) {
-                    UIToastr.init('info', 'خطا در ارسال اطلاعات');
-                });
-
-        }
+ 
         // =============== Delete a user ================
         deleteMethod = function(uniqueId,index) {
             var data = {};
@@ -302,190 +200,102 @@ angular.module('MetronicApp')
               
             });
         })
-        // =================== Form validation ====================
-         var handleValidation = function() {
-            // for more info visit the official plugin documentation: 
-            // http://docs.jquery.com/Plugins/Validation
-            var form = $('#insertUserForm');
-            form.validate({
-                errorElement: 'span', //default input error message container
-                errorClass: 'help-block help-block-error', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-                ignore: "", // validate all fields including form hidden input
-                
-                invalidHandler: function(event, validator) { //display error alert on form submit              
-                    App.scrollTo(form, -200);
-                },
-                rules: {
-                    'firstName' : {
-                      required: true
-                    },
-                    'lastName' : {
-                      required: true
-                    },
-                    'password' : {
-                      required: true
-                    },
-                    'repass' : {
-                      required: true
-                    },
-                    'roles' : {
-                      required: true
-                    },
-                    'userName' : {
-                      required: true
-                    }
-                  },
-                  messages: {
-                    'firstName' : {
-                        required: "این فیلد نمی تواند خالی باشد"
-                    },
-                    'lastName' : {
-                        required: "این فیلد نمی تواند خالی باشد"
-                    },
-                    'password' : {
-                        required: "این فیلد نمی تواند خالی باشد"
-                    },
-                    'repass' : {
-                        required: "این فیلد نمی تواند خالی باشد"
-                    },
-                    'roles' : {
-                        required: "این فیلد نمی تواند خالی باشد"
-                    },
-                    'userName' : {
-                        required: "این فیلد نمی تواند خالی باشد"
-                    }
-                  },
+        // ======================= Inser new merchant =====================
+             $scope.insertCampaign = function () {
+                var el = $('.mt-ladda-btn')[0];
+                UIButtons.startSpin(el);
 
-                errorPlacement: function(error, element) {
-                    if (element.is(':checkbox')) {
-                        error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
-                    } else if (element.is(':radio')) {
-                        error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                    } else {
-                        error.insertAfter(element); // for other inputs, just perform default behavior
-                    }
-                },
+                $scope.newCampaign.startDate = $scope.userAccFromDate;
+                $scope.newCampaign.endDate = $scope.userAccToDate;
 
-                highlight: function(element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-                },
 
-                unhighlight: function(element) { // revert the change done by hightlight
-                    $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                },
-
-                success: function(label) {
-                    label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                },
-
-                submitHandler: function(form) {
-                    $scope.submitUserForm();
+                if (mode === 'create') {
+                    var url = 'campaign';
+                } else if (mode === 'edit') {
+                    $('.form-control').addClass('edited');
+                    var url = 'campaign/' + campaignId;
+                } else {
+                    var msg = 'شما مجاز به انجام این عمل نمی باشید.';
+                    UIToastr.init('success', msg);
                 }
-            });
-        }
-        // =================== Change pass Form validation ====================
-        $scope.changePassword = function(event) {
-            changePassValidation();
-            $('#change-pass-form').submit();
-        }
-        function changeUserPass() {
-            if ($scope.userPass.newPassword != $scope.userPass.repass) {
-                    var msg = 'کلمات عبور یکسان نمی باشند لطفا بررسی نمایید';
-                    UIToastr.init('warning', msg);
+                if ($scope.newCampaign.startDate > $scope.newCampaign.endDate) {
+                    UIToastr.init('error', "تاریخ پایان باید بعد از تاریخ آغاز باشد");
+                    initDatePickers2();
+                    UIButtons.stopSpin(el);
                     return
-                    // warning,success,error,info
                 }
-                delete $scope.userPass.repass;
+                initService.postMethod($scope.newCampaign, url)
+                    .then(function (resault) {
+                        UIButtons.stopSpin(el);
+                        if (resault.data.code === 0) {
+                            var msg = resault.data.message;
+                            UIToastr.init('success', "کاربر گرامی کمپین با موفقیت ثبت شد.");
+                            $scope.newCampaign = {};
+                            initDatePickers2();
+                            url = '/campaign/show';
+                            $timeout(function () {
+                                $location.path(url);
+                            }, 3000);
 
-                userService.changePassword($scope.userPass)
-                .then(function (resault) {
-                    if ( resault.data.code === 0 ) {
-                        var msg = 'عملیات با موفقیت انجام شد';
-                        UIToastr.init('success', msg);
-                        $scope.newResort = {};
-                    }
-                    else {
-                        var msg = resault.data.message;
-                        UIToastr.init('info', msg);
-                        $scope.newResort = {};
-                    }
-                    
-                })
-                .catch(function (error) {
-                    var msg = error.data.message;
-                    UIToastr.init('warning', msg);
-                });
-        }
-         var changePassValidation = function() {
-            // for more info visit the official plugin documentation: 
-            // http://docs.jquery.com/Plugins/Validation
-            var form = $('#change-pass-form');
-            form.validate({
-                errorElement: 'span', //default input error message container
-                errorClass: 'help-block help-block-error', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-                ignore: "", // validate all fields including form hidden input
+                        } else {
+                            $scope.newCampaign.startDate = new persianDate($scope.newCampaign.startDate).format('LLLL');
+                            $scope.newCampaign.endDate = new persianDate($scope.newCampaign.endDate).format('LLLL');
+                            var msg = resault.data.message;
+                            UIToastr.init('success', msg);
+                        }
+                    })
+                    .catch(function (error) {
+                        UIButtons.stopSpin(el);
+                        var msg = error.data.message;
+                        UIToastr.init('warning', msg);
+                    });
+            }
+            // ================== Active/Deactive a campaign ============
+            $scope.activateCampaign = function (campaignId, method='active') {
+                var data = {};
+                let url = `campaign/${campaignId}`
+                if (method === 'active') {
+                    initService.putMethod({}, url)
+                    .then(function (resault) {
+                         if (resault.data.code === 0) {
+                            var msg = resault.data.message;
+                             UIToastr.init('success', msg);
+                              $timeout(function() {
+                                $state.reload();
+                             },3000)
+                        } else {
+                            var msg = resault.data.message;
+                            UIToastr.init('success', msg);
+                           
+                        }
+                    })
+                    .catch(function (error) {
+                        var msg = error.data.message;
+                        UIToastr.init('warning', msg);
+                    });
+                } else {
+                    initService.deleteMethod({}, url)
+                    .then(function (resault) {
+                        if (resault.data.code === 0) {
+                            var msg = resault.data.message;
+                             UIToastr.init('success', msg);
+                             $timeout(function() {
+                                $state.reload();
+                             },3000)
+                        } else {
+                            var msg = resault.data.message;
+                            UIToastr.init('success', msg);
+                           
+                        }
+                    })
+                    .catch(function (error) {
+                        var msg = error.data.message;
+                        UIToastr.init('warning', msg);
+                    });
+                }
+
                 
-                invalidHandler: function(event, validator) { //display error alert on form submit              
-                    App.scrollTo(form, -200);
-                },
-                rules: {
-                    'curpass' : {
-                      required: true
-                    },
-                    'newpass' : {
-                      required: true
-                    },
-                    'repass' : {
-                      required: true
-                    }
-                  },
-                  messages: {
-                    'curpass' : {
-                        required: "این فیلد نمی تواند خالی باشد"
-                    },
-                    'newpass' : {
-                        required: "این فیلد نمی تواند خالی باشد"
-                    },
-                    'repass' : {
-                        required: "این فیلد نمی تواند خالی باشد"
-                    }
-                  },
-
-                errorPlacement: function(error, element) {
-                    if (element.is(':checkbox')) {
-                        error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
-                    } else if (element.is(':radio')) {
-                        error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                    } else {
-                        error.insertAfter(element); // for other inputs, just perform default behavior
-                    }
-                },
-
-                highlight: function(element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-                },
-
-                unhighlight: function(element) { // revert the change done by hightlight
-                    $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                },
-
-                success: function(label) {
-                    label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                },
-
-                submitHandler: function(form) {
-                    changeUserPass();
-                }
-            });
-        }
+            }
         // =================== check server response ==============
         function checkStatus(code)
         {
@@ -611,29 +421,34 @@ angular.module('MetronicApp')
         };
 
         // ================= date settings ===================
-        function listingDate() {
-            $timeout(function(){
-                $('.date-input').val('');
-                $('.date-input').addClass('edited');
-                $('#fromDate').pDatepicker({
-                    format: 'LL',
-                    altField:'#fromDateTS',
-                });
-
-            }, 500);
-        }
-
-        function listingDate2(time) {
-            $timeout(function(){
-                $('.date-input').val(time);
-                $('.date-input').addClass('edited');
-                $('#fromDate').pDatepicker({
-                    format: 'LL',
-                    altField:'#fromDateTS',
-                });
-
-            }, 500);
-        }
+         function initDatePickers() {
+                $timeout(function () {
+                    $('.date-input').val('');
+                    $('.date-input').addClass('edited');
+                    $('#toDate').pDatepicker({
+                        format: 'LL',
+                        altField: '#toDateTS',
+                    });
+                    $('#fromDate').pDatepicker({
+                        format: 'LL',
+                        altField: '#fromDateTS',
+                    });
+                }, 10);
+            }
+             function initDatePickers2() {
+                $timeout(function () {
+                    $('.date-input').val('');
+                    $('.date-input').addClass('edited');
+                    $('#toDate').pDatepicker({
+                        format: 'LL',
+                        altField: '#toDateTS',
+                    });
+                    $('#fromDate').pDatepicker({
+                        format: 'LL',
+                        altField: '#fromDateTS',
+                    });
+                }, 1);
+            }
         // ==================== Persian date to timestamp ===============
         function pDateTimeStamp(date) {
             let cDate = date;
@@ -734,6 +549,21 @@ angular.module('MetronicApp')
 
                 });
         }
+        // ====== init date pickers =============
+            function initDatePickers2() {
+                $timeout(function () {
+                    $('.date-input').val('');
+                    $('.date-input').addClass('edited');
+                    $('#toDate').pDatepicker({
+                        format: 'LL',
+                        altField: '#toDateTS',
+                    });
+                    $('#fromDate').pDatepicker({
+                        format: 'LL',
+                        altField: '#fromDateTS',
+                    });
+                }, 1);
+            }
 
     });
 }]);

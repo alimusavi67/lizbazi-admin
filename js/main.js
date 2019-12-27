@@ -336,7 +336,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/jquery.sparkline.min.js',
                             '../assets/global/plugins/jquery.sparkline.min.js',
                             '../assets/pages/scripts/dashboard.min.js',
-                            '../assets/main/controll/DashboardController.js',
+                            'js/controllers/DashboardController.js',
                         ]
                     });
                 }]
@@ -362,7 +362,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/backstretch/jquery.backstretch.min.js',
                             '../assets/pages/scripts/ui-buttons.js',
 
-                            '../assets/main/controll/loginController.js',
+                            'js/controllers/loginController.js',
                         ]
                     });
                 }]
@@ -388,7 +388,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/backstretch/jquery.backstretch.min.js',
                             '../assets/pages/scripts/ui-buttons.js',
 
-                            '../assets/main/controll/loginController.js',
+                            'js/controllers/loginController.js',
                         ]
                     });
                 }]
@@ -424,7 +424,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/resortController.js?1505'
+                            'js/controllers/resortController.js?1505'
                         ]
                     });
                 }]
@@ -461,7 +461,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            '../assets/main/controll/resortController.js?1505'
+                            'js/controllers/resortController.js?1505'
                         ]
                     });
                 }]
@@ -498,7 +498,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            '../assets/main/controll/resortController.js?1505'
+                            'js/controllers/resortController.js?1505'
                         ]
                     });
                 }]
@@ -535,7 +535,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/resortFeatureController.js'
+                            'js/controllers/resortFeatureController.js'
                         ]
                     });
                 }]
@@ -575,7 +575,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            '../assets/main/controll/resortFeatureController.js'
+                            'js/controllers/resortFeatureController.js'
                         ]
                     });
                 }]
@@ -612,7 +612,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            '../assets/main/controll/resortFeatureController.js'
+                            'js/controllers/resortFeatureController.js'
                         ]
                     });
                 }]
@@ -648,7 +648,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/learningVideoController.js?1501'
+                            'js/controllers/learningVideoController.js?1501'
                         ]
                     });
                 }]
@@ -685,7 +685,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            '../assets/main/controll/learningVideoController.js?1501'
+                            'js/controllers/learningVideoController.js?1501'
                         ]
                     });
                 }]
@@ -722,7 +722,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            '../assets/main/controll/learningVideoController.js?1501'
+                            'js/controllers/learningVideoController.js?1501'
                         ]
                     });
                 }]
@@ -759,7 +759,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
 
 
-                            '../assets/main/controll/countryController.js'
+                            'js/controllers/countryController.js'
                         ]
                     });
                 }]
@@ -797,7 +797,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
                             '../assets/pages/scripts/ui-buttons.js',
 
-                            '../assets/main/controll/countryController.js'
+                            'js/controllers/countryController.js'
                         ]
                     });
                 }]
@@ -835,7 +835,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
                             '../assets/pages/scripts/ui-buttons.js',
 
-                            '../assets/main/controll/countryController.js'
+                            'js/controllers/countryController.js'
                         ]
                     });
                 }]
@@ -871,7 +871,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/instructorController.js'
+                            'js/controllers/instructorController.js'
                         ]
                     });
                 }]
@@ -910,7 +910,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
 
 
-                            '../assets/main/controll/instructorController.js'
+                            'js/controllers/instructorController.js'
                         ]
                     });
                 }]
@@ -949,7 +949,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
 
 
-                            '../assets/main/controll/instructorController.js'
+                            'js/controllers/instructorController.js'
                         ]
                     });
                 }]
@@ -988,7 +988,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
 
 
-                            '../assets/main/controll/appUsersController.js?1509'
+                            'js/controllers/appUsersController.js?1509'
                         ]
                     });
                 }]
@@ -1027,7 +1027,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
 
 
-                            '../assets/main/controll/versionController.js'
+                            'js/controllers/versionController.js'
                         ]
                     });
                 }]
@@ -1065,7 +1065,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
                             '../assets/pages/scripts/ui-buttons.js',
 
-                            '../assets/main/controll/versionController.js'
+                            'js/controllers/versionController.js'
                         ]
                     });
                 }]
@@ -1105,7 +1105,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
                             '../assets/pages/scripts/ui-buttons.js',
 
-                            '../assets/main/controll/versionController.js'
+                            'js/controllers/versionController.js'
                         ]
                     });
                 }]
@@ -1144,7 +1144,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/notificationController.js'
+                            'js/controllers/notificationController.js'
                         ]
                     });
                 }]
@@ -1181,7 +1181,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
 
-                            '../assets/main/controll/notificationController.js'
+                            'js/controllers/notificationController.js'
                         ]
                     });
                 }]
@@ -1219,7 +1219,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/commentController.js?1506'
+                            'js/controllers/commentController.js?1506'
                         ]
                     });
                 }]
@@ -1256,7 +1256,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/agenda/agendaResortController.js?1506'
+                            'js/controllers/agenda/agendaResortController.js?1506'
                         ]
                     });
                 }]
@@ -1279,12 +1279,15 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/datatables/datatables.min.css',
                             '../assets/global/plugins/select2/css/select2.min.css',
                             '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
+                            '../assets/global/plugins/persian-datepicker/css/persian-datepicker-0.4.5.min.css',
                             '../assets/global/plugins/bootstrap-toastr/toastr-rtl.min.css',
 
                             '../assets/global/plugins/datatables/datatables.all.min.js',
                             '../assets/pages/scripts/table-datatables-managed.min.js',
                             '../assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
                             '../assets/global/plugins/select2/js/select2.full.min.js',
+                            '../assets/global/plugins/persian-datepicker/js/persian-date.js',
+                            '../assets/global/plugins/persian-datepicker/js/persian-datepicker-0.4.5.min.js',
                             '../assets/pages/scripts/components-select2.min.js',
                             '../assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js',
                             '../assets/pages/scripts/ui-confirmations.js',
@@ -1292,7 +1295,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/campaign/campaignController.js?1500'
+                            'js/controllers/campaign/campaignController.js?1500'
                         ]
                     });
                 }]
@@ -1315,20 +1318,24 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/datatables/datatables.min.css',
                             '../assets/global/plugins/select2/css/select2.min.css',
                             '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
+                            '../assets/global/plugins/persian-datepicker/css/persian-datepicker-0.4.5.min.css',
                             '../assets/global/plugins/bootstrap-toastr/toastr-rtl.min.css',
 
                             '../assets/global/plugins/datatables/datatables.all.min.js',
                             '../assets/pages/scripts/table-datatables-managed.min.js',
+                            '../assets/global/plugins/persian-datepicker/js/persian-date.js',
+                            '../assets/global/plugins/persian-datepicker/js/persian-datepicker-0.4.5.min.js',
                             '../assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
                             '../assets/global/plugins/select2/js/select2.full.min.js',
                             '../assets/pages/scripts/components-select2.min.js',
                             '../assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js',
                             '../assets/pages/scripts/ui-confirmations.js',
+                            '../assets/pages/scripts/ui-buttons.js',
                             '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            '../assets/main/controll/campaign/campaignController.js?1500'
+                            'js/controllers/campaign/campaignController.js?1500'
                         ]
                     });
                 }]

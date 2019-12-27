@@ -6,8 +6,37 @@
             <div class="portlet-title">
                 <div class="caption font-dark">
                     <i class="icon-settings font-dark"></i>
-                    <span class="caption-subject bold uppercase">فهرست  پیست ها</span>
+                    <span class="caption-subject bold uppercase">فهرست  کمپین ها</span>
                 </div>
+                  <div class="filter-holder col-md-12">
+                <div class="col-md-6">
+                    <div class="modal-input-mar form-group form-md-line-input form-md-floating-label has-info">
+                        <label for="form_control_1"> وضعیت فعال بودن</label>
+                        <select ng-model="campaignStatus" name="roles" class="form-control select2 edited">
+                            <option value="">انتخاب کنید ... </option>
+                            <option value="true">کمپین های فعال</option>
+                            <option value="false">کمپین های غیر فعال</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- countryId input -->
+                <div class="col-md-6">
+                    <div class="modal-input-mar form-group form-md-line-input form-md-floating-label has-info">
+                        <select ng-model="countryId" name="roles" class="form-control select2 edited"  ng-options="country.id as country.name for country in countryList">
+                            <option value="">انتخاب کنید ... </option>
+                        </select>
+                        <label for="form_control_1" style="color: #27a4b0"> کشور</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-info" ng-click="getAllCampaignFilter()">
+                            <span class="glyphicon glyphicon-search"></span> جستجو
+                        </button>
+                    </div>
+                </div>
+                <!-- Is listed end date -->
+            </div>
             </div>
             <div class="col-sm-2 col-xs-12 pull-left" ng-show="menuAccess['showresorts']">
                 <span class="input-group-btn">
@@ -24,6 +53,7 @@
 
                             <th> ردیف </th>
                             <th> نام </th>
+                            <th> اولویت </th>
                             <th> تاریخ شروع </th>
                             <th> تاریخ پایان  </th>
                             <th> عملیات </th>
@@ -34,15 +64,16 @@
 
                             <td ng-bind="$index + 1"></td>
                             <td ng-bind="campaign.title"></td>
+                            <td ng-bind="campaign.displayOrder"></td>
                             <td ng-bind="campaign.startDate"></td>
                             <td ng-bind="campaign.endDate"></td>
                             <td>
 
-                                <i class="user-status fa admin-op" ng-click="activateResort(resort.id,$event)" data-toggle="tooltip" data-placement="top"
-                                title="{{(resort.status === 'Open')?'غیر فعال کردن':'فعال کردن'}}"
-                                ng-class="(resort.status === 'Open') ? 'fa-check-circle-o font-green-seagreen' : 'fa-times-circle-o font-yellow-gold'"></i>
-                                <!-- <i class='fa fa-comment admin-op font-green-jungle' ng-click="goToResortComments(resort)" data-toggle="tooltip" data-placement="top" title="نظرات"></i> -->
+                                <i class="user-status fa admin-op fa-check-circle-o font-green-seagreen" ng-click="activateCampaign(campaign.id,'active')" data-toggle="tooltip" data-placement="top"
+                                title="فعال کردن"></i>
 
+                                <i class="user-status fa admin-op fa-times-circle-o font-yellow-gold" ng-click="activateCampaign(campaign.id,'deactive')" data-toggle="tooltip" data-placement="top"
+                                title="غیر فعال کردن"></i>
                             </td>
                         </tr>
 

@@ -29,6 +29,8 @@ angular.module('MetronicApp')
         var token = $cookieStore.get(Constants.cookieName).token;
         var mode = 'create';
         $scope.newResort = {};
+        $scope.activateText = '';
+        $scope.activeResortId = '';
         $scope.editStudentItem = {};
         $scope.studentExtraData = {};
         $scope.resortList = [];
@@ -706,29 +708,18 @@ angular.module('MetronicApp')
             }
         }
         // ========== CLose And Open Resort
-        $scope.activateResort = function(resortId, event)
+        $scope.activateResort = function(text)
         {
-             let data = {
-                status: "Open"
-            };
+            let status = text + ',' + $scope.activateText
             let target = $(event.target);
              if ( target.hasClass('fa-check-circle-o') ) {
                  data.status = "Close";
              }
-            initService.putMethod(data, `resort/${resortId}?status=${data.status}`)
+            initService.putMethod({}, `resort/${$scope.activeResortId}?status=${status}`)
                 .then(function (resault) {
                     if (resault.data.code === 0) {
-                        if (resault.data.content.status === 'Close') {
-                        target.removeClass('fa-check-circle-o');
-                        target.removeClass('font-green-seagreen');
-                        target.addClass('font-yellow-gold');
-                        target.addClass('fa-times-circle-o');
-                        } else {
-                            target.removeClass('fa-times-circle-o');
-                            target.removeClass('font-yellow-gold');
-                            target.addClass('font-green-seagreen');
-                            target.addClass('fa-check-circle-o');
-                        }
+                        UIToastr.init('success', resault.data.message);
+                        $state.reload();
                     } else if (resault.data.code === 142) {
                         UIToastr.init('warning', resault.data.message);
                     }
@@ -737,6 +728,13 @@ angular.module('MetronicApp')
                     UIToastr.init('info', 'با موفقیت حذف شد');
                 });
 
+        }
+        $scope.openAcDialog = function(resortId) {
+            $('#comments').modal('show');
+            $scope.activeResortId = resortId;
+        }
+        $scope.acRes = function(status) {
+            $scope.activateResort(status)
         }
         function getSportFields()
         {

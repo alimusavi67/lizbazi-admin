@@ -53,10 +53,43 @@
                                 <i class="fa fa-user-o"></i>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                           <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                <div class="input-icon">
+                                    <input id="fromDate" type="text" name="startDate" class="form-control date-input" >
+                                    <input id="fromDateTS" type="text" class="timeStamp hidden" ng-model="newCampaign.startDate">
+                                    <label for="form_control_1">تاریخ شروع</label>
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div> 
+                        </div>
+                        <!-- toDate -->
+                        <div class="col-md-6">
+                           <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                <div class="input-icon">
+                                    <input id="toDate" type="text" name="endDate" class="form-control date-input" >
+                                    <input id="toDateTS" type="text" class="timeStamp hidden" ng-model="newCampaign.endDate">
+                                    <label for="form_control_1">تاریخ پایان</label>
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div> 
+                        </div>
+                        <!-- From Time -->
+                        <div class="col-md-6">
+                            <from-time userdate="{{newCampaign.startDate}}" ng-model="userAccFromDate">
+                                
+                            </from-time>
+                        </div>
+                        <!-- To time -->
+                        <div class="col-md-6">
+                            <to-time userdate="{{newCampaign.endDate}}" ng-model="userAccToDate">
+                                
+                            </to-time>
+                        </div>
                     </div>
                     <div class="form-actions noborder">
                         <button type="button" class="btn blue mt-ladda-btn ladda-button"
-                                data-style="zoom-out" ng-click="registerInstructor()">
+                                data-style="zoom-out" ng-click="insertCampaign()">
                             <span class="ladda-label">ثبت</span>
                         </button>
                     </div>
