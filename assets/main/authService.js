@@ -32,7 +32,6 @@ angular.module('MetronicApp')
     }
     // Check menus is accessable for current user or no
     this.setMenusAccessability = function(user) {
-        debugger
         $rootScope.menuAccess = {};
         var accessList = Constants.accessZone;
         var user_roles = user.role;
