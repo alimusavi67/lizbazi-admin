@@ -64,10 +64,10 @@
                 </div>
                 <div class="portlet-body">
                             <div class="tiles">
-                                <div class="tile double-down bg-blue-hoki">
+                                <div class="tile double-down bg-blue-hoki" ng-if="menuAccess['showresorts']">
                                     <a ui-sref="showresorts" class="dashboard-qnav">
                                         <div class="tile-body">
-                                            <i class="fa fa-bell-o"></i>
+                                            <i class="fa fa-compass"></i>
                                         </div>
                                         <div class="tile-object">
                                             <div class="name"> پیست ها  </div>
@@ -75,17 +75,28 @@
                                         </div>
                                     </a>
                                 </div>
-                                <!--<div class="tile bg-red-sunglo">-->
-                                    <!--<a ui-sref="showteachers" class="dashboard-qnav">-->
-                                        <!--<div class="tile-body">-->
-                                            <!--<i class="fa fa-safari"></i>-->
-                                        <!--</div>-->
-                                        <!--<div class="tile-object">-->
-                                            <!--<div class="name">  معلم ها </div>-->
-                                            <!--<div class="number" ng-bind="merCount"></div>-->
-                                        <!--</div>-->
-                                    <!--</a>-->
-                                <!--</div>-->
+                                <div class="tile double-down bg-blue-hoki" ng-if="menuAccess['agendaResorts']">
+                                    <a ui-sref="agendaResorts" class="dashboard-qnav">
+                                        <div class="tile-body">
+                                            <i class="fa fa-compass"></i>
+                                        </div>
+                                        <div class="tile-object">
+                                            <div class="name"> مدیریت پیست نماینده  </div>
+                                            <div class="number" ng-bind="sugCount">  </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="tile bg-red-sunglo" ng-if="menuAccess['campaignShow']">
+                                    <a ui-sref="campaignShow" class="dashboard-qnav">
+                                        <div class="tile-body">
+                                            <i class="fa fa-safari"></i>
+                                        </div>
+                                        <div class="tile-object">
+                                            <div class="name">کمپین ها</div>
+                                            <div class="number" ng-bind="merCount"></div>
+                                        </div>
+                                    </a>
+                                </div>
                                 <!--<div class="tile selected bg-yellow-saffron">-->
                                     <!--<a ui-sref="showparents" class="dashboard-qnav">-->
                                         <!--<div class="corner"> </div>-->

@@ -1,6 +1,6 @@
 /*
 =================================================================================
-= ~Controller : appUsersController
+= ~Controller : instructorController
 = ~Author     : Petra
 = ~License    : Petra
 = ~Developer  : EH7AN
@@ -9,9 +9,9 @@
 */
 
 angular.module('MetronicApp')
-.controller('appUsersController',
-	['$timeout','$rootScope','$location','$stateParams', '$state', '$window', '$scope','$q','$cookieStore', '$timeout','settings','initService','$state','Constants','$interval',
- function($timeout,$rootScope,$location,$stateParams, $state, $window,  $scope,$q,$cookieStore, $timeout, settings,initService,$state,Constants,$interval) {
+.controller('resortController',
+	['$timeout','$rootScope','$location','$stateParams', '$state', '$window', '$scope','$q','$cookieStore', '$timeout','settings','initService','$state','Constants','$interval', '$http',
+ function($timeout,$rootScope,$location,$stateParams, $state, $window,  $scope,$q,$cookieStore, $timeout, settings,initService,$state,Constants,$interval, $http) {
     $scope.$on('$viewContentLoaded', function() {   
         // initialize core components
         App.initAjax();
@@ -28,32 +28,46 @@ angular.module('MetronicApp')
         // ================Init process========================
         var token = $cookieStore.get(Constants.cookieName).token;
         var mode = 'create';
-        getAllCountry();
-        $scope.userList = {};
+        $scope.newResort = {};
+        $scope.editStudentItem = {};
+        $scope.studentExtraData = {};
+        $scope.resortList = [];
+        $scope.userRoles = [];
+        $scope.userPass = {};
+        $scope.userAdded = true;
+        $scope.imageList = [];
+        $scope.sportFields = [];
+        getSportFields();
+        // $scope.newResort.photoMediaIds = [];
+        getFeatureList();
+        getFeatureList();
 
-        if ($stateParams.videoId) { // If user id is set so Mode is update
-            var videoId = $stateParams.videoId;
-            getVideo();
-            mode = 'create';
+        if ($stateParams.resortId) { // If user id is set so Mode is update
+            var resortId = $stateParams.resortId;
+            getResort();
+            getAllCountry();
+            mode = 'update';
             // listingDate2();
-        } else if ($location.$$url == '/users/all') {
-            initil_table();
+        } else if ($location.$$url == '/resorts/all') {
+            getAllResort();
         } else {
-            
+            getAllCountry();
         }
 
 
-        $scope.registerVideo = function() {
+        $scope.registerResort = function() {
             // create a new user when mode is `create`
             if (mode === 'create'){
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
-                initService.postMethod($scope.newVideo, 'learningVideo')
+                initService.postMethod($scope.newResort, 'resort')
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
-                        if ( resault.code === 0 ) {
+                        if ( resault.data.code === 0 ) {
                             var msg = 'عملیات با موفقیت انجام شد';
                             UIToastr.init('success', msg);
+                            $location.path('resorts/all');
+                            submitDefaultFeature(resault.data.content.id);
                         }
                         else {
                             var msg = resault.data.message;
@@ -70,13 +84,13 @@ angular.module('MetronicApp')
             } else if (mode === 'update') {
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
-                initService.postMethod($scope.newVideo, `learningVideo/${videoId}`)
+                initService.postMethod($scope.newResort, `resort/${resortId}`)
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
                         if ( resault.data.code === 0 ) {
                             var msg = 'عملیات با موفقیت انجام شد';
                             UIToastr.init('success', msg);
-                            $location.path('videos/all');
+                            $location.path('resorts/all');
 
                         }
                         else {
@@ -95,49 +109,30 @@ angular.module('MetronicApp')
 
         };
 
-       function getAllUsers()
-        {
-            var data = {'params' :{}};
-            initService.getMethod(data, 'user')
-                .then(function (resault) {
-                    $scope.userList = resault.data.content.users;
-                })
-                .catch(function (error) {
 
-                });
+        // =============== Show all users ================
+        function getAllResort()
+        {
+     		var	data = {
+     		    'params' :{
+
+                }
+            };
+
+        	initService.getMethod(data, 'resort')
+	        .then(function (resault) {
+	            $scope.resortList = resault.data.content.resorts;
+	            $timeout(function(){
+                    initTable();
+	      			toolTipHandler();
+                    UIConfirmations.init();
+	            },100);
+	        })
+	        .catch(function (error) {
+	           
+	        });
         }
-        $scope.activateUser = function(userId) {
-            let data = {};
-            data.userId = userId;
-            initService.postMethod(data, `user/${userId}/active`)
-                .then(function (resault) {
-                   if (resault.status == 200) {
-                    UIToastr.init('info', 'با موفقیت انجام شد');
-                   }
-                })
-                .catch(function (error) {
-                    UIToastr.init('warning', 'خطای سرور');
-                });
-        }
-        $scope.verifyUser = function(username) {
-            let data = {};
-            data.username = username;
-            initService.postMethod(data, `user/verify?username=${username}`)
-                .then(function (resault) {
-                   if (resault.status == 200) {
-                       if (resault.data.code != 0) {
-                          UIToastr.init('warning', resault.data.message);
-                       }
-                       else {
-                          UIToastr.init('info', 'با موفقیت انجام شد');
-                       }
-                    
-                   }
-                })
-                .catch(function (error) {
-                    UIToastr.init('warning', 'خطای سرور');
-                });
-        }
+
         // ================= get all parent ==========
         function getAllCountry()
         {
@@ -155,24 +150,32 @@ angular.module('MetronicApp')
                 });
         }
         // =============== Get a user ================
-        function getVideo()
+        function getResort()
         {
+        
             var	data = {
                 'params' :{
 
                 }
             };
-            var url = 'learningVideo/' + videoId;
+            var url = 'resort/' + resortId;
 
             initService.getMethod(data, url)
                 .then(function (resault) {
-                    $scope.newVideo = resault.data.content;
-                    $scope.newVideo.coverPhotoMediaId = resault.data.content.coverPhoto.id;
-                    $scope.newVideo.farsiVideoMediaId =  $scope.newVideo.farsiVideo.id;
-                    $scope.newVideo.englishVideoMediaId =  $scope.newVideo.englishVideo.id;
-
-                    delete $scope.newVideo.farsiVideo;
-                    delete $scope.newVideo.englishVideo;
+                    $scope.newResort = resault.data.content;
+                    $scope.newResort.countryId =  $scope.newResort.country.id;
+                    if (resault.data.content.mapPhoto) {
+                        $scope.newResort.mapPhotoMediaId = resault.data.content.mapPhoto.id;
+                    }
+                    $scope.imageList =  $scope.newResort.photos;
+                    // $scope.newResort.photoMediaIds = [];
+                    // for (img of $scope.newResort.photos) {
+                    //     $scope.newResort.photoMediaIds.push(img.id);
+                    // }
+                    delete $scope.newResort.photos;
+                    $timeout(function(){
+                        ComponentsSelect2.init();
+                    }, 100);
 
                 })
                 .catch(function (error) {
@@ -195,17 +198,43 @@ angular.module('MetronicApp')
                 $location.path(url);
             }
         };
+        $scope.goToResortComments = function(resort) {
+            var    url = '';
+            if (resort.id) {
+                url = '/comments/resort/' + resort.id;
+                $location.path(url);
+            }
+        };
+        // =============== delete image =================
+        $scope.deleteImage = function(index, img) {
+            $scope.imageList.splice(index, 1);
+            // this.newResort.photoMediaIds.splice(index, 1);
+            let data = {
+                params:{photoMediaId : [img.id]}
+            }
+            let url = `resort/${resortId}/photos`;
+            initService.deleteMethod(data, url)
+                .then(function (resault) {
+                    if (resault.data.code === 0) {
+                        UIToastr.init('info', 'با موفقیت حذف شد');
+                    }
+                })
+                .catch(function (error) {
+                    UIToastr.init('info', 'خطا در ارسال اطلاعات');
+                });
+
+        }
         // =============== Delete a user ================
         deleteMethod = function(uniqueId,index) {
             var data = {};
-            var url = 'learningVideo/' + uniqueId;
+            var url = 'resort/' + uniqueId;
 
             initService.deleteMethod(data, url)
             .then(function (resault) {
                 if ( resault.data.code === 0 ) {
                     var msg = resault.data.message;
                     UIToastr.init('success', msg);
-                    $scope.videoList.splice(index,1);
+                    $scope.resortList.splice(index,1);
                     $state.reload();
                 }
                 else if (resault.data.code === 101){
@@ -222,51 +251,12 @@ angular.module('MetronicApp')
                 console.log(msg);
             });
         };
-        // go to edit
-        $scope.goToEdit = function(video) {
-            let url = '/video/' + video.id;
-            $location.path(url);
-        }
         //============= upload files   =======
         $scope.fileUploader = function(files, type) {
-
-            // var el = $('.ladda-changepic')[0];
-            $('.uplodp-btn').removeClass('green');
-            // UIButtons.startSpin(el);
-            var file=files[0];
-                var canceller = $q.defer();
-                file.canceler = canceller;
-                var fd = new FormData(document.forms[0]);
-            fd.append('file', file);;
-                var url = '/media/upload';
-                var formData = new FormData();
-                initService.uploader(fd, file, url,function(result){
-                    if (result.data.code == 0) {
-                        // UIButtons.stopSpin(el);
-                        if (type === 'english') {
-                            $scope.newVideo.englishVideoMediaId = result.data.content.id;
-                            $scope.englishFileName =  result.data.content.fileName;
-                        }
-                        if (type === 'farsi') {
-                            $scope.newVideo.farsiVideoMediaId = result.data.content.id;
-                            $scope.farsiFileName =  result.data.content.fileName;
-                        }
-
-                    }
-                    else {
-                        var msg = result.data.message;
-                        UIToastr.init('error', msg);
-                    }
-                })
-        };
-         //============= upload coverImage   =======
-         $scope.avatarUploader = function(files) {
 
             var el = $('.ladda-changepic')[0];
             $('.uplodp-btn').removeClass('green');
             // UIButtons.startSpin(el);
-            // ===============================
-
             var file=files[0];
             var canceller = $q.defer();
             file.canceler = canceller;
@@ -279,7 +269,14 @@ angular.module('MetronicApp')
             initService.uploader(fd, file, url,function(result){
                 if (result.data.code == 0) {
                     UIButtons.stopSpin(el);
-                    $scope.newVideo.coverPhotoMediaId = result.data.content.id;
+                    if (type === 'image') {
+                        $scope.imageList.push(result.data.content);
+                        // $scope.newResort.photoMediaIds.push(result.data.content.id);
+                        submitPhotos(result.data.content.id);
+
+                    } else {
+                        $scope.newResort.mapPhotoMediaId = result.data.content.id;
+                    }
                 }
                 else {
                     var msg = result.data.message;
@@ -287,89 +284,22 @@ angular.module('MetronicApp')
                 }
             })
         };
-        // ============================= Compact images using convas  ===============================
-        function compactImages(myFile,callBack)
-        {
-
-            var fr = new FileReader;
-            var reader = new FileReader();
-            var bolb_obj = '';
-
-            reader.onload = function(e) {
-                if (!myFile){
-                    return
-                }
-
-                var img = new Image;
-                img.onload = function() {
-                    var width = img.width;
-                    var height = img.height;
-                    var canvas = document.createElement('canvas');
-                    // ======= BEGIN initializing resize =============
-                    var MAX_WIDTH = 800;
-                    var MAX_HEIGHT = 800;
-                    var quality = 0.7;
-                    var type = myFile.type;
-                    // ======= END initializing resize =============
-                    if (width > height) {
-                        if (width > MAX_WIDTH) {
-                            height = Math.round(height *= MAX_WIDTH / width);
-                            width = height;
-                        }
-                        else {
-                            height = width;
-                        }
-                    }
-                    else {
-                        if (height > MAX_HEIGHT) {
-                            width = Math.round(width *= MAX_HEIGHT / height);
-                            height = width;
-                        }
-                        else {
-                            width = height
-                        }
-                    }
-                    canvas.width = width;
-                    canvas.height = height;
-                    var ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0, width, height);
-
-                    var dataURL = canvas.toDataURL(type);
-                    bolb_obj = dataURItoBlob(dataURL);
-                    $.event.trigger({
-                        type: "imageResized",
-                        blob: bolb_obj,
-                        url: dataURL
-                    });
-                    callBack(bolb_obj);
-                };
-                img.src = e.target.result;
+        function submitPhotos(mediaId) {
+            let data = {
+                photoMediaIds : [mediaId]
             }
-            if (myFile){
-                reader.readAsDataURL(myFile);
-            }
+            let url = `resort/${resortId}/photos`;
+            initService.postMethod(data, url)
+                .then(function (resault) {
+                    if (resault.data.code === 0) {
+                        UIToastr.init('info', 'با موفقیت آپلود شد');
+                    }  
+                })
+                .catch(function (error) {
+
+                });
         }
-        // =========================Convert Data Url to bolb object ========================================
-        function dataURItoBlob(dataURI) {
-            // convert base64/URLEncoded data component to raw binary data held in a string
-            var byteString;
-            if (dataURI.split(',')[0].indexOf('base64') >= 0)
-                byteString = atob(dataURI.split(',')[1]);
-            else
-                byteString = unescape(dataURI.split(',')[1]);
 
-            // separate out the mime component
-            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-            // write the bytes of the string to a typed array
-            var ab = new ArrayBuffer(byteString.length);
-            var ia = new Uint8Array(ab);
-            for (var i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
-            }
-            var cmBlob = new Blob([ia], {type:mimeString});
-            return cmBlob;
-        }
         // =============== Show a user Modal================
         $(document).on('click','.show-op',function(){
             var This = $(this);
@@ -623,223 +553,78 @@ angular.module('MetronicApp')
                 $(target).addClass('fa-check-circle-o');
             }
         }
-        // ============== initil functions ================
-        //
-        function initil_table() {
-            var oldExportAction = function(self, e, dt, button, config) {
-                    if (button[0].className.indexOf('buttons-excel') >= 0) {
-                        if ($.fn.dataTable.ext.buttons.excelHtml5.available(dt, config)) {
-                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config);
-                        } else {
-                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
-                        }
-                    } else if (button[0].className.indexOf('buttons-print') >= 0) {
-                        $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
-                    }
-            };
-            var newExportAction = function(e, dt, button, config) {
-                var self = this;
-                var oldStart = dt.settings()[0]._iDisplayStart;
+    
+        function initTable() {
+            var table = $('#users_table');
 
-                dt.one('preXhr', function(e, s, data) {
-                    // Just this once, load all data from the server...
-                    data.start = 0;
-                    data.limit = -1;
-
-                    dt.one('preDraw', function(e, settings) {
-                        // Call the original action function 
-                        oldExportAction(self, e, dt, button, config);
-
-                        dt.one('preXhr', function(e, s, data) {
-                            // DataTables thinks the first item displayed is index 0, but we're not drawing that.
-                            // Set the property to what it was before exporting.
-                            settings._iDisplayStart = oldStart;
-                            data.start = oldStart;
-                        });
-
-                        // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
-                        setTimeout(dt.ajax.reload, 0);
-
-                        // Prevent rendering of the full data to the DOM
-                        return false;
-                    });
-                });
-
-                // Requery the server with the new one-time export settings
-                dt.ajax.reload();
-            };
-            var table = $('#users_table2').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "bFilter": false,
-                "info": false,
+            table.dataTable({
+                "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
 
                 "lengthMenu": [
-                    [5, 15, 20],
-                    [5, 15, 20] // change per page values here
+                    [5, 15, 20, -1],
+                    [5, 15, 20, "همه"] // change per page values here
                 ],
-                "pagingType": "full_numbers",
-                "ajax": {
-                    "url": "/api/user",                    
-                    error: function( objAJAXRequest, strError ){
-                        $("#balance_report_processing").css("height", "60px");
-
-                        $( "#balance_report_processing" ).text(
-                       "پاسخ در زمان مناسب دریافت نشد"
-                        );
-                        },
-                    dataSrc: function(json){
-                       json.draw = json.content.draw;
-                       json.recordsTotal = Number(json.content.totalRecordsCount);
-                       json.recordsFiltered = Number(json.content.filteredRecordsCount);
-                       debugger
-                       return json.content.users;
-                    },
-                    'beforeSend': function (request) {
-                        request.setRequestHeader('Content-Type','application/json;charset=utf-8');
-                        request.setRequestHeader('Accept','application/json');
-                        request.setRequestHeader("X-Platform" ,"Web");
-                        request.setRequestHeader("X-Version" ,"1.0");
-                        request.setRequestHeader("X-BuildNo" ,"1");
-                    },
-                    "data": function(d) {
-                        // get time and convert
-                        $scope.pageIndex = (d.start / d.length);
-                        $scope.pageSize = d.length;
-                        return $.extend({}, d, {
-                            "page": (d.start / d.length),
-                            "size": d.length,
-                            "countryId": $scope.countryId,
-                            "mobileNo": $scope.mobileNo,
-                            "username": $scope.username
-                        });
-                    }
+                "fnDrawCallback": function( oSettings ) {
+                    $timeout(function(){
+                        toolTipHandler();
+                        UIConfirmations.init();
+                    }, 100);        
                 },
-                // ======== Read data from server and show in rows
-                // ======== Add default column for show details
-                "aoColumnDefs": [
-                    { bSortable: false, aTargets: [0,1,2,3,4,5,6,7,8] },
-                    {
-                        "aTargets": [ 0 ],
-                        "mData": "rowNumber",
-                        "mRender": function ( data, type, full, rowData ) {
-                             let row = ($scope.pageIndex  * $scope.pageSize)+ (rowData.row + 1)
-                            return row;
-                        }
-                    }, 
-                    {
-                      "aTargets": [ 1 ],
-                      "mData": "fullName",
-                      "mRender": function ( data, type, full ) {
-                        return data;
-                      }
-                    },
-                    {
-                        "aTargets": [ 2 ],
-                        "data": "username",
-                        "mRender": function ( data, type, full ) {
-                            return data;
-                        }
-                    },
-                    {
-                    "aTargets": [ 3 ],
-                      "mData": "sportField",
-                      "mRender": function ( data, type, full ) {
-                        return (data)?data.value : 'تعریف نشده'
-                      }
-                    },
-                     {
-                      "aTargets": [ 4 ],
-                      "mData": "profilePicture",
-                      "mRender": function ( data, type, full ) {
-                          let content = '---'
-                          if (data) {
-                              content = `<img style="width:150px" src="${data.previewUrl}" alt="">`;
-                          }
-                            return content;
-                      }
-                    },
-                    {
-                        "aTargets": [ 5 ],
-                        "data": "email",
-                        "mRender": function ( data, type, full ) {
-                            return data || 'ثبت نشده';
-                        }
-                    },
-                     {
-                      "aTargets": [ 6 ],
-                      "mData": "email",
-                      "mRender": function ( data, type, full ) {
-                        return data || 'ثبت نشده';
-                      }
-                    },
-                    {
-                      "aTargets": [ 7 ],
-                      "mData": "country",
-                      "mRender": function ( data, type, full ) {
-                        let countryName = data ? data.name : '---'
-                        return countryName;
-                      }
-                    },
-                    {
-                      "aTargets": [ 8 ],
-                      "mData": "id",
-                      "mRender": function ( data, type, full ) {
-                        const opList = `<a class="actiovation-user" title="فعال سازی" data-userid="${data}"><i class="fa fa-check fa-report-details"></i>
-                                        <a class="verify-user" title="تایید هویت" data-userid="${full.username}"><i class="fa fa-user fa-report-details"></i>`;
-                        return opList;
-                      }
-                    }
-             
-                ],
-                "columnDefs": [{ // set default column settings
-                    'orderable': false,
-                    'targets': [0, 1, 2, 3, 4, 5]
-                }],
-                "language": Constants.tableTranslations,
                 dom: 'Blfrtip',
-                buttons: [{
+                 buttons: [
+                     {
                         extend: 'excelHtml5',
-                        title: 'گزارش موجودی',
+                        title: 'لیست کاربران',
                         text: 'خروجی excel',
-                        action: newExportAction,
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [ 1, 2, 3, 4]
                         },
                     },
-
                     {
                         extend: 'print',
-                        title: 'گزارش موجودی',
+                        title: 'لیست کاربران',
                         text: 'پرینت لیست',
-                        action: newExportAction,
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [ 1, 2, 3, 4]
                         },
-                        customize: function(win) {
-                            $(win.document.body)
-                                .css('font-size', '10pt')
-                                .css('text-align', 'center')
-                                .css('padding-right', '10%')
-                                .css('background-color', '#c2c2c2')
-                                .prepend(
-                                    '<span>همراه کارت</span>'
-                                );
-
-                            $(win.document.body).find('table')
-                                .addClass('print-preview')
+                        customize: function ( win ) {
+                        $(win.document.body)
+                        .css( 'font-size', '10pt' )
+                        .css( 'text-align', 'center' )
+                        .css( 'padding-right', '10%' )
+                        .prepend(
+                            '<span>چتر سبز</span>'
+                        );
+ 
+                        $(win.document.body).find( 'table' )
+                        .addClass( 'print-preview' )
                         }
                     }
                 ],
-
+                // set the initial value
+                "pageLength": 5,            
+                "pagingType": "bootstrap_full_number",
+                 "columnDefs": [
+                    {  // set default column settings
+                        'orderable': false,
+                        'targets': [0]
+                    },
+                    {
+                        "searchable": false,
+                        "targets": [0]
+                    },
+                    {
+                        "className": "dt-right",
+                        //"targets": [2]
+                    }
+                ],
+                "order": [
+                    [0, "asc"]
+                ], // set first column as a default sort by asc
+                "language": Constants.tableTranslations
             });
-            $scope.dataTableObj = table;
-        }
-        // =================== Get report data by ajax =============
-        $scope.getAjaxData = function()
-        {
-            $scope.dataTableObj.draw();
-        }
+        };
+
         // ================= date settings ===================
         function listingDate() {
             $timeout(function(){
@@ -876,14 +661,6 @@ angular.module('MetronicApp')
             return out;
         }
 
-        function fillBirthDateValue(time) {
-            if (time != null && time != "") {
-                var time_stamp = parseInt(time);
-                val = convertDate(time_stamp)
-                listingDate2(time_stamp);
-            }
-        }
-
         function convertDate(date) {
             var day = new persianDate(date).format('YYYY/MM/DD');
             return day;
@@ -904,14 +681,41 @@ angular.module('MetronicApp')
                 }
             });
         });
-        $(document).on('click','.actiovation-user',function(event){
-            let userId = $(this).attr('data-userid');
-            $scope.activateUser(userId);
-        });
-        $(document).on('click','.verify-user',function(event){
-            let username = $(this).attr('data-userid');
-            $scope.verifyUser(username);
-        });
+        // ========== Get default features
+        function getFeatureList()
+        {
+            $http.get('views/resorts/resortFeatures.json').then(function(response) {
+               $scope.defaultFeature = response.data;
+            });
+        }
+        // ========== submit default features
+        function submitDefaultFeature(resortId)
+        {
+            let i = 0;
+            for(feature of $scope.defaultFeature)
+            {
+                var url = `resort/${resortId}/features`
+                initService.postMethod(feature, url)
+                    .then(function (resault) {
+                        console.log(`Feature ${i} stored !`);
+                        i ++;
+                    })
+                    .catch(function (error) {
+                        // TODO : if smth went wrong re store feature
+                    });
+            }
+        }
+        function getSportFields()
+        {
+            var data = {'params' :{}};
+            initService.getMethod(data, 'baseInfo/sportCategories')
+                .then(function (resault) {
+                    $scope.sportFields = resault.data.content;
+                })
+                .catch(function (error) {
+
+                });
+        }
 
     });
 }]);

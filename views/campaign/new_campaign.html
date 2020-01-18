@@ -1,0 +1,102 @@
+<!-- BEGIN CONTENT BODY -->
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">خانه</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>ثبت کمپین</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<div class="row">
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <span class="caption-subject bold uppercase">فرم ثبت کمپین جدید</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form role="form" id="insertUserForm">
+                    <div class="form-body">
+                        <!-- name input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newCampaign.title" class="form-control edited">
+                                <label for="form_control_1">نام</label>
+                                <span class="help-block">لطفا از حروف فارسی استفاده کنید</span>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <!-- countryId input -->
+                        <div class="form-group form-md-line-input form-md-floating-label has-info">
+                            <select ng-model="newCampaign.countryId" name="roles" class="form-control select2 edited"  ng-options="country.id as country.name for country in countryList">
+                                <option value="">انتخاب کنید ... </option>
+                            </select>
+                            <label for="form_control_1" style="color: #27a4b0"> کشور</label>
+                        </div>
+                        <!-- displayOrder input -->
+                        <div class="form-group form-md-line-input has-success form-md-floating-label">
+                            <div class="input-icon">
+                                <input type="text" name="name" ng-model="newCampaign.displayOrder" class="form-control edited">
+                                <label for="form_control_1">اولویت نمایش</label>
+                                <span class="help-block">لطفا از مقادیر عددی استفاده کنید</span>
+                                <i class="fa fa-user-o"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                <div class="input-icon">
+                                    <input id="fromDate" type="text" name="startDate" class="form-control date-input" >
+                                    <input id="fromDateTS" type="text" class="timeStamp hidden" ng-model="newCampaign.startDate">
+                                    <label for="form_control_1">تاریخ شروع</label>
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div> 
+                        </div>
+                        <!-- toDate -->
+                        <div class="col-md-6">
+                           <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                <div class="input-icon">
+                                    <input id="toDate" type="text" name="endDate" class="form-control date-input" >
+                                    <input id="toDateTS" type="text" class="timeStamp hidden" ng-model="newCampaign.endDate">
+                                    <label for="form_control_1">تاریخ پایان</label>
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div> 
+                        </div>
+                        <!-- From Time -->
+                        <div class="col-md-6">
+                            <from-time userdate="{{newCampaign.startDate}}" ng-model="userAccFromDate">
+                                
+                            </from-time>
+                        </div>
+                        <!-- To time -->
+                        <div class="col-md-6">
+                            <to-time userdate="{{newCampaign.endDate}}" ng-model="userAccToDate">
+                                
+                            </to-time>
+                        </div>
+                    </div>
+                    <div class="form-actions noborder">
+                        <button type="button" class="btn blue mt-ladda-btn ladda-button"
+                                data-style="zoom-out" ng-click="insertCampaign()">
+                            <span class="ladda-label">ثبت</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+<!-- END CONTENT BODY

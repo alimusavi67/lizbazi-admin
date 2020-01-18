@@ -9,18 +9,18 @@
                     <span class="caption-subject bold uppercase">فهرست  پیست ها</span>
                 </div>
             </div>
-            <div class="col-sm-2 col-xs-12 pull-left" ng-show="menuAccess['showresorts']">
+            <!-- <div class="col-sm-2 col-xs-12 pull-left" ng-show="menuAccess['showresorts']">
                 <span class="input-group-btn">
                     <a href="/#/resort/register" class="btn green" id="username1_checker">
                         <i class="fa fa-plus add-new-row"></i>ثبت پیست</a>
                 </span>
-            </div>
-            <div class="col-sm-2 col-xs-12 pull-left" ng-show="menuAccess['showresorts']">
+            </div> -->
+            <!-- <div class="col-sm-2 col-xs-12 pull-left" ng-show="menuAccess['showresorts']">
                 <span class="input-group-btn">
                     <a href="/#/comments/resort" class="btn green" id="username1_checker">
                         <i class="fa fa-comment add-new-row"></i>مشاهده نظرات</a>
                 </span>
-            </div>
+            </div> -->
             <div class="portlet-body">
                 <div class="table-toolbar">
                 </div>
@@ -31,7 +31,6 @@
                             <th> ردیف </th>
                             <th> نام </th>
                             <th> وضعیت </th>
-                            <!--<th> کد </th>-->
                             <th> کشور  </th>
                             <th> latitude  </th>
                             <th> longitude  </th>
@@ -51,14 +50,9 @@
                             <td class="center" ng-bind="resort.longitude"></td>
                             <td class="center" ng-bind="resort.orderNumber"></td>
                             <td>
-                                <i class='fa fa-pencil admin-op font-green-jungle' ng-click="goToEditResort(resort)" data-toggle="tooltip" data-placement="top" title="ویرایش"></i>
-                                <i class='fa fa-book admin-op font-green-jungle' ng-click="goToResortFeature(resort)" data-toggle="tooltip" data-placement="top" title="ویژگی ها"></i>
 
-                               <!--  <i class="user-status fa admin-op" ng-click="activateUser(user,$event)" data-toggle="tooltip" data-placement="top"
-                                title="{{(user.active)?'غیر فعال کردن':'فعال کردن'}}"
-                                ng-class="(user.active) ? 'fa-check-circle-o font-green-seagreen' : 'fa-times-circle-o font-yellow-gold'"></i> -->
-
-                                <i class="fa fa-trash-o admin-op font-red-mint" role="button" data-toggle="confirmation" data-content="{{resort.id}}" data-index="{{$index}}"></i>
+                                <i class="user-status fa admin-op fa-refresh" ng-click="openAcDialog(resort.id)" data-toggle="tooltip" data-placement="top"
+                                title="تغییر وضعیت"></i>
                                 <!-- <i class='fa fa-comment admin-op font-green-jungle' ng-click="goToResortComments(resort)" data-toggle="tooltip" data-placement="top" title="نظرات"></i> -->
 
                             </td>
@@ -72,5 +66,31 @@
 
     </div>
 </div>
+<div class="modal fade" id="comments" data-backdrop="static">
+    <div class="modal-dialog modal-small">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">متن پیشنهادی</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <div class="input-icon">
+                        <input type="text" name="name" ng-model="activateText" class="form-control edited">
+                        <label for="form_control_1">متن توضیح</label>
+                        <span class="help-block">متن توضیح جهت نمایش به کاربر</span>
+                        <i class="fa fa-user-o"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="idle-timeout-dialog-logout" type="button" class="btn green btn-outline sbold uppercase" ng-click="acRes('Open')" data-dismiss="modal">باز کردن</button>
 
+
+                <button id="idle-timeout-dialog-keepalive" type="button" class="btn red uppercase" ng-click="acRes('Closed')" data-dismiss="modal">بستن پیست</button>
+
+                <button id="idle-timeout-dialog-keepalive" type="button" class="btn dark uppercase" data-dismiss="modal">لغو عملیات</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- END MAIN CONTENT -->

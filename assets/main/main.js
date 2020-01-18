@@ -174,7 +174,7 @@ MetronicApp.constant('Constants', {
         '/resorts/all' : {
             menuName : 'showresorts',
             url : '/login',
-            roles: 'Admin,Agent'
+            roles: 'Admin'
         },
         '/resort/register' : {
             menuName : 'newresort',
@@ -289,6 +289,24 @@ MetronicApp.constant('Constants', {
             url : '/comments/:mediaType',
             roles: 'Admin'
         },
+        // =================== Agenda Resorts
+        '/agenda/resorts' : {
+            menuName: 'agendaResorts',
+            url : '/agenda/resorts',
+            roles: 'Admin,Agent'
+
+        },
+        // =================== Campaigns
+        '/campaign/show' : {
+            menuName: 'campaignShow',
+            url : '/campaign/show',
+            roles: 'Admin'
+        },
+        '/campaign/new' : {
+            menuName: 'campaignNew',
+            url : '/campaign/new',
+            roles: 'Admin'
+        }
     }
 });
 /* Setup Rounting For All Pages */
@@ -970,7 +988,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-buttons.js',
 
 
-                            '../assets/main/controll/appUsersController.js?1509'
+                            '../assets/main/controll/appUsersController.js?1510'
                         ]
                     });
                 }]
@@ -1202,6 +1220,115 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
 
 
                             '../assets/main/controll/commentController.js?1506'
+                        ]
+                    });
+                }]
+            }
+        })
+        // 
+        // Show all students
+        .state('agendaResorts', {
+            url: "/agenda/resorts",
+            templateUrl: "views/agenda/show_resorts.html",
+            data: {
+                pageTitle: 'پیست ها'
+            },
+            controller: "agendaResortController",
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        files: [
+                            '../assets/global/plugins/datatables/datatables.min.css',
+                            '../assets/global/plugins/select2/css/select2.min.css',
+                            '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
+                            '../assets/global/plugins/bootstrap-toastr/toastr-rtl.min.css',
+
+                            '../assets/global/plugins/datatables/datatables.all.min.js',
+                            '../assets/pages/scripts/table-datatables-managed.min.js',
+                            '../assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
+                            '../assets/global/plugins/select2/js/select2.full.min.js',
+                            '../assets/pages/scripts/components-select2.min.js',
+                            '../assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js',
+                            '../assets/pages/scripts/ui-confirmations.js',
+                            '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+                            '../assets/pages/scripts/ui-toastr.js',
+
+
+                            '../assets/main/controll/agenda/agendaResortController.js?1507'
+                        ]
+                    });
+                }]
+            }
+        })
+        // Show all Campaigns
+        .state('campaignShow', {
+            url: "/campaign/show",
+            templateUrl: "views/campaign/show_campaigns.html",
+            data: {
+                pageTitle: 'پیست ها'
+            },
+            controller: "campaignController",
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        files: [
+                            '../assets/global/plugins/datatables/datatables.min.css',
+                            '../assets/global/plugins/select2/css/select2.min.css',
+                            '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
+                            '../assets/global/plugins/bootstrap-toastr/toastr-rtl.min.css',
+
+                            '../assets/global/plugins/datatables/datatables.all.min.js',
+                            '../assets/pages/scripts/table-datatables-managed.min.js',
+                            '../assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
+                            '../assets/global/plugins/select2/js/select2.full.min.js',
+                            '../assets/pages/scripts/components-select2.min.js',
+                            '../assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js',
+                            '../assets/pages/scripts/ui-confirmations.js',
+                            '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+                            '../assets/pages/scripts/ui-toastr.js',
+
+
+                            '../assets/main/controll/campaign/campaignController.js?1500'
+                        ]
+                    });
+                }]
+            }
+        })
+        // Register New Campaign
+        .state('campaignNew', {
+            url: "/campaign/new",
+            templateUrl: "views/campaign/new_campaign.html",
+            data: {
+                pageTitle: 'ثبت کمپین'
+            },
+            controller: "campaignController",
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        files: [
+                            '../assets/global/plugins/datatables/datatables.min.css',
+                            '../assets/global/plugins/select2/css/select2.min.css',
+                            '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
+                            '../assets/global/plugins/bootstrap-toastr/toastr-rtl.min.css',
+
+                            '../assets/global/plugins/datatables/datatables.all.min.js',
+                            '../assets/pages/scripts/table-datatables-managed.min.js',
+                            '../assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
+                            '../assets/global/plugins/select2/js/select2.full.min.js',
+                            '../assets/pages/scripts/components-select2.min.js',
+                            '../assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js',
+                            '../assets/pages/scripts/ui-confirmations.js',
+                            '../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+                            '../assets/pages/scripts/ui-toastr.js',
+
+
+                            '../assets/main/controll/campaign/campaignController.js?1500'
                         ]
                     });
                 }]
