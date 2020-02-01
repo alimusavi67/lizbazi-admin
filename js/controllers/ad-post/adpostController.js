@@ -1,18 +1,18 @@
 /*
 =================================================================================
-= ~Controller : instructorController
+= ~Controller : adpostController
 = ~Author     : Petra
 = ~License    : Petra
 = ~Developer  : EH7AN
-= ~Date       : 1397/08/01 
+= ~Date       : 1398/11/12
 =================================================================================
 */
 
 angular.module('MetronicApp')
-.controller('countryController',
+.controller('adpostController',
 	['$timeout','$rootScope','$location','$stateParams', '$state', '$window', '$scope','$q','$cookieStore', '$timeout','settings','initService','$state','Constants','$interval',
  function($timeout,$rootScope,$location,$stateParams, $state, $window,  $scope,$q,$cookieStore, $timeout, settings,initService,$state,Constants,$interval) {
-    $scope.$on('$viewContentLoaded', function() {   
+    $scope.$on('$viewContentLoaded', function() {
         // initialize core components
         App.initAjax();
         // set default layout mode
@@ -24,31 +24,32 @@ angular.module('MetronicApp')
         // ================Init process========================
         var token = $cookieStore.get(Constants.cookieName).token;
         var mode = 'create';
-        $scope.newCountry = {};
+        $scope.newAdPost = {};
         $scope.editStudentItem = {};
         $scope.studentExtraData = {};
-        $scope.countries = [];
-        
+        $scope.imageList = [];
+        $scope.adpost = [];
+        $scope.countryList = [];
         $scope.resortItem = {};
-
+        getAllCountry();
         if ($stateParams.countryId) {
             var mode = 'update';
             var countryId = $stateParams.countryId;
             getCountry();
         }
         else {
-            getCountries();
+            getAdPost();
         }
-
-
         // =============== Register countries ================
-        $scope.registerCountry = function() {
+        $scope.registerAdPost = function() {
             // create a new user when mode is `create`
             if (mode === 'create'){
                 var el = $('.mt-ladda-btn')[0];
                 UIButtons.startSpin(el);
-                var url = 'baseInfo/countries'
-                initService.postMethod($scope.newCountry, url)
+                var url = 'adPost';
+                $scope.newAdPost.pictureUrls = $scope.imageList.map( x => x.id);
+                console.log($scope.newAdPost);
+                initService.postMethod($scope.newAdPost, url)
                     .then(function (resault) {
                         UIButtons.stopSpin(el);
                         if ( resault.data.code === 0 ) {
@@ -100,14 +101,13 @@ angular.module('MetronicApp')
 
         };
 
-        // =============== Show all countries ================
-        function getCountries()
+        // =============== Show all adPost ================
+        function getAdPost()
         {
      		var	data = {'params' :{}};
-        	initService.getMethod(data, 'baseInfo/countries')
+        	initService.getMethod(data, 'adPost')
 	        .then(function (resault) {
-	            $scope.countries = resault.data.content.countries;
-            
+	            $scope.adpost = resault.data.content;
 	            $timeout(function(){
                     initTable();
 	      			toolTipHandler();
@@ -115,8 +115,24 @@ angular.module('MetronicApp')
 	            },100);
 	        })
 	        .catch(function (error) {
-	           
+
 	        });
+        }
+        // =============== getAllCountry ================
+        function getAllCountry()
+        {
+            var data = {
+                'params' :{
+
+                }
+            };
+            initService.getMethod(data, 'baseInfo/countries')
+                .then(function (resault) {
+                    $scope.countryList = resault.data.content.countries;
+                })
+                .catch(function (error) {
+
+                });
         }
         // ======== Get country by id
         function getCountry()
@@ -133,7 +149,7 @@ angular.module('MetronicApp')
                 }, 500);
             })
             .catch(function (error) {
-               
+
             });
         }
         $scope.goToEditFeature = function(feature) {
@@ -190,12 +206,11 @@ angular.module('MetronicApp')
                 file.canceler = canceller;
                 var fd = new FormData(document.forms[0]);
                 fd.append('file', myBolb);
-                var url = '/media/upload';
-                var formData = new FormData();
+                var url = 'media/upload';
                 initService.uploader(fd, file, url,function(result){
-                    if (result.data.code == 0) {
+                    if (result.data.code === 0) {
                         UIButtons.stopSpin(el);
-                        $scope.newCountry.flagPhotoMediaId = result.data.content.id;
+                        $scope.imageList.push(result.data.content);
                     }
                     else {
                         var msg = result.data.message;
@@ -297,7 +312,7 @@ angular.module('MetronicApp')
         }
         function activeUser(flag,target)
         {
-             
+
             var active = $(target).hasClass('fa-check-circle-o');
             var deactive = $(target).hasClass('fa-times-circle-o');
             if ( !flag && active ) {
@@ -309,7 +324,7 @@ angular.module('MetronicApp')
                 $(target).addClass('fa-check-circle-o');
             }
         }
-    
+
         function initTable() {
             var table = $('#users_table');
 
@@ -324,7 +339,7 @@ angular.module('MetronicApp')
                     $timeout(function(){
                         toolTipHandler();
                         UIConfirmations.init();
-                    }, 100);        
+                    }, 100);
                 },
                 dom: 'Blfrtip',
                  buttons: [
@@ -351,26 +366,26 @@ angular.module('MetronicApp')
                         .prepend(
                             '<span>چتر سبز</span>'
                         );
- 
+
                         $(win.document.body).find( 'table' )
                         .addClass( 'print-preview' )
                         }
                     }
                 ],
                 // set the initial value
-                "pageLength": 5,            
+                "pageLength": 5,
                 "pagingType": "bootstrap_full_number",
                 "columnDefs": [
                     {  // set default column settings
                         'orderable': false,
                         'targets': [0]
-                    }, 
+                    },
                     {
                         "searchable": false,
                         "targets": [0]
                     },
                     {
-                        "className": "dt-right", 
+                        "className": "dt-right",
                         //"targets": [2]
                     }
                 ],
@@ -435,8 +450,8 @@ angular.module('MetronicApp')
             var day = new persianDate(date).format('YYYY/MM/DD');
             return day;
         }
-        
-       
+
+
         // ================== Jquery handler ==================
         $(document).on('click','ul.pagination > li  ',function(event){
             $timeout(function(){

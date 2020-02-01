@@ -154,7 +154,7 @@ i.fileinput-exists:hover {
   font-family: "IRANSans"
 }
 .datepicker-plot-area{
-  z-index: 7 !important; 
+  z-index: 7 !important;
 }
 .resort-meidas {
   margin-bottom: 60px;
@@ -196,4 +196,16 @@ i.fileinput-exists:hover {
     background-color: #f0f0f0;
     padding: 15px 5px;
     box-shadow: 2px 2px 5px 0px;
+}
+.pic-rows {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 5px 15px;
+  margin-bottom: 25px;
+}
+.pic-rows img {
+  width: 150px;
+  height: 150px;
+  border: 1px solid #0a001f;
 }
