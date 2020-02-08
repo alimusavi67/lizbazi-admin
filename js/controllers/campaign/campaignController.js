@@ -4,7 +4,7 @@
 = ~Author     : Petra
 = ~License    : Petra
 = ~Developer  : EH7AN
-= ~Date       : 1397/08/01 
+= ~Date       : 1397/08/01
 =================================================================================
 */
 
@@ -12,7 +12,7 @@ angular.module('MetronicApp')
 .controller('campaignController',
 	['$timeout','$rootScope','$location','$stateParams', '$state', '$window', '$scope','$q','$cookieStore', '$timeout','settings','initService','$state','Constants','$interval', '$http',
  function($timeout,$rootScope,$location,$stateParams, $state, $window,  $scope,$q,$cookieStore, $timeout, settings,initService,$state,Constants,$interval, $http) {
-    $scope.$on('$viewContentLoaded', function() {   
+    $scope.$on('$viewContentLoaded', function() {
         // initialize core components
         App.initAjax();
         // set default layout mode
@@ -60,8 +60,8 @@ angular.module('MetronicApp')
                 }
             })
             .catch(function (error) {
-               
-            }); 
+
+            });
         }
         function getAllCampaign()
         {
@@ -86,7 +86,7 @@ angular.module('MetronicApp')
 	            },100);
 	        })
 	        .catch(function (error) {
-	           
+
 	        });
         }
 
@@ -106,7 +106,7 @@ angular.module('MetronicApp')
 
                 });
         }
- 
+
         // =============== Delete a user ================
         deleteMethod = function(uniqueId,index) {
             var data = {};
@@ -147,7 +147,7 @@ angular.module('MetronicApp')
             var fd = new FormData();
             fd.append('contentMedia', file);;
             fd.append("file",file);
-            var url = '/media/upload';
+            var url = 'media/upload';
             var formData = new FormData();
             initService.uploader(fd, file, url,function(result){
                 if (result.data.code == 0) {
@@ -176,7 +176,7 @@ angular.module('MetronicApp')
                 .then(function (resault) {
                     if (resault.data.code === 0) {
                         UIToastr.init('info', 'با موفقیت آپلود شد');
-                    }  
+                    }
                 })
                 .catch(function (error) {
 
@@ -197,7 +197,7 @@ angular.module('MetronicApp')
                 $('#usersModal').modal('show');
             })
             .catch(function (error) {
-              
+
             });
         })
         // ======================= Inser new merchant =====================
@@ -266,7 +266,7 @@ angular.module('MetronicApp')
                         } else {
                             var msg = resault.data.message;
                             UIToastr.init('success', msg);
-                           
+
                         }
                     })
                     .catch(function (error) {
@@ -285,7 +285,7 @@ angular.module('MetronicApp')
                         } else {
                             var msg = resault.data.message;
                             UIToastr.init('success', msg);
-                           
+
                         }
                     })
                     .catch(function (error) {
@@ -294,7 +294,7 @@ angular.module('MetronicApp')
                     });
                 }
 
-                
+
             }
         // =================== check server response ==============
         function checkStatus(code)
@@ -322,7 +322,7 @@ angular.module('MetronicApp')
 			    default:
 			    	msg = 'خطای در مرکز داده لطفا با پشتیبانی تماس بگیرید';
 			    	break;
-			} 
+			}
 			return msg;
         }
         // ================ statick js ========================
@@ -336,7 +336,7 @@ angular.module('MetronicApp')
         }
         function activeUser(flag,target)
         {
-             
+
             var active = $(target).hasClass('fa-check-circle-o');
             var deactive = $(target).hasClass('fa-times-circle-o');
             if ( !flag && active ) {
@@ -348,7 +348,7 @@ angular.module('MetronicApp')
                 $(target).addClass('fa-check-circle-o');
             }
         }
-    
+
         function initTable() {
             var table = $('#users_table');
 
@@ -363,7 +363,7 @@ angular.module('MetronicApp')
                     $timeout(function(){
                         toolTipHandler();
                         UIConfirmations.init();
-                    }, 100);        
+                    }, 100);
                 },
                 dom: 'Blfrtip',
                  buttons: [
@@ -390,14 +390,14 @@ angular.module('MetronicApp')
                         .prepend(
                             '<span>چتر سبز</span>'
                         );
- 
+
                         $(win.document.body).find( 'table' )
                         .addClass( 'print-preview' )
                         }
                     }
                 ],
                 // set the initial value
-                "pageLength": 5,            
+                "pageLength": 5,
                 "pagingType": "bootstrap_full_number",
                  "columnDefs": [
                     {  // set default column settings
@@ -465,8 +465,8 @@ angular.module('MetronicApp')
             var day = new persianDate(date).format('YYYY/MM/DD');
             return day;
         }
-        
-       
+
+
         // ================== Jquery handler ==================
         $(document).on('click','ul.pagination > li  ',function(event){
             $timeout(function(){

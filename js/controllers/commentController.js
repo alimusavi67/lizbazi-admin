@@ -247,7 +247,7 @@ angular.module('MetronicApp')
                 file.canceler = canceller;
                 var fd = new FormData(document.forms[0]);
             fd.append('file', file);;
-                var url = '/media/upload';
+                var url = 'media/upload';
                 var formData = new FormData();
                 initService.uploader(fd, file, url,function(result){
                     if (result.data.code == 0) {
@@ -283,7 +283,7 @@ angular.module('MetronicApp')
             var fd = new FormData();
             fd.append('contentMedia', file);;
             fd.append("file",file);
-            var url = '/media/upload';
+            var url = 'media/upload';
             var formData = new FormData();
             initService.uploader(fd, file, url,function(result){
                 if (result.data.code == 0) {

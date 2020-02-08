@@ -4,7 +4,7 @@
 = ~Author     : Petra
 = ~License    : Petra
 = ~Developer  : EH7AN
-= ~Date       : 1397/08/01 
+= ~Date       : 1397/08/01
 =================================================================================
 */
 
@@ -12,7 +12,7 @@ angular.module('MetronicApp')
 .controller('countryController',
 	['$timeout','$rootScope','$location','$stateParams', '$state', '$window', '$scope','$q','$cookieStore', '$timeout','settings','initService','$state','Constants','$interval',
  function($timeout,$rootScope,$location,$stateParams, $state, $window,  $scope,$q,$cookieStore, $timeout, settings,initService,$state,Constants,$interval) {
-    $scope.$on('$viewContentLoaded', function() {   
+    $scope.$on('$viewContentLoaded', function() {
         // initialize core components
         App.initAjax();
         // set default layout mode
@@ -28,7 +28,7 @@ angular.module('MetronicApp')
         $scope.editStudentItem = {};
         $scope.studentExtraData = {};
         $scope.countries = [];
-        
+
         $scope.resortItem = {};
 
         if ($stateParams.countryId) {
@@ -107,7 +107,7 @@ angular.module('MetronicApp')
         	initService.getMethod(data, 'baseInfo/countries')
 	        .then(function (resault) {
 	            $scope.countries = resault.data.content.countries;
-            
+
 	            $timeout(function(){
                     initTable();
 	      			toolTipHandler();
@@ -115,7 +115,7 @@ angular.module('MetronicApp')
 	            },100);
 	        })
 	        .catch(function (error) {
-	           
+
 	        });
         }
         // ======== Get country by id
@@ -133,7 +133,7 @@ angular.module('MetronicApp')
                 }, 500);
             })
             .catch(function (error) {
-               
+
             });
         }
         $scope.goToEditFeature = function(feature) {
@@ -190,7 +190,7 @@ angular.module('MetronicApp')
                 file.canceler = canceller;
                 var fd = new FormData(document.forms[0]);
                 fd.append('file', myBolb);
-                var url = '/media/upload';
+                var url = 'media/upload';
                 var formData = new FormData();
                 initService.uploader(fd, file, url,function(result){
                     if (result.data.code == 0) {
@@ -297,7 +297,7 @@ angular.module('MetronicApp')
         }
         function activeUser(flag,target)
         {
-             
+
             var active = $(target).hasClass('fa-check-circle-o');
             var deactive = $(target).hasClass('fa-times-circle-o');
             if ( !flag && active ) {
@@ -309,7 +309,7 @@ angular.module('MetronicApp')
                 $(target).addClass('fa-check-circle-o');
             }
         }
-    
+
         function initTable() {
             var table = $('#users_table');
 
@@ -324,7 +324,7 @@ angular.module('MetronicApp')
                     $timeout(function(){
                         toolTipHandler();
                         UIConfirmations.init();
-                    }, 100);        
+                    }, 100);
                 },
                 dom: 'Blfrtip',
                  buttons: [
@@ -351,26 +351,26 @@ angular.module('MetronicApp')
                         .prepend(
                             '<span>چتر سبز</span>'
                         );
- 
+
                         $(win.document.body).find( 'table' )
                         .addClass( 'print-preview' )
                         }
                     }
                 ],
                 // set the initial value
-                "pageLength": 5,            
+                "pageLength": 5,
                 "pagingType": "bootstrap_full_number",
                 "columnDefs": [
                     {  // set default column settings
                         'orderable': false,
                         'targets': [0]
-                    }, 
+                    },
                     {
                         "searchable": false,
                         "targets": [0]
                     },
                     {
-                        "className": "dt-right", 
+                        "className": "dt-right",
                         //"targets": [2]
                     }
                 ],
@@ -435,8 +435,8 @@ angular.module('MetronicApp')
             var day = new persianDate(date).format('YYYY/MM/DD');
             return day;
         }
-        
-       
+
+
         // ================== Jquery handler ==================
         $(document).on('click','ul.pagination > li  ',function(event){
             $timeout(function(){

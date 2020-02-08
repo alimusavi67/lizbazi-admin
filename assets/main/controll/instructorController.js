@@ -4,14 +4,14 @@
 = ~Author     : Petra
 = ~License    : Petra
 = ~Developer  : EH7AN
-= ~Date       : 1397/08/01 
+= ~Date       : 1397/08/01
 =================================================================================
 */
 angular.module('MetronicApp')
 .controller('instructorController',
 	['$timeout','$rootScope','$location','$stateParams', '$state', '$window', '$scope','$q','$cookieStore', '$timeout','settings','initService','$state','Constants','$interval',
  function($timeout,$rootScope,$location,$stateParams, $state, $window,  $scope,$q,$cookieStore, $timeout, settings,initService,$state,Constants,$interval) {
-    $scope.$on('$viewContentLoaded', function() {   
+    $scope.$on('$viewContentLoaded', function() {
         // initialize core components
         App.initAjax();
         // set default layout mode
@@ -133,7 +133,7 @@ angular.module('MetronicApp')
         	initService.getMethod(data, 'instructor/admin')
 	        .then(function (resault) {
 	            $scope.instructors = resault.data.content.instructors;
-            
+
 	            $timeout(function(){
                     initTable();
 	      			toolTipHandler();
@@ -141,7 +141,7 @@ angular.module('MetronicApp')
 	            },100);
 	        })
 	        .catch(function (error) {
-	           
+
 	        });
         }
         // ======== Get country by id
@@ -164,7 +164,7 @@ angular.module('MetronicApp')
                 }, 500);
             })
             .catch(function (error) {
-               
+
             });
         }
         // =============== Delete a resort feature ================
@@ -209,7 +209,7 @@ angular.module('MetronicApp')
             var fd = new FormData();
             fd.append('contentMedia', file);;
             fd.append("file",file);
-                var url = '/media/upload';
+                var url = 'media/upload';
                 var formData = new FormData();
                 initService.uploader(fd, file, url,function(result){
                     if (result.data.code == 0) {
@@ -234,7 +234,7 @@ angular.module('MetronicApp')
                 file.canceler = canceller;
                 var fd = new FormData(document.forms[0]);
                 fd.append('file', myBolb);
-                var url = '/media/upload';
+                var url = 'media/upload';
                 var formData = new FormData();
                 initService.uploader(fd, file, url,function(result){
                     if (result.data.code == 0) {
@@ -341,7 +341,7 @@ angular.module('MetronicApp')
         }
         function activeUser(flag,target)
         {
-             
+
             var active = $(target).hasClass('fa-check-circle-o');
             var deactive = $(target).hasClass('fa-times-circle-o');
             if ( !flag && active ) {
@@ -353,7 +353,7 @@ angular.module('MetronicApp')
                 $(target).addClass('fa-check-circle-o');
             }
         }
-    
+
         function initTable() {
             var table = $('#users_table');
 
@@ -368,7 +368,7 @@ angular.module('MetronicApp')
                     $timeout(function(){
                         toolTipHandler();
                         UIConfirmations.init();
-                    }, 100);        
+                    }, 100);
                 },
                 dom: 'Blfrtip',
                  buttons: [
@@ -395,26 +395,26 @@ angular.module('MetronicApp')
                         .prepend(
                             '<span>چتر سبز</span>'
                         );
- 
+
                         $(win.document.body).find( 'table' )
                         .addClass( 'print-preview' )
                         }
                     }
                 ],
                 // set the initial value
-                "pageLength": 5,            
+                "pageLength": 5,
                 "pagingType": "bootstrap_full_number",
                 "columnDefs": [
                     {  // set default column settings
                         'orderable': false,
                         'targets': [0]
-                    }, 
+                    },
                     {
                         "searchable": false,
                         "targets": [0]
                     },
                     {
-                        "className": "dt-right", 
+                        "className": "dt-right",
                         //"targets": [2]
                     }
                 ],

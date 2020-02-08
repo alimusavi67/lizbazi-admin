@@ -4,7 +4,7 @@
 = ~Author     : Petra
 = ~License    : Petra
 = ~Developer  : EH7AN
-= ~Date       : 1397/08/01 
+= ~Date       : 1397/08/01
 =================================================================================
 */
 
@@ -12,7 +12,7 @@ angular.module('MetronicApp')
 .controller('commentController',
 	['$timeout','$rootScope','$location','$stateParams', '$state', '$window', '$scope','$q','$cookieStore', '$timeout','settings','initService','$state','Constants','$interval',
  function($timeout,$rootScope,$location,$stateParams, $state, $window,  $scope,$q,$cookieStore, $timeout, settings,initService,$state,Constants,$interval) {
-    $scope.$on('$viewContentLoaded', function() {   
+    $scope.$on('$viewContentLoaded', function() {
         // initialize core components
         App.initAjax();
         // set default layout mode
@@ -247,7 +247,7 @@ angular.module('MetronicApp')
                 file.canceler = canceller;
                 var fd = new FormData(document.forms[0]);
             fd.append('file', file);;
-                var url = '/media/upload';
+                var url = 'media/upload';
                 var formData = new FormData();
                 initService.uploader(fd, file, url,function(result){
                     if (result.data.code == 0) {
@@ -283,7 +283,7 @@ angular.module('MetronicApp')
             var fd = new FormData();
             fd.append('contentMedia', file);;
             fd.append("file",file);
-            var url = '/media/upload';
+            var url = 'media/upload';
             var formData = new FormData();
             initService.uploader(fd, file, url,function(result){
                 if (result.data.code == 0) {
@@ -393,12 +393,12 @@ angular.module('MetronicApp')
                 $('#usersModal').modal('show');
             })
             .catch(function (error) {
-              
+
             });
         })
         // =================== Form validation ====================
          var handleValidation = function() {
-            // for more info visit the official plugin documentation: 
+            // for more info visit the official plugin documentation:
             // http://docs.jquery.com/Plugins/Validation
             var form = $('#insertUserForm');
             form.validate({
@@ -406,8 +406,8 @@ angular.module('MetronicApp')
                 errorClass: 'help-block help-block-error', // default input error message class
                 focusInvalid: false, // do not focus the last invalid input
                 ignore: "", // validate all fields including form hidden input
-                
-                invalidHandler: function(event, validator) { //display error alert on form submit              
+
+                invalidHandler: function(event, validator) { //display error alert on form submit
                     App.scrollTo(form, -200);
                 },
                 rules: {
@@ -507,7 +507,7 @@ angular.module('MetronicApp')
                         UIToastr.init('info', msg);
                         $scope.newResort = {};
                     }
-                    
+
                 })
                 .catch(function (error) {
                     var msg = error.data.message;
@@ -515,7 +515,7 @@ angular.module('MetronicApp')
                 });
         }
          var changePassValidation = function() {
-            // for more info visit the official plugin documentation: 
+            // for more info visit the official plugin documentation:
             // http://docs.jquery.com/Plugins/Validation
             var form = $('#change-pass-form');
             form.validate({
@@ -523,8 +523,8 @@ angular.module('MetronicApp')
                 errorClass: 'help-block help-block-error', // default input error message class
                 focusInvalid: false, // do not focus the last invalid input
                 ignore: "", // validate all fields including form hidden input
-                
-                invalidHandler: function(event, validator) { //display error alert on form submit              
+
+                invalidHandler: function(event, validator) { //display error alert on form submit
                     App.scrollTo(form, -200);
                 },
                 rules: {
@@ -606,7 +606,7 @@ angular.module('MetronicApp')
 			    default:
 			    	msg = 'خطای در مرکز داده لطفا با پشتیبانی تماس بگیرید';
 			    	break;
-			} 
+			}
 			return msg;
         }
         // ================ statick js ========================
@@ -620,7 +620,7 @@ angular.module('MetronicApp')
         }
         function activeUser(flag,target)
         {
-             
+
             var active = $(target).hasClass('fa-check-circle-o');
             var deactive = $(target).hasClass('fa-times-circle-o');
             if ( !flag && active ) {
@@ -632,7 +632,7 @@ angular.module('MetronicApp')
                 $(target).addClass('fa-check-circle-o');
             }
         }
-    
+
         function initTable() {
             var table = $('#users_table');
 
@@ -647,7 +647,7 @@ angular.module('MetronicApp')
                     $timeout(function(){
                         toolTipHandler();
                         UIConfirmations.init();
-                    }, 100);        
+                    }, 100);
                 },
                 dom: 'Blfrtip',
                  buttons: [
@@ -674,26 +674,26 @@ angular.module('MetronicApp')
                         .prepend(
                             '<span>چتر سبز</span>'
                         );
- 
+
                         $(win.document.body).find( 'table' )
                         .addClass( 'print-preview' )
                         }
                     }
                 ],
                 // set the initial value
-                "pageLength": 30,            
+                "pageLength": 30,
                 "pagingType": "bootstrap_full_number",
                 "columnDefs": [
                     {  // set default column settings
                         'orderable': false,
                         'targets': [0]
-                    }, 
+                    },
                     {
                         "searchable": false,
                         "targets": [0]
                     },
                     {
-                        "className": "dt-right", 
+                        "className": "dt-right",
                         //"targets": [2]
                     }
                 ],
@@ -780,7 +780,7 @@ angular.module('MetronicApp')
                     UIToastr.init('warning', msg);
                 });
        }
-       $scope.dataTime =function(fromDate) 
+       $scope.dataTime =function(fromDate)
           {
             let day = new persianDate(fromDate).format('LLLL');
              return day
@@ -809,7 +809,7 @@ angular.module('MetronicApp')
                     data.limit = -1;
 
                     dt.one('preDraw', function(e, settings) {
-                        // Call the original action function 
+                        // Call the original action function
                         oldExportAction(self, e, dt, button, config);
 
                         dt.one('preXhr', function(e, s, data) {
@@ -842,7 +842,7 @@ angular.module('MetronicApp')
                 ],
                 "pagingType": "full_numbers",
                 "ajax": {
-                    "url": $scope.desUrl,                    
+                    "url": $scope.desUrl,
                     error: function( objAJAXRequest, strError ){
                         $("#balance_report_processing").css("height", "60px");
 
@@ -886,7 +886,7 @@ angular.module('MetronicApp')
                              let row = ($scope.pageIndex  * $scope.pageSize)+ (rowData.row + 1)
                             return row;
                         }
-                    }, 
+                    },
                     {
                       "aTargets": [ 1 ],
                       "mData": "author",
