@@ -207,7 +207,7 @@ angular.module('MetronicApp')
             file.canceler = canceller;
 
             var fd = new FormData();
-            fd.append('contentMedia', file);;
+            fd.append('contentMedia', file);
             fd.append("file",file);
                 var url = 'media/upload';
                 var formData = new FormData();
