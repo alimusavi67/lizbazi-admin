@@ -199,25 +199,25 @@ angular.module('MetronicApp')
 
             var el = $('.ladda-changepic')[0];
             $('.uplodp-btn').removeClass('green');
-            UIButtons.startSpin(el);
             var file=files[0];
-            compactImages(file, function(myBolb){
-                var canceller = $q.defer();
-                file.canceler = canceller;
-                var fd = new FormData(document.forms[0]);
-                fd.append('file', myBolb);
-                var url = 'media/upload';
-                initService.uploader(fd, file, url,function(result){
-                    if (result.data.code === 0) {
-                        UIButtons.stopSpin(el);
-                        $scope.imageList.push(result.data.content);
-                    }
-                    else {
-                        var msg = result.data.message;
-                        UIToastr.init('error', msg);
-                    }
-                })
-            });
+            var canceller = $q.defer();
+            file.canceler = canceller;
+
+            var fd = new FormData();
+            fd.append('contentMedia', file);
+            fd.append("file",file);
+            var url = 'media/upload';
+            var formData = new FormData();
+            initService.uploader(fd, file, url,function(result){
+                if (result.data.code == 0) {
+                    UIButtons.stopSpin(el);
+                    $scope.imageList.push(result.data.content);
+                }
+                else {
+                    var msg = result.data.message;
+                    UIToastr.init('error', msg);
+                }
+            })
         };
         // ============================= Compact images using convas  ===============================
         function compactImages(myFile,callBack)
