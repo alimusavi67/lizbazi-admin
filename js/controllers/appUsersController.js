@@ -768,7 +768,7 @@ angular.module('MetronicApp')
                     },
                      {
                       "aTargets": [ 6 ],
-                      "mData": "email",
+                      "mData": "mobileNo",
                       "mRender": function ( data, type, full ) {
                         return data || 'ثبت نشده';
                       }
