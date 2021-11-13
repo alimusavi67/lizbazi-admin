@@ -115,7 +115,7 @@ MetronicApp.controller('FooterController', ['$scope', function($scope) {
 }]);
 /* Setup Constants */
 MetronicApp.constant('Constants', {
-    serverUrl: "/api",
+    serverUrl: "http://159.69.16.45:8080/api",
     cookieName: "userInfo",
     contentType: "application/json",
     version: "1.0",

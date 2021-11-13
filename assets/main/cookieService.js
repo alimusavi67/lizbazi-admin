@@ -69,6 +69,8 @@ angular.module('MetronicApp')
                 buildNo: 1
             };
             var url = Constants.serverUrl + "/user/login";
+            debugger
+            alert('hi')
             var config = Constants.defaultHeader();
     
             $http.post(url, loginReq, config)

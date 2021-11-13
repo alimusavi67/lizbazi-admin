@@ -24,18 +24,18 @@
             <div class="portlet-body">
                 <div class="table-toolbar">
                 </div>
-                <table class="table table-striped table-bordered table-hover table-checkable order-column" id="users_table">
+                <table class="table table-responsive table-striped table-bordered table-hover table-checkable order-column" id="users_table">
                     <thead>
                         <tr>
 
                             <th> ردیف </th>
                             <th> نام </th>
-                            <th> وضعیت </th>
+                            <th class="desktop"> وضعیت </th>
                             <!--<th> کد </th>-->
-                            <th> کشور  </th>
-                            <th> latitude  </th>
-                            <th> longitude  </th>
-                            <th> اولویت  </th>
+                            <th class="desktop"> کشور  </th>
+                            <th class="desktop"> latitude  </th>
+                            <th class="desktop"> longitude  </th>
+                            <th class="desktop"> اولویت  </th>
                             <th> عملیات </th>
                         </tr>
                     </thead>
@@ -47,9 +47,9 @@
                             <td ng-bind="resort.status"></td>
                             <!--<td ng-bind="resort.preCode"></td>-->
                             <td ng-bind="resort.country.name"></td>
-                            <td class="center" ng-bind="resort.latitude"></td>
-                            <td class="center" ng-bind="resort.longitude"></td>
-                            <td class="center" ng-bind="resort.orderNumber"></td>
+                            <td class="center desktop" ng-bind="resort.latitude"></td>
+                            <td class="center desktop" ng-bind="resort.longitude"></td>
+                            <td class="center desktop" ng-bind="resort.orderNumber"></td>
                             <td>
                                 <i class='fa fa-pencil admin-op font-green-jungle' ng-click="goToEditResort(resort)" data-toggle="tooltip" data-placement="top" title="ویرایش"></i>
                                 <i class='fa fa-book admin-op font-green-jungle' ng-click="goToResortFeature(resort)" data-toggle="tooltip" data-placement="top" title="ویژگی ها"></i>

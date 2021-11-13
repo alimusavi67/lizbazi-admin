@@ -559,7 +559,7 @@ angular.module('MetronicApp')
 
             table.dataTable({
                 "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-
+                "responsive": window.innerWidth < 500 ? true : false,
                 "lengthMenu": [
                     [5, 15, 20, -1],
                     [5, 15, 20, "همه"] // change per page values here
