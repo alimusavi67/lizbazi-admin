@@ -15,6 +15,7 @@ angular.module('MetronicApp')
     $scope.$on('$viewContentLoaded', function() {
         // initialize core components
         App.initAjax();
+        alert('bo azar style !');
         // set default layout mode
         $rootScope.settings.layout.pageContentWhite = true;
         $rootScope.settings.layout.pageBodySolid = false;
