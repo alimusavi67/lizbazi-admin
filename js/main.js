@@ -436,7 +436,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/pages/scripts/ui-toastr.js',
 
 
-                            'js/controllers/resortController.js?13123'
+                            'js/controllers/resortController.js?182213'
                         ]
                     });
                 }]
