@@ -110,8 +110,10 @@ angular.module('MetronicApp')
         };
 
         $scope.updateResortStatus = function (resort) {
-                debugger
+            
                 resort.status = (resort.status === 'Open') ? 'Closed' : 'Open';
+                resort.countryId = resort.country.id;
+                resort.mapPhotoMediaId = resort.mapPhoto.id;
                 initService.postMethod(resort, `resort/${resort.id}`)
                     .then(function (resault) {
                     
