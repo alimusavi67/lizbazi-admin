@@ -54,7 +54,7 @@ angular.module('MetronicApp')
             getAllCountry();
         }
 
-
+        
         $scope.registerResort = function() {
             // create a new user when mode is `create`
             if (mode === 'create'){
@@ -109,10 +109,36 @@ angular.module('MetronicApp')
 
         };
 
+        $scope.updateResortStatus = function (resId, status) {
+                const temp = {
+                    status: (status === 'Open') ? 'Closed' : 'Open',
+                };
+                initService.postMethod(temp, `resort/${resId}`)
+                    .then(function (resault) {
+                    
+                        if ( resault.data.code === 0 ) {
+                            var msg = 'عملیات با موفقیت انجام شد';
+                            UIToastr.init('success', msg);
+                            $location.path('resorts/all');
 
+                        }
+                        else {
+                            var msg = resault.data.message;
+                            UIToastr.init('info', msg);
+                            $scope.newResort = {};
+                        }
+
+                    })
+                    .catch(function (error) {
+                    
+                        var msg = error.data.message;
+                        UIToastr.init('warning', msg);
+                    });
+        }
         // =============== Show all users ================
         function getAllResort()
         {
+            const agentCountry = getAgenCountry();
      		var	data = {
      		    'params' :{
 
@@ -122,6 +148,10 @@ angular.module('MetronicApp')
         	initService.getMethod(data, 'resort')
 	        .then(function (resault) {
 	            $scope.resortList = resault.data.content.resorts;
+                if(agentCountry) {
+                    const data = $scope.resortList.filter(item => item.country.name === agentCountry);
+                    $scope.resortList = data;
+                }
 	            $timeout(function(){
                     initTable();
 	      			toolTipHandler();
@@ -150,16 +180,19 @@ angular.module('MetronicApp')
                 });
         }
         // =============== Get a user ================
+        function getAgenCountry() {
+            const user = JSON.parse(localStorage.getItem('userInfo'));
+            return user.country;
+        }
         function getResort()
-        {
-
+        {  
             var	data = {
                 'params' :{
 
                 }
             };
             var url = 'resort/' + resortId;
-
+            
             initService.getMethod(data, url)
                 .then(function (resault) {
                     $scope.newResort = resault.data.content;

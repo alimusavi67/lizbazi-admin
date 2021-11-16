@@ -49,7 +49,9 @@ angular.module('MetronicApp')
         .then(function (response) {
             UIButtons.stopSpin(el);
             if (response.status === 200) {
-                $rootScope.setCurrentUser(user);
+                $rootScope.setCurrentUser(response.data.content);
+                const currentUser = JSON.stringify(response.data.content.userInfo);
+                localStorage.setItem('userInfo', currentUser);
                 if (redirectPath) {
                     $location.url(redirectPath)
                 }

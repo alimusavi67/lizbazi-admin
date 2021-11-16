@@ -54,9 +54,9 @@
                                 <i class='fa fa-pencil admin-op font-green-jungle' ng-click="goToEditResort(resort)" data-toggle="tooltip" data-placement="top" title="ویرایش"></i>
                                 <i class='fa fa-book admin-op font-green-jungle' ng-click="goToResortFeature(resort)" data-toggle="tooltip" data-placement="top" title="ویژگی ها"></i>
 
-                               <!--  <i class="user-status fa admin-op" ng-click="activateUser(user,$event)" data-toggle="tooltip" data-placement="top"
+                                <i class="user-status fa admin-op" ng-click="updateResortStatus(resort.id, resort.status)" data-toggle="tooltip" data-placement="top"
                                 title="{{(user.active)?'غیر فعال کردن':'فعال کردن'}}"
-                                ng-class="(user.active) ? 'fa-check-circle-o font-green-seagreen' : 'fa-times-circle-o font-yellow-gold'"></i> -->
+                                ng-class="(resort.status === 'Open') ? 'fa-check-circle-o font-green-seagreen' : 'fa-times-circle-o font-yellow-gold'"></i>
 
                                 <i class="fa fa-trash-o admin-op font-red-mint" role="button" data-toggle="confirmation" data-content="{{resort.id}}" data-index="{{$index}}"></i>
                                 <!-- <i class='fa fa-comment admin-op font-green-jungle' ng-click="goToResortComments(resort)" data-toggle="tooltip" data-placement="top" title="نظرات"></i> -->

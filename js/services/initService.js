@@ -28,6 +28,24 @@ angular.module('MetronicApp')
             });
         return deferred.promise;
     };
+    // Get From Pure Url
+    this.getGeneral = function (data,url) {
+        var deferred = $q.defer();
+        var config = Constants.defaultHeader();
+        var url = url;
+        config.params = data.params;
+        var That = this;
+        $http.get(url, config)
+            .then(function (response) {
+                deferred.resolve(response);
+            }).catch(function (response) {
+                if (response.status == 401) {
+                    That.logOutUser();
+                }
+                // deferred.reject(response);
+            });
+        return deferred.promise;
+    };
     // GENERAL POST METHOD
     this.postMethod = function (data,url) {
         var deferred = $q.defer();

@@ -28,6 +28,8 @@ angular.module('MetronicApp')
             });
         return deferred.promise;
     };
+
+    
     // GENERAL POST METHOD
     this.postMethod = function (data,url) {
         var deferred = $q.defer();
