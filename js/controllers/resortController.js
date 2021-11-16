@@ -150,7 +150,7 @@ angular.module('MetronicApp')
 	        .then(function (resault) {
 	            $scope.resortList = resault.data.content.resorts;
                 if(agentCountry) {
-                    const data = $scope.resortList.filter(item => item.country.name === agentCountry);
+                    const data = $scope.resortList.filter(item => item.country.name === agentCountry?.name);
                     $scope.resortList = data;
                 }
 	            $timeout(function(){

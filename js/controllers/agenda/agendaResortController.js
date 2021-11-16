@@ -115,15 +115,22 @@ angular.module('MetronicApp')
         // =============== Show all users ================
         function getAllResort()
         {
+            const agentCountry = getAgenCountry();
+        
      		var	data = {
      		    'params' :{
 
                 }
             };
-
+            
         	initService.getMethod(data, 'resort')
 	        .then(function (resault) {
 	            $scope.resortList = resault.data.content.resorts;
+                if(agentCountry) {
+                    const data = $scope.resortList.filter(item => item.country.name === agentCountry.name);
+                
+                    $scope.resortList = data;
+                }
 	            $timeout(function(){
                     initTable();
 	      			toolTipHandler();
@@ -561,7 +568,7 @@ angular.module('MetronicApp')
 
             table.dataTable({
                 "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-
+                "responsive": window.innerWidth < 500 ? true : false,
                 "lengthMenu": [
                     [5, 15, 20, -1],
                     [5, 15, 20, "همه"] // change per page values here
@@ -708,13 +715,16 @@ angular.module('MetronicApp')
             }
         }
         // ========== CLose And Open Resort
+        function getAgenCountry() {
+            const user = JSON.parse(localStorage.getItem('userInfo'));
+            return user.country;
+        }
         $scope.activateResort = function(text)
         {
             let status = text;
             if ($scope.activateText) {
                status +=  ',' + $scope.activateText;
             }
-            let target = $(event.target);
             initService.putMethod({}, `resort/${$scope.activeResortId}?status=${status}`)
                 .then(function (resault) {
                     $scope.activateText = ''
@@ -726,9 +736,29 @@ angular.module('MetronicApp')
                     }
                 })
                 .catch(function (error) {
-                    UIToastr.init('info', 'با موفقیت حذف شد');
+                    UIToastr.init('info', 'خطا در برقراری ارتباط');
                 });
 
+        }
+        // Update Resort Status In Place
+
+        $scope.updateResortStatus = function(resort) {
+            const status = (resort.status === 'Open') ? 'Closed' : 'Open';
+            initService.putMethod({}, `resort/${resort.id}?status=${status}`)
+                .then(function (resault) {
+                    $scope.activateText = ''
+                    if (resault.data.code === 0) {
+                        UIToastr.init('success', resault.data.message);
+                        $state.reload();
+                    } else if (resault.data.code === 142) {
+                        UIToastr.init('warning', resault.data.message);
+                    } else {
+                        UIToastr.init('warning', resault.data.message);
+                    }
+                })
+                .catch(function (error) {
+                    UIToastr.init('info', 'خطا در برقراری ارتباط');
+                });
         }
         $scope.openAcDialog = function(resortId) {
             $('#comments').modal('show');
